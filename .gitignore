@@ -1,0 +1,11 @@
+bin
+.DS_Store
+.actionScriptProperties
+.flexLibProperties
+.project
+.settings
+bin-debug
+html-template
+.flexProperties
+sandbox
+Sandbox*
