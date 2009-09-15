@@ -1,57 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <mx:Module xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		   xmlns:s="library://ns.adobe.com/flex/spark" 
-		   xmlns:mx="library://ns.adobe.com/flex/halo" layout="vertical" width="400" height="300" xmlns:zero1="http://zero.seanhess.net/2009" xmlns:dependency="dev.dependency.*"	   
+		   xmlns:mx="library://ns.adobe.com/flex/halo" layout="vertical" xmlns:zero1="http://zero.seanhess.net/2009" xmlns:dependency="dev.dependency.*"	   
 		   
 		   >
 	
-	<fx:Declarations>
-		<dependency:Test id="test"/>
-	</fx:Declarations>
-	
 	<s:Group>
-	
+		
 		<s:layout>
 			<s:VerticalLayout/>
 		</s:layout>
 		
 		<fx:Script>
 			<![CDATA[
-				import dev.sandbox.VectorSubClass;
-//				import dev.sandbox.Wonka;
-				import dev.sandbox.Lots;
-//				import net.seanhess.zero.observe.Notification;
+				import dev.interfaces.Test;
 				import mx.collections.ArrayCollection;
-
-//				private var n:Notification = new Notification();
 				
-				public var woot:Vector.<String>;
-
+				public var test:Test = new Test();
+				
 				private function go():void
 				{
-					var a:Lots = new Lots();
-					
-					trace(a.ok().kind);
-//					a.cook(new Cheese("flip"));
-					
-//					var b:* = new Wonka();
-//					n.send("first message");
-					test.test('click');
+					trace("WOOT");
+					trace(test.test("a message!"));	
 				}
 				
 				private function remove():void
 				{
-//					n.remove(happened);
 				}
 				
 				private function add():void
 				{
-//					n.add(happened, "two");
 				}
 				
 				private function happened(message:String, another:String):void
 				{
-					trace("Happened " + message + " :: " + another);
 				}
 			]]>
 		</fx:Script>
@@ -74,5 +56,5 @@
 		</s:List>
 		
 	</s:Group>
-		
+	
 </mx:Module>

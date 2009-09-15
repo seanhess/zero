@@ -1,8 +1,7 @@
 <?xml version="1.0"?>
 <componentPackage>    
-	<component class="net.seanhess.zero.inter.Dependency"/>
-	<component class="net.seanhess.zero.inter.Data"/>
-	<component class="net.seanhess.zero.inter.Result"/>
-	<component class="net.seanhess.zero.observe.Notification"/>
-	<component class="net.seanhess.zero.observe.Observer"/>
+	<component class="net.seanhess.zero.interfaces.Interface"/>
+	<component class="net.seanhess.zero.interfaces.Context"/>
+	<component class="net.seanhess.zero.interfaces.Connector"/>
+	<component class="net.seanhess.zero.implement.ImplementService"/>
 </componentPackage>

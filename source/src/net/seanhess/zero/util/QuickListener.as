@@ -1,5 +1,6 @@
 package net.seanhess.zero.util
 {
+	import flash.events.Event;
 	import flash.events.IEventDispatcher;
 	import flash.utils.Dictionary;
 	import flash.utils.Proxy;
@@ -20,7 +21,7 @@ package net.seanhess.zero.util
 		
 		protected var listeners:Dictionary;
 		
-		public function QuickListener(target:String)
+		public function QuickListener(target:IEventDispatcher)
 		{
 			this.target = target;	
 			listeners = new Dictionary(true);
