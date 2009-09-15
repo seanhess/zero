@@ -1,29 +1,48 @@
 package net.seanhess.zero.interfaces
 {
-	import flash.events.EventDispatcher;
 	
-	import net.seanhess.zero.util.QuickListener;
 
-	public class Interface extends EventDispatcher
+	public class Interface extends EventDispatcher implements IContextClient
 	{
-		/**
-		 * the current context. How does it get this?  Singleton for now?
-		 */
-		protected var context:Context;
-		
-		/**
-		 * Helps us get the current context
-		 */
-		protected var connector:Connector;
-		
-		protected var ids:IDs;
-		
-		public function Interface()
+		protected var _context:IContext;
+		protected var ids:IDs = new IDs();
+
+		public function set context(value:IContext):void
 		{
-			connector = new Connector();
-			context = connector.context;
-			ids = new IDs();
+			_context = value;	
+			
+			if (value)
+			{
+				// anything in here?
+			}
 		}
+		
+		public function get context():IContext
+		{
+			return _context;		
+		}
+		
+		// these guys need to GET a handle on the context magically somehow. //
+		
+		
+		
+		/**
+		 * Sends a service
+		 */
+		public function send(method:Function, ...params):*
+		{
+			var service:Service = new Service();
+			service.id = ids.getServiceIDFromInterface(this, method);
+			service.params = params;
+			
+			context.sendService(service);
+			
+			return service.result;
+		}
+		
+		
+		
+		
 		
 		
 		/**
@@ -35,17 +54,7 @@ package net.seanhess.zero.interfaces
 			return _events; 
 		}
 		protected var _events:QuickListener;
-
-		/**
-		 * Sends a service
-		 */
-		public function send(method:Function, ...params):*
-		{
-			var service:Service = new Service();
-				service.id = ids.getServiceIDFromInterface(this, method);
-				service.params = params;
-			
-			return context.sendService(service);
-		}
+		
+		
 	}
 }

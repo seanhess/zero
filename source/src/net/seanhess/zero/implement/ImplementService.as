@@ -1,10 +1,15 @@
 package net.seanhess.zero.implement
 {
+	import net.seanhess.zero.event.ServiceEvent;
+	import net.seanhess.zero.interfaces.Connector;
+	import net.seanhess.zero.interfaces.Context;
 	import net.seanhess.zero.interfaces.Service;
+	import net.seanhess.zero.interfaces.ContextClient;
 
-	public class ImplementService implements IServiceImplementation
+	public class ImplementService extends ContextClient
 	{
 		public var method:Function;
+		
 		protected var _id:String;
 		
 		public function set id(value:String):void
@@ -23,9 +28,18 @@ package net.seanhess.zero.implement
 			this.method = method;
 		}
 		
-		public function call(service:Service):void
+		override protected function connect():void
 		{
-			service.result = method.apply(null, service.params);
+			context.addEventListener(ServiceEvent.SEND, onSend);
+		}
+		
+		protected function onSend(event:ServiceEvent):void
+		{
+			if (event.service.id == id)
+			{
+				event.service.implementors.push(this);
+				event.service.result = method.apply(null, event.service.params);
+			}
 		}
 	}
 }

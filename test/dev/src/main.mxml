@@ -35,9 +35,8 @@
 				
 				testImplementation = new TestImplementation();
 				impl = new ImplementService("Test.test", testImplementation.test);
-			
-				// now you can calculate the id any number of ways. Including just putting in the string
-				context.implementService(impl);
+				
+				// minus the context weirdness... now I can do it! 
 			}
 		]]>
 	</fx:Script>

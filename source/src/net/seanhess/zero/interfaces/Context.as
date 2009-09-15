@@ -1,8 +1,10 @@
 package net.seanhess.zero.interfaces
 {
-	import flash.utils.Dictionary;
+	import flash.events.EventDispatcher;
 	
-	import net.seanhess.zero.implement.IServiceImplementation;
+	import net.seanhess.zero.event.NotificationEvent;
+	import net.seanhess.zero.event.PropertyEvent;
+	import net.seanhess.zero.event.ServiceEvent;
 	
 
 	
@@ -14,27 +16,28 @@ package net.seanhess.zero.interfaces
 	 * 
 	 * 
 	 */
-	public class Context extends Object
+	public class Context extends EventDispatcher
 	{
-		protected var services:Dictionary = new Dictionary(true);
-		
-		public function implementService(implementation:IServiceImplementation):void
+		/**
+		 * the service object will be modified by the implementors
+		 */
+		public function sendService(service:Service):void
 		{
-			services[implementation.id] = implementation;		
+			dispatchEvent(new ServiceEvent(service)); 
 		}
 
-		/**		
-		 * Only one implementor for now
+		/**
+		 * Property Update Event :: The interfaces should be listening on their context for these
+		 * .. correcto?
 		 */
-		public function sendService(service:Service):*
+		public function sendUpdate(property:Property):void
 		{
-			var implementor:IServiceImplementation = services[service.id];
-			
-			if (implementor == null)
-				throw new Error("No implementation of " + service.id);
-			
-			implementor.call(service);
-			return service.result;
+			dispatchEvent(new PropertyEvent(property));
+		}
+		
+		public function sendNotification(notification:Notification):void
+		{
+			dispatchEvent(new NotificationEvent(notification));
 		}
 	}
 }
