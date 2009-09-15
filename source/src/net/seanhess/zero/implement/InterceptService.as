@@ -2,7 +2,7 @@ package net.seanhess.zero.implement
 {
 	import net.seanhess.zero.interfaces.Service;
 
-	public class InterceptService implements IServiceImplementation
+	public class InterceptService
 	{
 		/**
 		 * Call the method and allow it to stop the service.

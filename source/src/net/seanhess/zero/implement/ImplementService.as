@@ -5,9 +5,21 @@ package net.seanhess.zero.implement
 	public class ImplementService implements IServiceImplementation
 	{
 		public var method:Function;
+		protected var _id:String;
 		
-		public function ImplementService(method:Function=null)
+		public function set id(value:String):void
 		{
+			_id = value;	
+		}
+		
+		public function get id():String
+		{
+			return _id;	
+		}
+		
+		public function ImplementService(id:String=null, method:Function=null)
+		{
+			this.id = id;
 			this.method = method;
 		}
 		

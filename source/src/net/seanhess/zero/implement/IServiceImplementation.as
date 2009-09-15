@@ -5,5 +5,6 @@ package net.seanhess.zero.implement
 	public interface IServiceImplementation
 	{
 		function call(service:Service):void;
+		function get id():String; // the service you are implementing ... 
 	}
 }

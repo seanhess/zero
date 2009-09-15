@@ -2,7 +2,6 @@ package net.seanhess.zero.interfaces
 {
 	import flash.events.EventDispatcher;
 	
-	import net.seanhess.zero.scan.SimpleScan;
 	import net.seanhess.zero.util.QuickListener;
 
 	public class Interface extends EventDispatcher
@@ -17,12 +16,13 @@ package net.seanhess.zero.interfaces
 		 */
 		protected var connector:Connector;
 		
-		protected var scan:SimpleScan = new SimpleScan();
+		protected var ids:IDs;
 		
 		public function Interface()
 		{
-			connector = new Connector(this);
-			context = connector.getContext();
+			connector = new Connector();
+			context = connector.context;
+			ids = new IDs();
 		}
 		
 		
@@ -42,8 +42,7 @@ package net.seanhess.zero.interfaces
 		public function send(method:Function, ...params):*
 		{
 			var service:Service = new Service();
-				service.face = this;
-				service.method = scan.getMethodName(this, method);
+				service.id = ids.getServiceIDFromInterface(this, method);
 				service.params = params;
 			
 			return context.sendService(service);

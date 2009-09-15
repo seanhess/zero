@@ -16,11 +16,11 @@ package net.seanhess.zero.interfaces
 	 */
 	public class Context extends Object
 	{
-		protected var implementors:Dictionary = new Dictionary(true);
+		protected var services:Dictionary = new Dictionary(true);
 		
-		public function implementService(service:Service, implementation:IServiceImplementation):void
+		public function implementService(implementation:IServiceImplementation):void
 		{
-			implementors[service.key] = implementation;		
+			services[implementation.id] = implementation;		
 		}
 
 		/**		
@@ -28,10 +28,10 @@ package net.seanhess.zero.interfaces
 		 */
 		public function sendService(service:Service):*
 		{
-			var implementor:IServiceImplementation = implementors[service.key];
+			var implementor:IServiceImplementation = services[service.id];
 			
 			if (implementor == null)
-				throw new Error("No implementation of " + service.key);
+				throw new Error("No implementation of " + service.id);
 			
 			implementor.call(service);
 			return service.result;

@@ -1,35 +1,56 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
-			   xmlns:mx="library://ns.adobe.com/flex/halo" minWidth="1024" minHeight="768" xmlns:module="dev.module.*" xmlns:zero="net.seanhess.zero.*" preinitialize="onInit()">
+			   xmlns:mx="library://ns.adobe.com/flex/halo" minWidth="1024" minHeight="768" xmlns:module="dev.module.*" preinitialize="onInit()" xmlns:zero="http://zero.seanhess.net/2009" xmlns:interfaces="dev.interfaces.*" xmlns:services="dev.services.*">
 
 	
 	<fx:Script>
 		<![CDATA[
+			import dev.sandbox.Death;
 			import dev.interfaces.Test;
 			import net.seanhess.zero.interfaces.Service;
 			import net.seanhess.zero.interfaces.Connector;
 			import net.seanhess.zero.interfaces.Context;
 			import dev.services.TestImplementation;
 			import net.seanhess.zero.implement.ImplementService;
+			
+			private var context:Context;
+			private var connector:Connector;
+			
+			private var testImplementation:TestImplementation;
+			private var impl:ImplementService;
+			
+			private var service:Service;
+			
+			private var test:Test;
+			
+			
 			private function onInit():void
 			{
 				trace("INIT");
-				var context:Context = new Context();
-				var connector:Connector = new Connector(null);
-					connector.context = context;
 				
-				var test:TestImplementation = new TestImplementation();
-				var impl:ImplementService = new ImplementService(test.test);
+				context = new Context();
+				connector = new Connector();
+				connector.context = context;
 				
-				var service:Service = new Service();
-					service.type = Test;
-					service.method = "test"; // I need a better way of doing this
-				
-				context.implementService(service, impl);
+				testImplementation = new TestImplementation();
+				impl = new ImplementService("Test.test", testImplementation.test);
+			
+				// now you can calculate the id any number of ways. Including just putting in the string
+				context.implementService(impl);
 			}
 		]]>
 	</fx:Script>
+	
+	<fx:Declarations>
+		
+		<!-- how would it know which interface you are using though? ... lame ! -->
+		<!-- (Test)  (test)  ... how to know? 
+			
+		<zero:ImplementService service="{testinterface.test}" method="test.test"/>
+		<zero:ImplementService service="{testinterface.test}" method="test.test"/>
+		-->
+	</fx:Declarations>
 	
 	<module:WootModule/>
 	
