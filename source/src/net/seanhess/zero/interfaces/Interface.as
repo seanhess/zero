@@ -1,11 +1,21 @@
 package net.seanhess.zero.interfaces
 {
+	import flash.events.EventDispatcher;
+	
+	import net.seanhess.zero.util.QuickListener;
 	
 
 	public class Interface extends EventDispatcher implements IContextClient
 	{
 		protected var _context:IContext;
 		protected var ids:IDs = new IDs();
+		protected var connector:Connector;
+		
+		public function Interface()
+		{
+			connector = new Connector();
+			connector.registerInterface(this);
+		}
 
 		public function set context(value:IContext):void
 		{

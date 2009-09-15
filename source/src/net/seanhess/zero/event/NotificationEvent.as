@@ -2,7 +2,7 @@ package net.seanhess.zero.event
 {
 	import flash.events.Event;
 	
-	import net.seanhess.zero.interfaces.Service;
+	import net.seanhess.zero.interfaces.Notification;
 	
 	public class NotificationEvent extends Event
 	{

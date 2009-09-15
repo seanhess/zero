@@ -16,7 +16,7 @@ package net.seanhess.zero.interfaces
 	 * 
 	 * 
 	 */
-	public class Context extends EventDispatcher
+	public class Context extends EventDispatcher implements IContext
 	{
 		/**
 		 * the service object will be modified by the implementors

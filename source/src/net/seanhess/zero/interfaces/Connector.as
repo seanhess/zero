@@ -5,24 +5,34 @@ package net.seanhess.zero.interfaces
 	 */
 	public class Connector extends Object
 	{
-		protected static var _context:Context;
+		protected static var _context:IContext;
+		protected static var interfaces:Array = [];
 		
 		public function Connector()
 		{
 			
 		}
 		
-		public function set context(value:Context):void
+		public function set context(value:IContext):void
 		{
 			_context = value;
+			
+			/// loop through static interfaces
+			for each (var face:Interface in interfaces)
+			{
+				face.context = _context;
+			}
 		}
 		
-		public function get context():Context
+		public function get context():IContext
 		{
-			if (_context == null)
-				throw new Error("No context found");
-			
 			return _context;
+		}
+		
+		public function registerInterface(face:Interface):void
+		{
+			interfaces.push(face); // registers it staticly
+			face.context = context;
 		}
 	}
 }

@@ -35,6 +35,7 @@
 				
 				testImplementation = new TestImplementation();
 				impl = new ImplementService("Test.test", testImplementation.test);
+				impl.context = context;
 				
 				// minus the context weirdness... now I can do it! 
 			}
