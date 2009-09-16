@@ -15,37 +15,31 @@
 			import dev.services.TestImplementation;
 			import net.seanhess.zero.implement.ImplementService;
 			
-			private var context:Context;
-			private var connector:Connector;
-			
-			private var testImplementation:TestImplementation;
-			private var impl:ImplementAll;
-			
-			private var service:Service;
-			
-			private var test:Test;
-			
 			private function onInit():void
 			{
-				trace("INIT");
-				
-				context = new Context();
-				connector = new Connector();
-				connector.context = context;
-				
-				testImplementation = new TestImplementation();
-				impl = new ImplementAll(Test, testImplementation);
-				impl.context = context;
-				
-				// minus the context weirdness... now I can do it! 
 			}
 		]]>
 	</fx:Script>
 	
 	<fx:Declarations>
 		
+		<zero:Implement>
+			<zero:ImplementAll type="{Test}" source="{new TestImplementation()}"/>
+		</zero:Implement>
+		
+		
 		<!-- how would it know which interface you are using though? ... lame ! -->
 		<!-- (Test)  (test)  ... how to know? 
+		
+		<Context /> - optional, implementations creates one if you haven't already
+		
+		<Implementations context="{context}">
+			<ImplementAll type="{Test}" factory="{TestImplementation}"/>
+			<ImplementAll type="{Test}" instance="{new TestImplementation()}"/>
+		</Implementations>
+		
+		
+			
 			
 		<zero:ImplementService service="{testinterface.test}" method="test.test"/>
 		<zero:ImplementService service="{testinterface.test}" method="test.test"/>

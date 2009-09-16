@@ -2,7 +2,7 @@
 <componentPackage>    
 	<component class="net.seanhess.zero.interfaces.Interface"/>
 	<component class="net.seanhess.zero.interfaces.Context"/>
-	<component class="net.seanhess.zero.interfaces.Connector"/>
 	<component class="net.seanhess.zero.implement.ImplementService"/>
 	<component class="net.seanhess.zero.implement.ImplementAll"/>
+	<component class="net.seanhess.zero.implement.Implement"/>
 </componentPackage>

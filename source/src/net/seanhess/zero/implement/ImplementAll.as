@@ -33,20 +33,27 @@ package net.seanhess.zero.implement
 			return _context;
 		}
 		
-		public function ImplementAll(face:Class, source:Object)
+		public function set type(value:Class):void
 		{
-			this.face = scan.getClassInfo(face);
-			this.source = source;
+			this.face = scan.getClassInfo(value);
+			tryConnect();
 		}
 		
-		protected function set source(value:Object):void
+		public function set source(value:Object):void
 		{
-			_source = value;	
+			_source = value;
+			tryConnect();
 		}
 		
-		protected function get source():Object
+		public function get source():Object
 		{
 			return _source;
+		}
+		
+		public function ImplementAll(type:Class=null, source:Object=null)
+		{
+			this.type = type;
+			this.source = source;
 		}
 		
 		protected function tryConnect():void
