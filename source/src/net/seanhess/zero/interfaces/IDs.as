@@ -12,5 +12,15 @@ package net.seanhess.zero.interfaces
 			var info:TypeInfo = scan.getObjectInfo(face);
 			return info.name + "." + scan.getMethodName(face, method); 
 		}
+		
+		public function getType(face:Interface):String
+		{
+			return scan.getObjectInfo(face).name;	
+		}
+		
+		public function getName(face:Interface, method:Function):String
+		{
+			return scan.getMethodName(face, method);
+		}
 	}
 }

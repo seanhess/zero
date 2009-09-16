@@ -8,8 +8,9 @@ package net.seanhess.zero.implement
 	{
 		public var method:Function;
 		
-		protected var _id:String;
 		protected var _context:IContext;
+		protected var type:String;
+		protected var name:String;
 		
 		public function set context(value:IContext):void
 		{
@@ -27,27 +28,17 @@ package net.seanhess.zero.implement
 		}
 		
 		
-		public function set id(value:String):void
+		public function ImplementService(type:String, name:String, method:Function=null)
 		{
-			_id = value;	
-		}
-		
-		public function get id():String
-		{
-			return _id;	
-		}
-		
-		public function ImplementService(id:String=null, method:Function=null)
-		{
-			this.id = id;
+			this.type = type;
+			this.name = name;
 			this.method = method;
 		}
 		
 		protected function onSend(event:ServiceEvent):void
 		{
-			if (event.service.id == id)
+			if (event.service.type == type && event.service.name == name)
 			{
-				event.service.implementors.push(this);
 				event.service.result = method.apply(null, event.service.params);
 			}
 		}

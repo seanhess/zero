@@ -58,11 +58,67 @@ package net.seanhess.zero.scan
 				info.name = name.replace(/.*::/i, ""); // get rid of the other stuff
 				info.definitionName = name.replace(/::/i,".");
 				
+				
+				
 			var methods:XMLList = data.factory.method.(@declaredBy == info.qualifiedName);
 			
 			for each (var method:XML in methods)
-				info.methods.push(method.@name.toString());
+			{
+				var methodInfo:MethodInfo = new MethodInfo();
+					methodInfo.name = method.@name.toString();
+					
+				info.methods.push(methodInfo);
+			}
+
+			
+			
 				
+				
+			var accessors:XMLList = data.factory.accessor.(@declaredBy == info.qualifiedName);
+			var variables:XMLList = data.factory.variable;
+			accessors += variables;
+			
+			for each (var accessor:XML in accessors)
+			{
+				var property:PropertyInfo = new PropertyInfo();
+					property.name = accessor.@name.toString();
+					property.type = accessor.@type.toString();
+					
+				if (accessor.localName() == "accessor")
+					property.access = accessor.@access.toString();
+				else
+					property.access = PropertyInfo.READ_WRITE;
+					
+				var bindableList:XMLList = accessor.metadata.(@name == "Bindable");
+				
+				if (bindableList.length() > 0)
+				{
+					property.bindable = true;
+					property.event = bindableList[0].arg[0].@value;
+				}
+				
+				info.properties.push(property);
+			}
+			
+			
+			
+			
+			var events:XMLList = data.factory.metadata.(@name == "Event");
+			
+			for each (var event:XML in events)
+			{
+				var eventInfo:EventInfo = new EventInfo();
+					eventInfo.name = event.arg.(@key == "name")[0].@value;
+					eventInfo.type = event.arg.(@key == "type")[0].@value;
+				
+				info.events.push(eventInfo);
+			}
+			
+			
+			
+			
+			
+			
 			SimpleScan.info[type] = info;
 			return;
 			

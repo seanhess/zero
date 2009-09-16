@@ -6,6 +6,7 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import net.seanhess.zero.implement.ImplementAll;
 			import dev.sandbox.Death;
 			import dev.interfaces.Test;
 			import net.seanhess.zero.interfaces.Service;
@@ -18,12 +19,11 @@
 			private var connector:Connector;
 			
 			private var testImplementation:TestImplementation;
-			private var impl:ImplementService;
+			private var impl:ImplementAll;
 			
 			private var service:Service;
 			
 			private var test:Test;
-			
 			
 			private function onInit():void
 			{
@@ -34,7 +34,7 @@
 				connector.context = context;
 				
 				testImplementation = new TestImplementation();
-				impl = new ImplementService("Test.test", testImplementation.test);
+				impl = new ImplementAll(new Test(), testImplementation);
 				impl.context = context;
 				
 				// minus the context weirdness... now I can do it! 

@@ -4,6 +4,9 @@ package net.seanhess.zero.interfaces
 
 	public class Notification
 	{
+		public var type:String;
+		public var name:String;
+		
 		public var id:String;
 		public var event:Event;
 	}

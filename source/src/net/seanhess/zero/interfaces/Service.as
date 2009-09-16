@@ -1,6 +1,6 @@
 package net.seanhess.zero.interfaces
 {
-	import flash.utils.Dictionary;
+	
 
 	/**
 	 * this is information about the call of a service. 
@@ -9,10 +9,12 @@ package net.seanhess.zero.interfaces
 	 */
 	public class Service
 	{
-		public var id:String;		
+		public var type:String; // the interface name
+		public var name:String; // the service name
+		
 		public var params:Array;
 		public var result:*;
-		public var stop:Boolean = false;
-		public var implementors:Array = []; // a record of who has worked on her, in order
+//		public var stop:Boolean = false; // just stop the event
+//		public var implementors:Array = []; // a record of who has worked on her, in order
 	}
 }

@@ -3,7 +3,12 @@
 		   xmlns:s="library://ns.adobe.com/flex/spark" 
 		   xmlns:mx="library://ns.adobe.com/flex/halo" layout="vertical" xmlns:zero1="http://zero.seanhess.net/2009" xmlns:dependency="dev.dependency.*"	   
 		   
-		   >
+		   xmlns:interfaces="dev.interfaces.*">
+	
+	
+	<fx:Declarations>
+		<interfaces:Test id="test" charlie="trace('charlie called!')"/>
+	</fx:Declarations>
 	
 	<s:Group>
 		
@@ -16,11 +21,8 @@
 				import dev.interfaces.Test;
 				import mx.collections.ArrayCollection;
 				
-				public var test:Test = new Test();
-				
 				private function go():void
 				{
-					trace("WOOT");
 					trace(test.test("a message!"));	
 				}
 				
@@ -34,9 +36,13 @@
 				
 				private function happened(message:String, another:String):void
 				{
+					
 				}
 			]]>
 		</fx:Script>
+		
+		<s:TextInput text="{test.death}"/>
+		<s:TextInput text="{test.woot}"/>
 		
 		<s:Button label="add" click="add()"/>
 		<s:Button label="remove" click="remove()"/>
