@@ -1,0 +1,7 @@
+# Todo
+
+[ ] CONTEXT - Better way to pass around contexts
+
+[ ] EVENTS - Performance optimizations? Too many events firing? 
+
+3. 

@@ -6,8 +6,8 @@ package net.seanhess.zero.scan
 		public var qualifiedName:String;
 		public var definitionName:String;
 		
-		public var methods:Array = []; // MethodInfo objects
-		public var events:Array = []; // EventInfo objects
-		public var properties:Array = []; // PropertyInfo objects
+		public var methods:Object = {}; // MethodInfo objects
+		public var events:Object = {}; // EventInfo objects
+		public var properties:Object = {}; // PropertyInfo objects
 	}
 }

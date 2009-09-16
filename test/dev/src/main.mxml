@@ -34,7 +34,7 @@
 				connector.context = context;
 				
 				testImplementation = new TestImplementation();
-				impl = new ImplementAll(new Test(), testImplementation);
+				impl = new ImplementAll(Test, testImplementation);
 				impl.context = context;
 				
 				// minus the context weirdness... now I can do it! 

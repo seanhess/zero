@@ -11,6 +11,7 @@ package dev.services
 		public function test(message:String):String
 		{
 			death++;
+			dispatchEvent(new Event("deathbrain"));
 			woot = "NEW WOOT";
 			dispatchEvent(new Event("charlie"));
 			return message + " worked on by TestImplementation";

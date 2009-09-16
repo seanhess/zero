@@ -25,6 +25,12 @@ package net.seanhess.zero.interfaces
 
 		public function set context(value:IContext):void
 		{
+			if (_context)
+			{
+				_context.removeEventListener(PropertyEvent.UPDATE, onUpdate);
+				_context.removeEventListener(NotificationEvent.SEND, onNotification);
+			}
+			
 			_context = value;	
 			
 			if (value)

@@ -67,7 +67,7 @@ package net.seanhess.zero.scan
 				var methodInfo:MethodInfo = new MethodInfo();
 					methodInfo.name = method.@name.toString();
 					
-				info.methods.push(methodInfo);
+				info.methods[methodInfo.name] = methodInfo;
 			}
 
 			
@@ -97,7 +97,7 @@ package net.seanhess.zero.scan
 					property.event = bindableList[0].arg[0].@value;
 				}
 				
-				info.properties.push(property);
+				info.properties[property.name] = property;
 			}
 			
 			
@@ -111,7 +111,7 @@ package net.seanhess.zero.scan
 					eventInfo.name = event.arg.(@key == "name")[0].@value;
 					eventInfo.type = event.arg.(@key == "type")[0].@value;
 				
-				info.events.push(eventInfo);
+				info.events[eventInfo.name] = eventInfo;
 			}
 			
 			
