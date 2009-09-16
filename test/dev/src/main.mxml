@@ -6,6 +6,7 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import net.seanhess.zero.implement.Implement;
 			import net.seanhess.zero.implement.ImplementAll;
 			import dev.sandbox.Death;
 			import dev.interfaces.Test;
@@ -17,33 +18,22 @@
 			
 			private function onInit():void
 			{
+				var implement:Implement = new Implement(overriddenContext);
+					implement.add(new ImplementAll(Test, new TestImplementation()));
 			}
 		]]>
 	</fx:Script>
 	
 	<fx:Declarations>
 		
+		<zero:Context id="overriddenContext"/>
+		
+		<!--
 		<zero:Implement>
 			<zero:ImplementAll type="{Test}" source="{new TestImplementation()}"/>
 		</zero:Implement>
-		
-		
-		<!-- how would it know which interface you are using though? ... lame ! -->
-		<!-- (Test)  (test)  ... how to know? 
-		
-		<Context /> - optional, implementations creates one if you haven't already
-		
-		<Implementations context="{context}">
-			<ImplementAll type="{Test}" factory="{TestImplementation}"/>
-			<ImplementAll type="{Test}" instance="{new TestImplementation()}"/>
-		</Implementations>
-		
-		
-			
-			
-		<zero:ImplementService service="{testinterface.test}" method="test.test"/>
-		<zero:ImplementService service="{testinterface.test}" method="test.test"/>
 		-->
+		
 	</fx:Declarations>
 	
 	<module:WootModule/>
