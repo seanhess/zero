@@ -1,0 +1,82 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		 xmlns:s="library://ns.adobe.com/flex/spark" 
+		 xmlns:mx="library://ns.adobe.com/flex/halo" width="400" height="300" xmlns:interfaces="dev.interfaces.*"
+		 removedFromStage="test.context = null; test=null;"
+		 >
+	
+	<s:layout>
+		<s:VerticalLayout/>
+	</s:layout>
+
+	
+	<fx:Declarations>
+		<interfaces:Test id="test" charlie="onCharlie()"/>
+		<interfaces:Nothing id="nothing"/>
+	</fx:Declarations>
+	
+	<fx:Binding source="test.death" destination="medeath"/>
+	
+	<fx:Script>
+		<![CDATA[
+			import dev.interfaces.Test;
+			import mx.collections.ArrayCollection;
+			
+			private function go():void
+			{
+				trace(test.test("a message!"));	
+			}
+			
+			private function set medeath(value:*):void
+			{
+				trace("ME DEATH :::: " + value);
+			}
+			
+			private function remove():void
+			{
+			}
+			
+			private function add():void
+			{
+			}
+			
+			private function happened(message:String, another:String):void
+			{
+				
+			}
+			
+			private function onCharlie():void
+			{
+				trace('charlie called!');
+			}
+			
+			private function cleanup():void
+			{
+				test.context = null;
+				test = null;
+			}
+		]]>
+	</fx:Script>
+	
+	<s:TextInput text="{test.death}"/>
+	<s:TextInput text="{test.woot}"/>
+	
+	<s:Button label="add" click="add()"/>
+	<s:Button label="remove" click="remove()"/>
+	<s:Button label="go" click="go()"/>
+	<s:Button label="clean" click="cleanup()"/>
+	
+	<s:DropDownList dataProvider="{new ArrayCollection(['one','two','three'])}"/>
+	
+	<s:List>
+		<s:dataProvider>
+			<s:ArrayCollection>
+				<fx:String>Hello</fx:String>
+				<fx:String>Hello</fx:String>
+				<fx:String>Hello</fx:String>
+				<fx:String>Hello</fx:String>
+			</s:ArrayCollection>
+		</s:dataProvider>
+	</s:List>
+	
+</s:Group>

@@ -1,5 +1,6 @@
 package net.seanhess.zero.interfaces
 {
+	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	
 	import net.seanhess.zero.event.NotificationEvent;
@@ -20,7 +21,13 @@ package net.seanhess.zero.interfaces
 		public function Interface()
 		{
 			connector = new Connector();
-			connector.registerInterface(this);
+			context = connector.context; 
+			connector.addEventListener(Connector.NEW_CONTEXT, onNewContext, false, 0, true);
+		}
+		
+		private function onNewContext(event:Event):void
+		{
+			this.context = connector.context;
 		}
 
 		public function set context(value:IContext):void
@@ -35,8 +42,8 @@ package net.seanhess.zero.interfaces
 			
 			if (value)
 			{
-				_context.addEventListener(PropertyEvent.UPDATE, onUpdate);
-				_context.addEventListener(NotificationEvent.SEND, onNotification);
+				_context.addEventListener(PropertyEvent.UPDATE, onUpdate, false, 0, true);
+				_context.addEventListener(NotificationEvent.SEND, onNotification, false, 0, true);
 				// anything in here?
 			}
 		}

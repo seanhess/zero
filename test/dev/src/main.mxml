@@ -3,6 +3,9 @@
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
 			   xmlns:mx="library://ns.adobe.com/flex/halo" minWidth="1024" minHeight="768" xmlns:module="dev.module.*" preinitialize="onInit()" xmlns:zero="http://zero.seanhess.net/2009" xmlns:interfaces="dev.interfaces.*" xmlns:services="dev.services.*">
 
+	<s:layout>
+		<s:VerticalLayout/>
+	</s:layout>
 	
 	<fx:Script>
 		<![CDATA[
@@ -18,24 +21,57 @@
 			
 			private function onInit():void
 			{
-				var implement:Implement = new Implement(overriddenContext);
-					implement.add(new ImplementAll(Test, new TestImplementation()));
+//				var implement:Implement = new Implement(overriddenContext);
+//					implement.add(new ImplementAll(Test, new TestImplementation()));
+//					
+//					<zero:Implement>
+//						<zero:ImplementAll type="{Test}" source="{new TestImplementation()}"/>
+//					</zero:Implement>
+				
+				
+				
+				var rootContext:Context = new Context();
+				var moduleContext:Context = new Context();
+				
+				var face:Interface = new Interface();
+				
+				moduleContext.listenAll(rootContext); 
+				rootContext.link(moduleContext); // or does it do this automatically? // I guess it depends... 
+				
+				
+
+			}
+			
+			private function onError(event:Event):void
+			{
+				return;
+			}
+			
+			private function removeInlineWoot():void
+			{
+//				container.removeElement(inlineWoot);
+//				inlineWoot = null;
 			}
 		]]>
 	</fx:Script>
 	
 	<fx:Declarations>
 		
-		<zero:Context id="overriddenContext"/>
-		
-		<!--
-		<zero:Implement>
-			<zero:ImplementAll type="{Test}" source="{new TestImplementation()}"/>
-		</zero:Implement>
-		-->
 		
 	</fx:Declarations>
 	
-	<module:WootModule/>
+	<s:Button label="hi"/>
+	
+	<!--<s:Panel width="400" height="400">
+		<mx:ModuleLoader id="woot" error="onError(event)"/>
+	</s:Panel>
+	<s:Button label="Load" click="woot.loadModule('dev/module/WootModule.swf')"/>
+	<s:Button label="Unload" click="woot.unloadModule(); woot.child = null"/>
+	<s:Button label="Nothing" click="trace('ok')"/>-->
+	
+	<!--<s:Panel id="container">
+		<module:WootModule id="inlineWoot"/>
+	</s:Panel>-->
+	
 	
 </s:Application>

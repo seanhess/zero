@@ -3,64 +3,8 @@
 		   xmlns:s="library://ns.adobe.com/flex/spark" 
 		   xmlns:mx="library://ns.adobe.com/flex/halo" layout="vertical" xmlns:zero1="http://zero.seanhess.net/2009" xmlns:dependency="dev.dependency.*"	   
 		   
-		   xmlns:interfaces="dev.interfaces.*">
+		   xmlns:interfaces="dev.interfaces.*" xmlns:module="dev.module.*">
 	
-	
-	<fx:Declarations>
-		<interfaces:Test id="test" charlie="trace('charlie called!')"/>
-	</fx:Declarations>
-	
-	<s:Group>
-		
-		<s:layout>
-			<s:VerticalLayout/>
-		</s:layout>
-		
-		<fx:Script>
-			<![CDATA[
-				import dev.interfaces.Test;
-				import mx.collections.ArrayCollection;
-				
-				private function go():void
-				{
-					trace(test.test("a message!"));	
-				}
-				
-				private function remove():void
-				{
-				}
-				
-				private function add():void
-				{
-				}
-				
-				private function happened(message:String, another:String):void
-				{
-					
-				}
-			]]>
-		</fx:Script>
-		
-		<s:TextInput text="{test.death}"/>
-		<s:TextInput text="{test.woot}"/>
-		
-		<s:Button label="add" click="add()"/>
-		<s:Button label="remove" click="remove()"/>
-		<s:Button label="go" click="go()"/>
-		
-		<s:DropDownList dataProvider="{new ArrayCollection(['one','two','three'])}"/>
-		
-		<s:List>
-			<s:dataProvider>
-				<s:ArrayCollection>
-					<fx:String>Hello</fx:String>
-					<fx:String>Hello</fx:String>
-					<fx:String>Hello</fx:String>
-					<fx:String>Hello</fx:String>
-				</s:ArrayCollection>
-			</s:dataProvider>
-		</s:List>
-		
-	</s:Group>
+	<module:Woot/>
 	
 </mx:Module>

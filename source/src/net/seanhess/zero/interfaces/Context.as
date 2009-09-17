@@ -6,6 +6,7 @@ package net.seanhess.zero.interfaces
 	import net.seanhess.zero.event.PropertyEvent;
 	import net.seanhess.zero.event.ServiceEvent;
 	
+	
 
 	
 	
@@ -39,5 +40,7 @@ package net.seanhess.zero.interfaces
 		{
 			dispatchEvent(new NotificationEvent(notification));
 		}
+		
+		
 	}
 }
