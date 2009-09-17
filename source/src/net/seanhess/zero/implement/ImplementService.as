@@ -1,18 +1,18 @@
 package net.seanhess.zero.implement
 {
 	import net.seanhess.zero.event.ServiceEvent;
-	import net.seanhess.zero.interfaces.IContext;
 	import net.seanhess.zero.interfaces.IContextClient;
+	import net.seanhess.zero.interfaces.IInterfaceContext;
 
 	public class ImplementService implements IContextClient
 	{
 		public var method:Function;
 		
-		protected var _context:IContext;
+		protected var _context:IInterfaceContext;
 		protected var type:String;
 		protected var name:String;
 		
-		public function set context(value:IContext):void
+		public function set context(value:IInterfaceContext):void
 		{
 			_context = value;
 			
@@ -22,7 +22,7 @@ package net.seanhess.zero.implement
 			}
 		}
 		
-		public function get context():IContext
+		public function get context():IInterfaceContext
 		{
 			return _context;
 		}

@@ -11,7 +11,7 @@
 
 	
 	<fx:Declarations>
-		<interfaces:Test id="test" charlie="onCharlie()"/>
+		<interfaces:Test id="test" charlie="onCharlie()" context="{context}"/>
 		<interfaces:Nothing id="nothing"/>
 	</fx:Declarations>
 	
@@ -19,8 +19,11 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import net.seanhess.zero.interfaces.IInterfaceContext;
 			import dev.interfaces.Test;
 			import mx.collections.ArrayCollection;
+			
+			[Bindable] public var context:IInterfaceContext;
 			
 			private function go():void
 			{

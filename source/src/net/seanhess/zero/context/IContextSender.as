@@ -4,7 +4,7 @@ package net.seanhess.zero.context
 	{
 		function addSubscriber(node:IContextReceiver):void;
 		function removeSubscriber(node:IContextReceiver):void;
-		function subscribed(node:IContextReceiver):Boolean;
+		function hasSubscriber(node:IContextReceiver):Boolean;
 		
 		
 		function send(message:Message):void;

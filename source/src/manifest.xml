@@ -1,8 +1,10 @@
 <?xml version="1.0"?>
 <componentPackage>    
 	<component class="net.seanhess.zero.interfaces.Interface"/>
-	<component class="net.seanhess.zero.interfaces.Context"/>
+	<component class="net.seanhess.zero.interfaces.InterfaceContext"/>
 	<component class="net.seanhess.zero.implement.ImplementService"/>
 	<component class="net.seanhess.zero.implement.ImplementAll"/>
 	<component class="net.seanhess.zero.implement.Implement"/>
+	<component class="net.seanhess.zero.view.View"/>
+	<component class="net.seanhess.zero.view.ViewModule"/>
 </componentPackage>

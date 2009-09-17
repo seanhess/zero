@@ -9,6 +9,7 @@ package net.seanhess.zero.interfaces
 		
 		public function getServiceIDFromInterface(face:Interface, method:Function):String
 		{
+			throw new Error("deprecated");
 			var info:TypeInfo = scan.getObjectInfo(face);
 			return info.name + "." + scan.getMethodName(face, method); 
 		}

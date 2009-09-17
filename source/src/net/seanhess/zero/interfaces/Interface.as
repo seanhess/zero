@@ -12,25 +12,16 @@ package net.seanhess.zero.interfaces
 
 	public class Interface extends EventDispatcher implements IContextClient
 	{
-		protected var _context:IContext;
+		protected var _context:IInterfaceContext;
 		protected var ids:IDs = new IDs();
-		protected var connector:Connector;
 		protected var _info:TypeInfo;
 		protected var scan:SimpleScan = new SimpleScan();
 		
 		public function Interface()
 		{
-			connector = new Connector();
-			context = connector.context; 
-			connector.addEventListener(Connector.NEW_CONTEXT, onNewContext, false, 0, true);
-		}
-		
-		private function onNewContext(event:Event):void
-		{
-			this.context = connector.context;
 		}
 
-		public function set context(value:IContext):void
+		public function set context(value:IInterfaceContext):void
 		{
 			if (_context)
 			{
@@ -48,7 +39,7 @@ package net.seanhess.zero.interfaces
 			}
 		}
 		
-		public function get context():IContext
+		public function get context():IInterfaceContext
 		{
 			return _context;		
 		}

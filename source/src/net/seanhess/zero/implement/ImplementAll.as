@@ -6,7 +6,7 @@ package net.seanhess.zero.implement
 	import mx.events.PropertyChangeEvent;
 	
 	import net.seanhess.zero.event.ServiceEvent;
-	import net.seanhess.zero.interfaces.IContext;
+	import net.seanhess.zero.interfaces.IInterfaceContext;
 	import net.seanhess.zero.interfaces.IContextClient;
 	import net.seanhess.zero.interfaces.Notification;
 	import net.seanhess.zero.interfaces.Property;
@@ -17,18 +17,18 @@ package net.seanhess.zero.implement
 	public class ImplementAll implements IContextClient
 	{
 		protected var _source:Object;
-		protected var _context:IContext;
+		protected var _context:IInterfaceContext;
 		protected var face:TypeInfo;
 		protected var customBindingEvents:Object = {};
 		protected var scan:SimpleScan = new SimpleScan();
 		
-		public function set context(value:IContext):void
+		public function set context(value:IInterfaceContext):void
 		{
 			_context = value;
 			tryConnect();
 		}
 		
-		public function get context():IContext
+		public function get context():IInterfaceContext
 		{
 			return _context;
 		}

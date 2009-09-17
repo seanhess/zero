@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Module xmlns:fx="http://ns.adobe.com/mxml/2009" 
+<zero:ViewModule xmlns:fx="http://ns.adobe.com/mxml/2009" 
 		   xmlns:s="library://ns.adobe.com/flex/spark" 
-		   xmlns:mx="library://ns.adobe.com/flex/halo" layout="vertical" xmlns:zero1="http://zero.seanhess.net/2009" xmlns:dependency="dev.dependency.*"	   
+		   xmlns:mx="library://ns.adobe.com/flex/halo" layout="vertical" xmlns:zero="http://zero.seanhess.net/2009" xmlns:dependency="dev.dependency.*"	   
 		   
 		   xmlns:interfaces="dev.interfaces.*" xmlns:module="dev.module.*">
 	
-	<module:Woot/>
 	
-</mx:Module>
+	
+	<module:Woot context="{context}"/>
+	
+</zero:ViewModule>

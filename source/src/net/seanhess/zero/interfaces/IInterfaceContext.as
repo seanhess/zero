@@ -2,7 +2,7 @@ package net.seanhess.zero.interfaces
 {
 	import flash.events.IEventDispatcher;
 
-	public interface IContext extends IEventDispatcher
+	public interface IInterfaceContext extends IEventDispatcher
 	{
 		function sendService(service:Service):void;
 		function sendUpdate(property:Property):void;

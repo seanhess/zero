@@ -2,10 +2,9 @@ package net.seanhess.zero.implement
 {
 	import flash.utils.Dictionary;
 	
-	import net.seanhess.zero.interfaces.Connector;
-	import net.seanhess.zero.interfaces.Context;
-	import net.seanhess.zero.interfaces.IContext;
 	import net.seanhess.zero.interfaces.IContextClient;
+	import net.seanhess.zero.interfaces.IInterfaceContext;
+	import net.seanhess.zero.interfaces.InterfaceContext;
 
 	/**
 	 * Utility class to make the syntax for connecting implementations easier
@@ -13,21 +12,18 @@ package net.seanhess.zero.implement
 	[DefaultProperty("implementations")]
 	public class Implement implements IContextClient
 	{
-		protected var _context:IContext;
+		protected var _context:IInterfaceContext;
 		protected var _implementations:Dictionary;
-		protected var connector:Connector;
 		
-		public function Implement(context:IContext=null):void
+		public function Implement(context:IInterfaceContext=null):void
 		{
-			this.connector = new Connector();
 			_implementations = new Dictionary(true);
-			this.context = (context) ? context : new Context();
+			this.context = context;
 		}
 		
-		public function set context(value:IContext):void
+		public function set context(value:IInterfaceContext):void
 		{
 			_context = value;
-			connector.context = value;
 			
 			for (var implementation:* in _implementations)
 			{
@@ -35,7 +31,7 @@ package net.seanhess.zero.implement
 			}
 		}
 		
-		public function get context():IContext
+		public function get context():IInterfaceContext
 		{
 			return _context;
 		}

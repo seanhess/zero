@@ -16,6 +16,7 @@ package net.seanhess.zero.context
 		public function Context()
 		{
 			subscribers = new Dictionary(true);
+			senders = new Dictionary(true);
 		}
 		
 		
@@ -44,17 +45,17 @@ package net.seanhess.zero.context
 		/**
 		 * Means the node is subscribing to you... Don't call this! 
 		 */
-		internal function addSubscriber(node:IContextReceiver):void
+		public function addSubscriber(node:IContextReceiver):void
 		{
 			subscribers[node] = node;
 		}
 		
-		internal function removeSubscriber(node:IContextReceiver):void
+		public function removeSubscriber(node:IContextReceiver):void
 		{
 			delete subscribers[node];						
 		}
 		
-		internal function hasSubscriber(node:IContextReceiver):Boolean
+		public function hasSubscriber(node:IContextReceiver):Boolean
 		{
 			return (subscribers[node] != null);	
 		}
@@ -155,7 +156,7 @@ package net.seanhess.zero.context
 		{
 			lastMessage = message;
 			
-			for each (var subscriber:IContext in subscribers)
+			for each (var subscriber:IContextReceiver in subscribers)
 			{
 				if (subscriber != message.broadcaster && subscriber != from) // don't send it back
 				{
