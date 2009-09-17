@@ -3,8 +3,11 @@ package net.seanhess.zero.interfaces
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
 	
+	import mx.events.PropertyChangeEvent;
+	
 	import net.seanhess.zero.event.NotificationEvent;
 	import net.seanhess.zero.event.PropertyEvent;
+	import net.seanhess.zero.scan.PropertyInfo;
 	import net.seanhess.zero.scan.SimpleScan;
 	import net.seanhess.zero.scan.TypeInfo;
 	import net.seanhess.zero.util.QuickListener;
@@ -19,6 +22,7 @@ package net.seanhess.zero.interfaces
 		
 		public function Interface()
 		{
+			
 		}
 
 		public function set context(value:IInterfaceContext):void
@@ -35,7 +39,22 @@ package net.seanhess.zero.interfaces
 			{
 				_context.addEventListener(PropertyEvent.UPDATE, onUpdate, false, 0, true);
 				_context.addEventListener(NotificationEvent.SEND, onNotification, false, 0, true);
-				// anything in here?
+				
+				// I need to fetch all the current values for properties!
+				
+				for each (var property:PropertyInfo in this.info.properties)
+				{
+					var prop:Property = new Property();
+						prop.type = info.name;
+						prop.name = property.name;
+						
+					_context.sendGet(prop); // this will cause it to be updated
+					
+					this[property.name] = prop.value;
+					
+					if (property.event != PropertyChangeEvent.PROPERTY_CHANGE)
+						dispatchEvent(new Event(property.event));
+				}
 			}
 		}
 		

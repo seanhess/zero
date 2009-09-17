@@ -8,6 +8,7 @@ package net.seanhess.zero.event
 	public class PropertyEvent extends Event
 	{
 		public static const UPDATE:String = "updateProperty";
+		public static const GET:String = "getProperty";
 		
 		public var property:Property;
 		

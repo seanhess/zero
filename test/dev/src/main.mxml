@@ -54,11 +54,11 @@
 	</fx:Script>
 	
 	<fx:Declarations>
-		
+		<interfaces:Test id="test" context="{context}"/>
 		
 	</fx:Declarations>
 	
-	<s:Button label="hi"/>
+	<s:Button label="go" click="test.test('bah')"/>
 	
 	<s:Panel width="400" height="400">
 		<zero:View module="dev.module.WootModule" visible="{toggle.selected}" context="{context}"/>

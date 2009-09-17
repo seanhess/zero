@@ -5,9 +5,10 @@ package net.seanhess.zero.implement
 	
 	import mx.events.PropertyChangeEvent;
 	
+	import net.seanhess.zero.event.PropertyEvent;
 	import net.seanhess.zero.event.ServiceEvent;
-	import net.seanhess.zero.interfaces.IInterfaceContext;
 	import net.seanhess.zero.interfaces.IContextClient;
+	import net.seanhess.zero.interfaces.IInterfaceContext;
 	import net.seanhess.zero.interfaces.Notification;
 	import net.seanhess.zero.interfaces.Property;
 	import net.seanhess.zero.scan.PropertyInfo;
@@ -93,6 +94,8 @@ package net.seanhess.zero.implement
 					}
 				}
 			}
+			
+			context.addEventListener(PropertyEvent.GET, onGet);
 		}
 		
 		protected function onSend(event:ServiceEvent):void
@@ -111,6 +114,14 @@ package net.seanhess.zero.implement
 				notification.name = event.type;
 					
 			context.sendNotification(notification);
+		}
+		
+		protected function onGet(event:PropertyEvent):void
+		{
+			if (event.property.type == face.name && source[event.property.name])
+			{
+				event.property.value = source[event.property.name];
+			}
 		}
 		
 		protected function onProperty(event:Event):void

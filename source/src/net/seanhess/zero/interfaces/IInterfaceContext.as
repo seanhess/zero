@@ -6,6 +6,7 @@ package net.seanhess.zero.interfaces
 	{
 		function sendService(service:Service):void;
 		function sendUpdate(property:Property):void;
+		function sendGet(property:Property):void;
 		function sendNotification(notification:Notification):void;
 	}
 }

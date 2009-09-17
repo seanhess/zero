@@ -24,6 +24,7 @@ package net.seanhess.zero.interfaces
 	{
 		public static const SERVICE:String = "service";
 		public static const UPDATE:String = "update";
+		public static const GET:String = "get";
 		public static const NOTIFICATION:String = "notification";
 		
 		protected var dispatcher:IEventDispatcher = new EventDispatcher();
@@ -38,7 +39,14 @@ package net.seanhess.zero.interfaces
 
 		public function sendUpdate(property:Property):void
 		{
-			var message:Message = new Message(UPDATE, property) 
+			var message:Message = new Message(UPDATE, property); 
+			dispatchMessage(message);
+			send(message);
+		}
+		
+		public function sendGet(property:Property):void
+		{
+			var message:Message = new Message(GET, property);
 			dispatchMessage(message);
 			send(message);
 		}
@@ -68,6 +76,10 @@ package net.seanhess.zero.interfaces
 				
 				case UPDATE:
 					dispatchEvent(new PropertyEvent(message.data as Property));
+					break;
+				
+				case GET:
+					dispatchEvent(new PropertyEvent(message.data as Property, PropertyEvent.GET));
 					break;
 				
 				case NOTIFICATION:
