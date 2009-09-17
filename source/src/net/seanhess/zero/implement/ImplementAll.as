@@ -100,7 +100,7 @@ package net.seanhess.zero.implement
 		
 		protected function onSend(event:ServiceEvent):void
 		{
-			if (event.service.type == face.name && source[event.service.name] && source[event.service.name] is Function)
+			if (event.service.type == face.type && source[event.service.name] && source[event.service.name] is Function)
 			{
 				event.service.result = (source[event.service.name] as Function).apply(null, event.service.params);
 			}
@@ -110,7 +110,7 @@ package net.seanhess.zero.implement
 		{			
 			var notification:Notification = new Notification();
 				notification.event = event;
-				notification.type = face.name;
+				notification.type = face.type;
 				notification.name = event.type;
 					
 			context.sendNotification(notification);
@@ -118,7 +118,7 @@ package net.seanhess.zero.implement
 		
 		protected function onGet(event:PropertyEvent):void
 		{
-			if (event.property.type == face.name && source[event.property.name])
+			if (event.property.type == face.type && source[event.property.name])
 			{
 				event.property.value = source[event.property.name];
 			}
@@ -127,7 +127,7 @@ package net.seanhess.zero.implement
 		protected function onProperty(event:Event):void
 		{
 			var property:Property = new Property();
-				property.type = face.name;
+				property.type = face.type;
 			
 			if (event is PropertyChangeEvent)
 			{

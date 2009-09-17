@@ -16,7 +16,6 @@ package net.seanhess.zero.interfaces
 	public class Interface extends EventDispatcher implements IContextClient
 	{
 		protected var _context:IInterfaceContext;
-		protected var ids:IDs = new IDs();
 		protected var _info:TypeInfo;
 		protected var scan:SimpleScan = new SimpleScan();
 		
@@ -45,7 +44,7 @@ package net.seanhess.zero.interfaces
 				for each (var property:PropertyInfo in this.info.properties)
 				{
 					var prop:Property = new Property();
-						prop.type = info.name;
+						prop.type = info.type;
 						prop.name = property.name;
 						
 					_context.sendGet(prop); // this will cause it to be updated
@@ -80,8 +79,8 @@ package net.seanhess.zero.interfaces
 		public function send(method:Function, ...params):*
 		{
 			var service:Service = new Service();
-			service.type = ids.getType(this);
-			service.name = ids.getName(this, method);
+			service.type = info.type;
+			service.name = scan.getMethodName(this, method);
 			service.params = params;
 			
 			context.sendService(service);
@@ -91,7 +90,7 @@ package net.seanhess.zero.interfaces
 		
 		protected function onUpdate(event:PropertyEvent):void
 		{
-			if (event.property.type == info.name)
+			if (event.property.type == info.type)
 			{
 				this[event.property.name] = event.property.value;
 			}
@@ -99,7 +98,7 @@ package net.seanhess.zero.interfaces
 		
 		protected function onNotification(event:NotificationEvent):void
 		{
-			if (event.notification.type == info.name)
+			if (event.notification.type == info.type)
 			{
 				dispatchEvent(event.notification.event);
 			}

@@ -55,7 +55,7 @@ package net.seanhess.zero.scan
 			
 			var info:TypeInfo = new TypeInfo();
 				info.qualifiedName = name;
-				info.name = name.replace(/.*::/i, ""); // get rid of the other stuff
+				info.type = name.replace(/.*::/i, ""); // get rid of the other stuff
 				info.definitionName = name.replace(/::/i,".");
 				
 				
