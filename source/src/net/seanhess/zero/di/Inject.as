@@ -17,6 +17,7 @@ package net.seanhess.zero.di
 		protected var _info:TypeInfo;
 		protected var _target:Object;
 		protected var _context:IContextSender;
+		protected var injected:Boolean = false;
 		
 		protected function get info():TypeInfo
 		{
@@ -40,7 +41,7 @@ package net.seanhess.zero.di
 		
 		protected function inject():void
 		{
-			if (_context && _target)
+			if (_context && _target && !injected)
 			{
 				for each (var property:PropertyInfo in info.properties)
 				{
@@ -54,6 +55,8 @@ package net.seanhess.zero.di
 						_target[property.name] = map.instance;
 					}
 				}
+				
+				injected = true;
 			}
 		}
 	}
