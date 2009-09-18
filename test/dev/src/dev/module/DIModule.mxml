@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		   xmlns:s="library://ns.adobe.com/flex/spark" 
+		   xmlns:mx="library://ns.adobe.com/flex/halo" 
+		   layout="vertical" implements="net.seanhess.zero.view.IViewChild" xmlns:zero="http://zero.seanhess.net/2009" xmlns:module="dev.module.*">
+
+	<fx:Script>
+		<![CDATA[
+			import net.seanhess.zero.context.IContextNode;
+			public function set parentContext(value:IContextNode):void
+			{
+				
+			}
+		]]>
+	</fx:Script>
+	
+	<module:DI/>
+	
+</mx:Module>

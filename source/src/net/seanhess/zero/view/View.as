@@ -1,6 +1,7 @@
 package net.seanhess.zero.view
 {
 	import flash.events.Event;
+	import flash.utils.getQualifiedClassName;
 	
 	import mx.events.ModuleEvent;
 	import mx.modules.ModuleLoader;
@@ -63,7 +64,7 @@ package net.seanhess.zero.view
 		 */
 		public function set module(value:String):void
 		{
-			moduleurl = value.replace(/\./gi, "/") + ".swf";
+			moduleurl = value.replace(/(\.|::)/gi, "/") + ".swf";
 			urlChanged = true;
 			invalidateProperties();
 		}
@@ -102,6 +103,11 @@ package net.seanhess.zero.view
 		
 		public function get view():IViewChild
 		{
+			if (child && !(child is IViewChild))
+			{
+				throw new Error("The module must implement IViewChild");	
+			}
+			
 			return child as IViewChild;			
 		}
 	}

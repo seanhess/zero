@@ -88,6 +88,10 @@ package net.seanhess.zero.interfaces
 			return service.result;
 		}
 		
+		
+		
+		
+		
 		protected function onUpdate(event:PropertyEvent):void
 		{
 			if (event.property.type == info.type)

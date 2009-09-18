@@ -1,12 +1,24 @@
 package dev.services
 {
+	import dev.di.ITest;
+
 	[Event(name="charlie", type="flash.events.Event")]
-	public class TestImplementation
+	public class TestImplementation implements ITest
 	{
 		[Bindable] public var woot:String = "My Woot";
 		
 		[Bindable("deathbrain")]
-		public var death:int = 0;
+		public function set death(value:int):void
+		{
+			_death = value;
+			dispatchEvent(new Event("deathbrain"));
+		}
+		
+		public function get death():int
+		{
+			return _death;
+		}
+		protected var _death:int = 0;
 		
 		public function test(message:String):String
 		{

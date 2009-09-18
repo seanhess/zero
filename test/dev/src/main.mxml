@@ -9,6 +9,7 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import net.seanhess.zero.di.GlobalContext;
 			import net.seanhess.zero.interfaces.IInterfaceContext;
 			import spark.skins.spark.ToggleButtonSkin;
 			import net.seanhess.zero.interfaces.InterfaceContext;
@@ -54,14 +55,22 @@
 	</fx:Script>
 	
 	<fx:Declarations>
-		<interfaces:Test id="test" context="{context}"/>
+		<!--<interfaces:Test id="test" context="{context}"/>-->
+		
+		<zero:GlobalContext id="gcontext"/>
+		
+		<zero:ImplementStatic context="{gcontext}">
+			<zero:Map type="dev.di.ITest" implementation="dev.services.TestImplementation"/>
+		</zero:ImplementStatic>
 		
 	</fx:Declarations>
 	
-	<s:Button label="go" click="test.test('bah')"/>
+	<!--<s:Button label="go" click="test.test('bah')"/>-->
 	
-	<s:Panel width="400" height="400">
-		<zero:View module="dev.module.WootModule" visible="{toggle.selected}" context="{context}"/>
+	<s:Panel width="400" minHeight="200">
+		<!--<module:Woot context="{context}"/>-->
+		<!--<zero:View module="dev.module.WootModule" visible="{toggle.selected}" context="{context}"/>-->
+		<zero:View module="dev.module.DIModule" visible="{toggle.selected}"/>
 	</s:Panel>
 	
 	

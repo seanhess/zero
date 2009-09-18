@@ -2,7 +2,6 @@ package net.seanhess.zero.scan
 {
 	import flash.utils.Dictionary;
 	import flash.utils.describeType;
-	import flash.utils.getDefinitionByName;
 	import flash.utils.getQualifiedClassName;
 
 	/**
@@ -31,25 +30,41 @@ package net.seanhess.zero.scan
 		
 		public function getObjectInfo(object:Object):TypeInfo
 		{
-			var name:String = getQualifiedClassName(object);
-			name = name.replace("::",".");
-			var type:Class = getDefinitionByName(name) as Class;
-			return getClassInfo(type);
+			var name:String = getClassName(object);
+			
+			if (info[name] == null)
+			{
+				info[name] = scan(object);
+			}
+			
+			return info[name];
 		}
 		
 		public function getClassInfo(type:Class):TypeInfo
 		{
-			if (info[type] == null)
+			var name:String = getClassName(type);
+			
+			if (info[name] == null)
 			{
-				scanClass(type);
+				info[name] = scan(type);
 			}
 			
-			return info[type];
+			return info[name];
 		}
 		
-		protected function scanClass(type:Class):void
+		protected function getClassName(type:Object):String
+		{
+			return getQualifiedClassName(type).replace("::",".");
+		}
+		
+		/**
+		 * Can scan objects or classes 
+		 */
+		protected function scan(type:Object):TypeInfo
 		{
 			var data:XML = describeType(type);
+			
+			
 			
 			var name:String = data.@name.toString();
 			
@@ -58,9 +73,13 @@ package net.seanhess.zero.scan
 				info.type = name.replace(/.*::/i, ""); // get rid of the other stuff
 				info.definitionName = name.replace(/::/i,".");
 				
+			
+			// handle classes AND objects
+			if (data.factory.length() > 0)
+				data = data.factory[0];
 				
 				
-			var methods:XMLList = data.factory.method.(@declaredBy == info.qualifiedName);
+			var methods:XMLList = data.method.(@declaredBy == info.qualifiedName);
 			
 			for each (var method:XML in methods)
 			{
@@ -74,8 +93,8 @@ package net.seanhess.zero.scan
 			
 				
 				
-			var accessors:XMLList = data.factory.accessor.(@declaredBy == info.qualifiedName);
-			var variables:XMLList = data.factory.variable;
+			var accessors:XMLList = data.accessor.(@declaredBy == info.qualifiedName);
+			var variables:XMLList = data.variable;
 			accessors += variables;
 			
 			for each (var accessor:XML in accessors)
@@ -97,13 +116,18 @@ package net.seanhess.zero.scan
 					property.event = bindableList[0].arg[0].@value;
 				}
 				
+				var metalist:XMLList = accessor.metadata;
+				
+				for each (var meta:XML in metalist)
+					property.metadata[meta.@name.toString()] = meta.@name.toString();
+				
 				info.properties[property.name] = property;
 			}
 			
 			
 			
 			
-			var events:XMLList = data.factory.metadata.(@name == "Event");
+			var events:XMLList = data.metadata.(@name == "Event");
 			
 			for each (var event:XML in events)
 			{
@@ -114,15 +138,7 @@ package net.seanhess.zero.scan
 				info.events[eventInfo.name] = eventInfo;
 			}
 			
-			
-			
-			
-			
-			
-			SimpleScan.info[type] = info;
-			return;
-			
-//			trace(info);
+			return info;
 		}
 	}
 }

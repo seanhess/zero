@@ -11,6 +11,7 @@ package net.seanhess.zero.scan
 		public var access:String;
 		public var bindable:Boolean;
 		public var event:String; // the bindable event type
+		public var metadata:Object = {}; // just a flat map of metadata flags... no values for now
 		
 		public function toString():String
 		{

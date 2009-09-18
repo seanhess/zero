@@ -7,7 +7,7 @@ package net.seanhess.zero.context
 	/**
 	 * A node for communication across a distance
 	 */
-	public class Context implements IContextSender, IContextReceiver, IContextConnectable, IContextNode
+	public class Context implements IContextSender, IContextConnectable, IContextNode, IContextSubscriber
 	{
 		protected var subscribers:Dictionary;
 		protected var senders:Dictionary;
@@ -100,7 +100,7 @@ package net.seanhess.zero.context
 				subscribe(node);
 			}
 			
-			if (node is IContextReceiver && !node.subscribed(this))
+			if (node is IContextSubscriber && !node.subscribed(this))
 			{
 				node.subscribe(this);
 			}	
@@ -113,7 +113,7 @@ package net.seanhess.zero.context
 				unsubscribe(node);
 			}
 			
-			if (node is IContextReceiver)
+			if (node is IContextSubscriber)
 			{
 				node.unsubscribe(this);
 			}
