@@ -1,91 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
-			   xmlns:mx="library://ns.adobe.com/flex/halo" minWidth="1024" minHeight="768" xmlns:module="dev.module.*" preinitialize="onInit()" xmlns:zero="http://zero.seanhess.net/2009" xmlns:interfaces="dev.interfaces.*" xmlns:services="dev.services.*">
+			   xmlns:mx="library://ns.adobe.com/flex/halo" xmlns:module="dev.module.*" xmlns:zero="http://zero.seanhess.net/2009" xmlns:interfaces="dev.interfaces.*" xmlns:services="dev.services.*">
 
 	<s:layout>
 		<s:VerticalLayout/>
 	</s:layout>
 	
-	<fx:Script>
-		<![CDATA[
-			import net.seanhess.zero.di.GlobalContext;
-			import net.seanhess.zero.interfaces.IInterfaceContext;
-			import spark.skins.spark.ToggleButtonSkin;
-			import net.seanhess.zero.interfaces.InterfaceContext;
-			import net.seanhess.zero.interfaces.Interface;
-			import net.seanhess.zero.implement.Implement;
-			import net.seanhess.zero.implement.ImplementAll;
-			import dev.sandbox.Death;
-			import dev.interfaces.Test;
-			import net.seanhess.zero.interfaces.Service;
-			import dev.services.TestImplementation;
-			import net.seanhess.zero.implement.ImplementService;
-			
-			[Bindable]
-			protected var context:InterfaceContext;
-			
-			private function onInit():void
-			{
-
-				context = new InterfaceContext();
-				
-				var implement:Implement = new Implement(context);
-					implement.add(new ImplementAll(Test, new TestImplementation()));
-//					
-//					<zero:Implement>
-//						<zero:ImplementAll type="{Test}" source="{new TestImplementation()}"/>
-//					</zero:Implement>
-				
-				
-
-			}
-			
-			private function onError(event:Event):void
-			{
-				return;
-			}
-			
-			private function removeInlineWoot():void
-			{
-//				container.removeElement(inlineWoot);
-//				inlineWoot = null;
-			}
-		]]>
-	</fx:Script>
-	
 	<fx:Declarations>
-		<!--<interfaces:Test id="test" context="{context}"/>-->
-		
-		<zero:GlobalContext id="gcontext"/>
-		
-		<zero:ImplementStatic context="{gcontext}">
-			<zero:Map type="dev.di.ITest" implementation="dev.services.TestImplementation"/>
-		</zero:ImplementStatic>
-		
 	</fx:Declarations>
 	
-	<!--<s:Button label="go" click="test.test('bah')"/>-->
-	
-	<s:Panel width="400" minHeight="200">
-		<!--<module:Woot context="{context}"/>-->
-		<!--<zero:View module="dev.module.WootModule" visible="{toggle.selected}" context="{context}"/>-->
-		<zero:View module="dev.module.DIModule" visible="{toggle.selected}"/>
+	<s:Panel width="600" height="600">
+		<!--<mx:TabNavigator width="100%" height="100%">
+			<zero:View module="dev.module.ConnectExample" label="Connect Example"/>-->
+			<zero:View module="dev.module.ImplementExample" label="Implement Example"/>
+		<!--</mx:TabNavigator>-->
 	</s:Panel>
-	
-	
-	<s:CheckBox id="toggle" label="ToggleView" selected="false"/>
-	
-	<!--<s:Panel width="400" height="400">
-		<mx:ModuleLoader id="woot" error="onError(event)"/>
-	</s:Panel>
-	<s:Button label="Load" click="woot.loadModule('dev/module/WootModule.swf')"/>
-	<s:Button label="Unload" click="woot.unloadModule(); woot.child = null"/>
-	<s:Button label="Nothing" click="trace('ok')"/>-->
-	
-	<!--<s:Panel id="container">
-		<module:WootModule id="inlineWoot"/>
-	</s:Panel>-->
-	
 	
 </s:Application>

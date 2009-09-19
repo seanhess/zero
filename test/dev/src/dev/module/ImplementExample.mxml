@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		   xmlns:s="library://ns.adobe.com/flex/spark" 
+		   xmlns:mx="library://ns.adobe.com/flex/halo" layout="vertical" xmlns:zero="http://zero.seanhess.net/2009">
+
+	<fx:Declarations>
+		<zero:GlobalContext id="gcontext"/>
+		
+		<zero:Implement context="{gcontext}">
+			<zero:Map type="dev.di.ITest" implementation="dev.services.TestImplementation"/>
+		</zero:Implement>
+	</fx:Declarations>
+	
+	<s:CheckBox id="toggle" label="ToggleView" selected="false"/>
+	<zero:View module="dev.module.DIModule" visible="{toggle.selected}"/>
+	
+</mx:Module>

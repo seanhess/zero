@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 <componentPackage>    
-	<component class="net.seanhess.zero.di.ImplementStatic"/>
+	<component class="net.seanhess.zero.connect.IncludeConnect"/>
+	<component class="net.seanhess.zero.connect.Service"/>
+	<component class="net.seanhess.zero.connect.Full"/>
+	<component class="net.seanhess.zero.connect.Connect"/>
+
+	<component class="net.seanhess.zero.di.IncludeDI"/>
+	<component class="net.seanhess.zero.di.Implement"/>
 	<component class="net.seanhess.zero.di.Fetch"/>
 	<component class="net.seanhess.zero.di.GlobalContext"/>
 	<component class="net.seanhess.zero.di.Inject"/>
@@ -8,9 +14,7 @@
 	
 	<component class="net.seanhess.zero.interfaces.Interface"/>
 	<component class="net.seanhess.zero.interfaces.InterfaceContext"/>
-	<component class="net.seanhess.zero.implement.ImplementService"/>
-	<component class="net.seanhess.zero.implement.ImplementAll"/>
-	<component class="net.seanhess.zero.implement.Implement"/>
+	
 	<component class="net.seanhess.zero.view.View"/>
 	<component class="net.seanhess.zero.view.ViewModule"/>
 </componentPackage>

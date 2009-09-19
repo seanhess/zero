@@ -1,10 +1,10 @@
-package net.seanhess.zero.implement
+package net.seanhess.zero.connect
 {
 	import net.seanhess.zero.event.ServiceEvent;
 	import net.seanhess.zero.interfaces.IContextClient;
 	import net.seanhess.zero.interfaces.IInterfaceContext;
 
-	public class ImplementService implements IContextClient
+	public class Service implements IContextClient
 	{
 		public var method:Function;
 		
@@ -28,7 +28,7 @@ package net.seanhess.zero.implement
 		}
 		
 		
-		public function ImplementService(type:String, name:String, method:Function=null)
+		public function Service(type:String, name:String, method:Function=null)
 		{
 			this.type = type;
 			this.name = name;

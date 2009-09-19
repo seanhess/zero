@@ -7,6 +7,7 @@ package net.seanhess.zero.di
 	import net.seanhess.zero.scan.PropertyInfo;
 	import net.seanhess.zero.scan.SimpleScan;
 	import net.seanhess.zero.scan.TypeInfo;
+	import net.seanhess.zero.util.Invalidator;
 
 	/**
 	 * Fills all public properties on the target with their attached values?
@@ -17,7 +18,7 @@ package net.seanhess.zero.di
 		protected var _info:TypeInfo;
 		protected var _target:Object;
 		protected var _context:IContextSender;
-		protected var injected:Boolean = false;
+		protected var v:Invalidator = new Invalidator(commit);
 		
 		protected function get info():TypeInfo
 		{
@@ -30,34 +31,39 @@ package net.seanhess.zero.di
 		public function set target(value:Object):void
 		{
 			_target = value;
-			inject();
+			v.invalidate("inject");
 		}
 		
 		public function set context(value:IContextSender):void
 		{
 			_context = value;
-			inject();
+			v.invalidate("inject");
+		}
+		
+		protected function commit():void
+		{
+			if (v.invalid("inject") && _context && _target)
+			{
+				inject();
+			}
 		}
 		
 		protected function inject():void
 		{
-			if (_context && _target && !injected)
+			for each (var property:PropertyInfo in info.properties)
 			{
-				for each (var property:PropertyInfo in info.properties)
+				if (property.access == PropertyInfo.READ_WRITE && property.metadata["Inject"])
 				{
-					if (property.access == PropertyInfo.READ_WRITE && property.metadata["Inject"])
-					{
-						var map:Map = new Map();
-						map.type = getDefinitionByName(property.type) as Class;
-						
-						_context.send(new Message(Map.FIND_TYPE_MESSAGE, map));
-						
-						_target[property.name] = map.instance;
-					}
+					var map:Map = new Map();
+					map.type = getDefinitionByName(property.type) as Class;
+					
+					_context.send(new Message(Map.FIND_TYPE_MESSAGE, map));
+					
+					_target[property.name] = map.instance;
 				}
-				
-				injected = true;
 			}
 		}
+		
+		
 	}
 }

@@ -38,7 +38,9 @@ package net.seanhess.zero.view
 		
 		protected function onReady(event:Event):void
 		{
-			view.parentContext = _context;
+			if (view)
+				view.parentContext = _context;
+			
 			loading = false;
 			loaded = true;
 			
@@ -55,7 +57,7 @@ package net.seanhess.zero.view
 		{
 			_context = value;
 			
-			if (loaded)
+			if (loaded && view)
 				view.parentContext = _context;
 		}
 		
@@ -69,9 +71,9 @@ package net.seanhess.zero.view
 			invalidateProperties();
 		}
 		
-		override public function set visible(value:Boolean) : void
+		override public function setVisible(value:Boolean, noEvent:Boolean = false):void
 		{
-			super.visible = value;
+			super.setVisible(value, noEvent);
 			visibleChanged = true;
 			invalidateProperties();
 		}
@@ -103,10 +105,10 @@ package net.seanhess.zero.view
 		
 		public function get view():IViewChild
 		{
-			if (child && !(child is IViewChild))
-			{
-				throw new Error("The module must implement IViewChild");	
-			}
+//			if (child && !(child is IViewChild))
+//			{
+//				throw new Error("The module must implement IViewChild");	
+//			}
 			
 			return child as IViewChild;			
 		}

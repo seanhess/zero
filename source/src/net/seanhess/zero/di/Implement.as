@@ -10,13 +10,13 @@ package net.seanhess.zero.di
 	 * Specifies an implementation for a particular interface/type
 	 */
 	[DefaultProperty("implementations")]
-	public class ImplementStatic implements IContextReceiver
+	public class Implement implements IContextReceiver
 	{
 		protected var _context:IContextSender;
 		
 		protected var _implementations:Dictionary;
 		
-		public function ImplementStatic()
+		public function Implement()
 		{
 			_implementations = new Dictionary(true);
 		}

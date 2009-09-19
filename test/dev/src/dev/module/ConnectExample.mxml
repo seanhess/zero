@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<mx:Module xmlns:fx="http://ns.adobe.com/mxml/2009" 
+		   xmlns:s="library://ns.adobe.com/flex/spark" 
+		   xmlns:mx="library://ns.adobe.com/flex/halo" layout="vertical" xmlns:zero="http://zero.seanhess.net/2009" xmlns:services="dev.services.*">
+
+	<fx:Script>
+		<![CDATA[
+			import dev.services.TestImplementation;
+		]]>
+	</fx:Script>
+	
+	<fx:Declarations>
+		<zero:InterfaceContext id="context"/>
+		<services:TestImplementation id="test"/>
+
+		<zero:Connect context="{context}">
+			<zero:Full type="dev.interfaces.Test" source="{test}"/>	
+		</zero:Connect>
+	</fx:Declarations>
+	
+	<s:CheckBox id="toggle" label="ToggleView" selected="false"/>
+	<zero:View module="dev.module.WootModule" visible="{toggle.selected}" context="{context}"/>
+	
+</mx:Module>

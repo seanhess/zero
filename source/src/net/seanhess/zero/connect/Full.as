@@ -1,4 +1,4 @@
-package net.seanhess.zero.implement
+package net.seanhess.zero.connect
 {
 	import flash.events.Event;
 	import flash.events.IEventDispatcher;
@@ -15,7 +15,7 @@ package net.seanhess.zero.implement
 	import net.seanhess.zero.scan.SimpleScan;
 	import net.seanhess.zero.scan.TypeInfo;
 	
-	public class ImplementAll implements IContextClient
+	public class Full implements IContextClient
 	{
 		protected var _source:Object;
 		protected var _context:IInterfaceContext;
@@ -51,7 +51,7 @@ package net.seanhess.zero.implement
 			return _source;
 		}
 		
-		public function ImplementAll(type:Class=null, source:Object=null)
+		public function Full(type:Class=null, source:Object=null)
 		{
 			this.type = type;
 			this.source = source;

@@ -1,4 +1,4 @@
-package net.seanhess.zero.implement
+package net.seanhess.zero.connect
 {
 	import flash.utils.Dictionary;
 	
@@ -10,12 +10,12 @@ package net.seanhess.zero.implement
 	 * Utility class to make the syntax for connecting implementations easier
 	 */
 	[DefaultProperty("implementations")]
-	public class Implement implements IContextClient
+	public class Connect implements IContextClient
 	{
 		protected var _context:IInterfaceContext;
 		protected var _implementations:Dictionary;
 		
-		public function Implement(context:IInterfaceContext=null):void
+		public function Connect(context:IInterfaceContext=null)
 		{
 			_implementations = new Dictionary(true);
 			this.context = context;
