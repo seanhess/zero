@@ -17,7 +17,8 @@
 			<zero:Full type="dev.interfaces.Test" source="{test}"/>	
 		</zero:Connect>
 	</fx:Declarations>
-	
+
+	<s:Button label="woot" click="test.test('asdf')"/>
 	<s:CheckBox id="toggle" label="ToggleView" selected="false"/>
 	<zero:View module="dev.module.WootModule" visible="{toggle.selected}" context="{context}"/>
 	

@@ -16,13 +16,14 @@
 	
 	<fx:Declarations>
 		<zero:IncludeDI/>
+		<zero:IncludeConnect/>
 	</fx:Declarations>
-	
+		
 	<s:Panel width="600" height="600">
-		<!--<mx:TabNavigator width="100%" height="100%">
-			<zero:View module="dev.module.ConnectExample" label="Connect Example"/>-->
+		<mx:TabNavigator width="100%" height="100%">
+			<zero:View module="dev.module.ConnectExample" label="Connect Example"/>
 			<zero:View module="dev.module.ImplementExample" label="Implement Example"/>
-		<!--</mx:TabNavigator>-->
+		</mx:TabNavigator>
 	</s:Panel>
 	
 </s:Application>
