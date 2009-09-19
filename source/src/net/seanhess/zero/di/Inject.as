@@ -55,7 +55,8 @@ package net.seanhess.zero.di
 				if (property.access == PropertyInfo.READ_WRITE && property.metadata["Inject"])
 				{
 					var map:Map = new Map();
-					map.type = getDefinitionByName(property.type) as Class;
+//					map.type = getDefinitionByName(property.type) as Class;
+					map.typeName = property.type;
 					
 					_context.send(new Message(Map.FIND_TYPE_MESSAGE, map));
 					

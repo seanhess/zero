@@ -5,6 +5,7 @@ package net.seanhess.zero.di
 	import net.seanhess.zero.context.IContextReceiver;
 	import net.seanhess.zero.context.IContextSender;
 	import net.seanhess.zero.context.Message;
+	import net.seanhess.zero.scan.SimpleScan;
 
 	/**
 	 * Specifies an implementation for a particular interface/type
@@ -13,6 +14,7 @@ package net.seanhess.zero.di
 	public class Implement implements IContextReceiver
 	{
 		protected var _context:IContextSender;
+		protected var scan:SimpleScan = new SimpleScan();
 		
 		protected var _implementations:Dictionary;
 		
@@ -26,7 +28,8 @@ package net.seanhess.zero.di
 		{
 			for each (var map:Map in value)
 			{
-				_implementations[map.type] = map;
+				var name:String = scan.getClassName(map.type);
+				_implementations[name] = map;
 			}
 		}
 		
@@ -41,16 +44,16 @@ package net.seanhess.zero.di
 			{
 				var map:Map = message.data as Map;
 				
-				if (_implementations[map.type])
+				if (_implementations[map.typeName])
 				{
-					map.instance = getInstance(map.type);
+					map.instance = getInstance(map.typeName);
 				}
 			}
 		}
 		
-		protected function getInstance(type:Class):*
+		protected function getInstance(typeName:String):*
 		{
-			var map:Map = _implementations[type];
+			var map:Map = _implementations[typeName];
 			
 			if (map.instance == null)
 			{

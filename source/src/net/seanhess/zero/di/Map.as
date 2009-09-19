@@ -7,6 +7,7 @@ package net.seanhess.zero.di
 		public static const FIND_TYPE_MESSAGE:String = "findTypeMessage";
 		
 		public var type:Class;
+		public var typeName:String;
 		public var factory:IFactory;
 		public var implementation:Class;
 		public var instance:*;

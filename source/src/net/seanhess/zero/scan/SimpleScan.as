@@ -26,8 +26,6 @@ package net.seanhess.zero.scan
 			return null;
 		}
 		
-		
-		
 		public function getObjectInfo(object:Object):TypeInfo
 		{
 			var name:String = getClassName(object);
@@ -52,7 +50,7 @@ package net.seanhess.zero.scan
 			return info[name];
 		}
 		
-		protected function getClassName(type:Object):String
+		public function getClassName(type:Object):String
 		{
 			return getQualifiedClassName(type).replace("::",".");
 		}
@@ -101,7 +99,7 @@ package net.seanhess.zero.scan
 			{
 				var property:PropertyInfo = new PropertyInfo();
 					property.name = accessor.@name.toString();
-					property.type = accessor.@type.toString();
+					property.type = accessor.@type.toString().replace("::",".");
 					
 				if (accessor.localName() == "accessor")
 					property.access = accessor.@access.toString();

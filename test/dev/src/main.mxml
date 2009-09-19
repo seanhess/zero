@@ -7,7 +7,15 @@
 		<s:VerticalLayout/>
 	</s:layout>
 	
+	<fx:Script>
+		<![CDATA[
+			import dev.di.ITest;
+			private var asdf:ITest;
+		]]>
+	</fx:Script>
+	
 	<fx:Declarations>
+		<zero:IncludeDI/>
 	</fx:Declarations>
 	
 	<s:Panel width="600" height="600">

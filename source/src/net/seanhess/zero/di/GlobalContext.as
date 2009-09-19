@@ -14,8 +14,12 @@ package net.seanhess.zero.di
 		
 		public function GlobalContext()
 		{
-			trace("NEW GLOBAL CONTEXT");
-			root.link(this); // unless it IS root			
+			root.link(this);			
+		}
+		
+		public function get root():Context
+		{
+			return GlobalContext.root;
 		}
 	}
 }

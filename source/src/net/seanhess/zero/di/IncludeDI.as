@@ -7,8 +7,5 @@ package net.seanhess.zero.di
 	{
 		public var gc:GlobalContext;
 		public var map:Map;
-		public var fetch:Fetch;
-		public var impl:Implement;
-		public var inject:Inject;
 	}
 }
