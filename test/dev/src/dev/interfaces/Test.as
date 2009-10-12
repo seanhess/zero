@@ -10,23 +10,24 @@ package dev.interfaces
 		[Bindable("deathbrain")]
 		public var death:int;
 		
-		// that way it will activate natural stuff, right? 
-		// when the binding event fires (which it will, naturally because I'm listening for it already)
-		// then they can get it ....  but I don't want to fire a get request every time it's called...
+		// shoot, this won't work, bc it will just call the getter again
+		// lame!
 		
-		// what if they don't mark the property as bindable?
-		// we can still set it just fine
+		// the other option is to always declare them as properties, and the implementation can decide 
+		// whether they are get/set or read-only or whatever
 		
-		// but we couldn't respond to it ;(
-		// binding sucks anyway
-		// your mom sucks
+		// it wouldn't be THAT big of a deal
 		
-//		public function get cheese():String 		{ return g(cheese) }
-//		public function set cheese(value:String)	{ s(cheese, value) }
+		// could throw a run-time error if they set a read-only prop. 
+		// could throw a run-time error if the implementor is only read-only and there's no one listening
+		
+		[Bindable("message")]
+		public function get message():String 		{ return _get(message) }
+		public function set message(value:String)	{ _set(message, value) }
 		
 		public function test(message:String):String
 		{
-			return send(test, message);
+			return _send(test, message);
 		}
 	}
 }

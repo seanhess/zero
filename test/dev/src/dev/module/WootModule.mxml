@@ -5,8 +5,78 @@
 		   
 		   xmlns:interfaces="dev.interfaces.*" xmlns:module="dev.module.*">
 	
+	<fx:Declarations>
+		<interfaces:Test id="test" charlie="onCharlie()" context="{context}"/>
+		<interfaces:Nothing id="nothing"/>
+	</fx:Declarations>
 	
+	<fx:Binding source="test.death" destination="medeath"/>
 	
-	<module:Woot context="{context}"/>
+	<fx:Script>
+		<![CDATA[
+			import net.seanhess.zero.interfaces.IInterfaceContext;
+			import dev.interfaces.Test;
+			import mx.collections.ArrayCollection;
+			
+			private function go():void
+			{
+				trace(test.test("a message!"));	
+			}
+			
+			private function set medeath(value:*):void
+			{
+				trace("ME DEATH :::: " + value);
+			}
+			
+			private function remove():void
+			{
+			}
+			
+			private function add():void
+			{
+			}
+			
+			private function happened(message:String, another:String):void
+			{
+				
+			}
+			
+			private function onCharlie():void
+			{
+				trace('charlie called!');
+			}
+		]]>
+	</fx:Script>
+	
+	<s:Group>
+		<s:layout>
+			<s:VerticalLayout/>
+		</s:layout>
+		
+		
+		<s:TextInput text="{test.death}"/>
+		<s:TextInput text="{test.woot}"/>
+		
+		<!--<s:Button label="add" click="add()"/>
+		<s:Button label="remove" click="remove()"/>-->
+		<s:Button label="go" click="go()"/>
+		<!--<s:Button label="clean" click="cleanup()"/>-->
+		
+		<!--
+		<s:DropDownList dataProvider="{new ArrayCollection(['one','two','three'])}"/>
+		
+		<s:List>
+		<s:dataProvider>
+		<s:ArrayCollection>
+		<fx:String>Hello</fx:String>
+		<fx:String>Hello</fx:String>
+		<fx:String>Hello</fx:String>
+		<fx:String>Hello</fx:String>
+		</s:ArrayCollection>
+		</s:dataProvider>
+		</s:List>
+		-->
+
+	</s:Group>
 	
 </zero:ViewModule>

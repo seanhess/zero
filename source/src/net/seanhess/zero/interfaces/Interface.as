@@ -76,7 +76,7 @@ package net.seanhess.zero.interfaces
 		/**
 		 * Sends a service
 		 */
-		public function send(method:Function, ...params):*
+		protected function _send(method:Function, ...params):*
 		{
 			var service:Service = new Service();
 			service.type = info.type;
@@ -87,6 +87,19 @@ package net.seanhess.zero.interfaces
 			
 			return service.result;
 		}
+		
+		
+		
+		protected function _set(property:Function, value:*):void
+		{
+			
+		}	
+		
+		protected function _get(property:Function):void
+		{
+			
+		}
+			
 		
 		
 		
