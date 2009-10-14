@@ -1,141 +1,157 @@
 package net.seanhess.zero.interfaces
 {
 	import flash.events.Event;
-	import flash.events.EventDispatcher;
+	import flash.events.IEventDispatcher;
+	import flash.utils.Dictionary;
+	import flash.utils.getQualifiedClassName;
 	
-	import mx.events.PropertyChangeEvent;
+	import net.seanhess.zero.context.IContext;
+	import net.seanhess.zero.util.Invalidator;
 	
-	import net.seanhess.zero.event.NotificationEvent;
-	import net.seanhess.zero.event.PropertyEvent;
-	import net.seanhess.zero.scan.PropertyInfo;
-	import net.seanhess.zero.scan.SimpleScan;
-	import net.seanhess.zero.scan.TypeInfo;
-	import net.seanhess.zero.util.QuickListener;
 	
-
-	public class Interface extends EventDispatcher implements IContextClient
+	public class Interface implements IEventDispatcher
 	{
-		protected var _context:IInterfaceContext;
-		protected var _info:TypeInfo;
-		protected var scan:SimpleScan = new SimpleScan();
-		
-		public function Interface()
-		{
-			
-		}
+		protected var _context:IContext;
+		protected var invalidator:Invalidator = new Invalidator(commit);
 
-		public function set context(value:IInterfaceContext):void
+		/**
+		 * The implementation
+		 */
+		protected var item:*;
+
+		
+		
+		/**
+		 * A unique key identifying this class
+		 */
+		public function get type():String
 		{
-			if (_context)
-			{
-				_context.removeEventListener(PropertyEvent.UPDATE, onUpdate);
-				_context.removeEventListener(NotificationEvent.SEND, onNotification);
-			}
-			
-			_context = value;	
-			
-			if (value)
-			{
-				_context.addEventListener(PropertyEvent.UPDATE, onUpdate, false, 0, true);
-				_context.addEventListener(NotificationEvent.SEND, onNotification, false, 0, true);
-				
-				// I need to fetch all the current values for properties!
-				
-				for each (var property:PropertyInfo in this.info.properties)
-				{
-					var prop:Property = new Property();
-						prop.type = info.type;
-						prop.name = property.name;
-						
-					_context.sendGet(prop); // this will cause it to be updated
-					
-					this[property.name] = prop.value;
-					
-					if (property.event != PropertyChangeEvent.PROPERTY_CHANGE)
-						dispatchEvent(new Event(property.event));
-				}
-			}
+			return getQualifiedClassName(this);
 		}
 		
-		public function get context():IInterfaceContext
+		/**
+		 * Context gives this interface a place to listen
+		 */
+		public function set context(value:IContext):void
+		{
+			if (context)
+			{
+				context.removeEventListener(InterfaceEvent.UPDATE, onUpdate);
+			}
+			
+			_context = value;
+			invalidator.invalidate("context");
+		}
+		
+		public function get context():IContext
 		{
 			return _context;		
 		}
 		
-		/**
-		 * The class information from describe type
-		 */
-		public function get info():TypeInfo
+		protected function commit():void
 		{
-			_info = _info || scan.getObjectInfo(this);
-			return _info;
+			if (invalidator.invalid("context"))
+			{
+				if (context)
+				{
+					context.addEventListener(InterfaceEvent.UPDATE, onUpdate);
+					context.addEventListener(InterfaceEvent.FOUND, onUpdate);
+					context.send(new InterfaceEvent(InterfaceEvent.FIND, this));
+				}
+			}
+			
+			if (invalidator.invalid("implementation"))
+			{
+				for (var type:String in listeners)
+				{
+					item.addEventListener.apply(item, listeners[type]);
+				}
+			}
 		}
 		
-		
-		
-		/**
-		 * Sends a service
-		 */
-		protected function _send(method:Function, ...params):*
+		protected function onUpdate(event:InterfaceEvent):void
 		{
-			var service:Service = new Service();
-			service.type = info.type;
-			service.name = scan.getMethodName(this, method);
-			service.params = params;
+			// only if they match!
 			
-			context.sendService(service);
-			
-			return service.result;
+			context.removeEventListener(InterfaceEvent.FOUND, onUpdate);
+			implementation = event.implementation;	
 		}
 		
-		
-		
-		protected function _set(property:Function, value:*):void
+		public function set implementation(value:*):void
 		{
-			
+			item = value;
+			invalidator.invalidate("implementation");
 		}	
-		
-		protected function _get(property:Function):void
+
+		public function get implementation():*
 		{
-			
+			return item;
 		}
-			
 		
-		
-		
-		
-		
-		protected function onUpdate(event:PropertyEvent):void
+		protected function get i():*
 		{
-			if (event.property.type == info.type)
+			return item;
+		}
+		
+		public function detach():void
+		{
+			for (var type:String in listeners)
 			{
-				this[event.property.name] = event.property.value;
+				var arguments:Array = listeners[type];
+				removeEventListener(type, arguments[1]);
+			}
+			
+			listeners = new Dictionary(true);
+			
+			implementation = null;
+		}
+		
+		
+		// I can't have them listening directly to the event, can I? 
+		// I need an easy way to detach! 
+		
+		protected var listeners:Dictionary = new Dictionary(true);
+		
+		public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void
+		{
+			listeners[type] = arguments;
+			
+			if (item)
+			{
+				item.addEventListener(type, listener, useCapture, priority, useWeakReference);
 			}
 		}
 		
-		protected function onNotification(event:NotificationEvent):void
+		public function dispatchEvent(event:Event):Boolean
 		{
-			if (event.notification.type == info.type)
+			throw new Error("Cannot dispatch an event!");
+		}
+		
+		public function hasEventListener(type:String):Boolean
+		{
+			return (listeners[type] != null);
+		}
+		
+		public function removeEventListener(type:String, listener:Function, useCapture:Boolean = false):void
+		{
+			delete listeners[type];
+			
+			if (item)
 			{
-				dispatchEvent(event.notification.event);
+				item.removeEventListener(type, listener, useCapture);
 			}
 		}
 		
-		
-		
-		
-		
-		
-		/**
-		 * Easy access to a quicklistener instance. See QuickListener
-		 */
-		public function get events():QuickListener
+		public function willTrigger(type:String):Boolean
 		{
-			_events = _events || new QuickListener(this);
-			return _events; 
+			if (item)
+			{
+				return item.willTrigger(type);
+			}
+			else
+			{
+				return false;
+			}
 		}
-		protected var _events:QuickListener;
-		
-		
 	}
 }
