@@ -121,9 +121,12 @@ package net.seanhess.zero.interfaces
 		{
 			if (item)
 			{
-				for each(var args:Array in listeners)
+				for (var type:String in listeners)
 				{
-					item.addEventListener.apply(item, args);
+					for each(var args:Array in listeners[type])
+					{
+						item.addEventListener.apply(item, args);
+					}
 				}
 			}
 		}
@@ -132,10 +135,13 @@ package net.seanhess.zero.interfaces
 		{
 			if (item)
 			{
-				for each(var args:Array in listeners)
+				for (var type:String in listeners)
 				{
-					args = args.slice(0, 3);
-					item.removeEventListener.apply(item, args);
+					for each(var args:Array in listeners[type])
+					{
+						args = args.slice(0, 3);
+						item.removeEventListener.apply(item, args);
+					}
 				}
 			}
 		}
@@ -146,13 +152,14 @@ package net.seanhess.zero.interfaces
 		
 		
 		
-		
-		
+		// IEventDispatcher Implementation // 		
 		protected var listeners:Dictionary = new Dictionary(true);
 		
 		public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void
 		{
-			listeners[listener] = arguments; // the "listener" is the unique key
+			if (listeners[type] == null) { listeners[type] = new Dictionary(true); }
+
+			listeners[type][listener] = arguments;
 			
 			if (item)
 			{
@@ -170,9 +177,14 @@ package net.seanhess.zero.interfaces
 			return item.hasEventListener(type);
 		}
 		
+		/**
+		 * Remove the keeping-track of the event listener
+		 */
 		public function removeEventListener(type:String, listener:Function, useCapture:Boolean = false):void
 		{
-			delete listeners[listener];
+			if (listeners[type] == null) { listeners[type] = new Dictionary(true); }
+
+			delete listeners[type][listener];
 			
 			if (item)
 			{
