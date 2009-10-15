@@ -5,10 +5,14 @@ package net.seanhess.zero.interfaces
 	import flash.utils.Dictionary;
 	import flash.utils.getQualifiedClassName;
 	
+	import net.seanhess.zero.context.ContextEvent;
 	import net.seanhess.zero.context.IContext;
 	import net.seanhess.zero.util.Invalidator;
 	
-	
+	/**
+	 * The implementation will be 
+	 * 
+	 */
 	public class Interface implements IEventDispatcher
 	{
 		protected var _context:IContext;
@@ -18,7 +22,6 @@ package net.seanhess.zero.interfaces
 		 * The implementation
 		 */
 		protected var item:*;
-
 		
 		
 		/**
@@ -34,9 +37,11 @@ package net.seanhess.zero.interfaces
 		 */
 		public function set context(value:IContext):void
 		{
+			// clean up 
 			if (context)
 			{
 				context.removeEventListener(InterfaceEvent.UPDATE, onUpdate);
+				context.removeEventListener(ContextEvent.DISCONNECT, onDisconnect); 
 			}
 			
 			_context = value;
@@ -55,30 +60,49 @@ package net.seanhess.zero.interfaces
 				if (context)
 				{
 					context.addEventListener(InterfaceEvent.UPDATE, onUpdate);
-					context.addEventListener(InterfaceEvent.FOUND, onUpdate);
-					context.send(new InterfaceEvent(InterfaceEvent.FIND, this));
+					context.addEventListener(ContextEvent.DISCONNECT, onDisconnect);
+					context.send(new InterfaceEvent(InterfaceEvent.FIND, this.type, onFound));
+				}
+				else (context == null)
+				{
+					implementation = null;
 				}
 			}
 			
 			if (invalidator.invalid("implementation"))
 			{
-				for (var type:String in listeners)
-				{
-					item.addEventListener.apply(item, listeners[type]);
-				}
+				connectImplementation();
 			}
+		}
+		
+		protected function onFound(event:InterfaceEvent):void
+		{
+			onUpdate(event);
 		}
 		
 		protected function onUpdate(event:InterfaceEvent):void
 		{
 			// only if they match!
-			
-			context.removeEventListener(InterfaceEvent.FOUND, onUpdate);
-			implementation = event.implementation;	
+			if (event.face == this.type)
+			{
+				implementation = event.implementation;	
+			}
 		}
 		
+		protected function onDisconnect(event:ContextEvent):void
+		{
+			context = null;
+		}
+		
+		
+		
+		
+		/**
+		 * The actual object we work with
+		 */
 		public function set implementation(value:*):void
 		{
+			disconnectImplementation();			
 			item = value;
 			invalidator.invalidate("implementation");
 		}	
@@ -93,48 +117,62 @@ package net.seanhess.zero.interfaces
 			return item;
 		}
 		
-		public function detach():void
+		protected function connectImplementation():void
 		{
-			for (var type:String in listeners)
+			if (item)
 			{
-				var arguments:Array = listeners[type];
-				removeEventListener(type, arguments[1]);
+				for each(var args:Array in listeners)
+				{
+					item.addEventListener.apply(item, args);
+				}
 			}
-			
-			listeners = new Dictionary(true);
-			
-			implementation = null;
+		}
+		
+		protected function disconnectImplementation():void
+		{
+			if (item)
+			{
+				for each(var args:Array in listeners)
+				{
+					args = args.slice(0, 3);
+					item.removeEventListener.apply(item, args);
+				}
+			}
 		}
 		
 		
-		// I can't have them listening directly to the event, can I? 
-		// I need an easy way to detach! 
+		
+		
+		
+		
+		
+		
 		
 		protected var listeners:Dictionary = new Dictionary(true);
 		
 		public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void
 		{
-			listeners[type] = arguments;
+			listeners[listener] = arguments; // the "listener" is the unique key
 			
 			if (item)
 			{
-				item.addEventListener(type, listener, useCapture, priority, useWeakReference);
+				item.addEventListener(type, listener, useCapture, priority, useWeakReference);				
 			}
 		}
 		
 		public function dispatchEvent(event:Event):Boolean
 		{
-			throw new Error("Cannot dispatch an event!");
+			return item.dispatchEvent(event);
 		}
 		
 		public function hasEventListener(type:String):Boolean
 		{
-			return (listeners[type] != null);
+			return item.hasEventListener(type);
 		}
 		
 		public function removeEventListener(type:String, listener:Function, useCapture:Boolean = false):void
 		{
-			delete listeners[type];
+			delete listeners[listener];
 			
 			if (item)
 			{
@@ -144,14 +182,7 @@ package net.seanhess.zero.interfaces
 		
 		public function willTrigger(type:String):Boolean
 		{
-			if (item)
-			{
-				return item.willTrigger(type);
-			}
-			else
-			{
-				return false;
-			}
+			return item.willTrigger(type);
 		}
 	}
 }

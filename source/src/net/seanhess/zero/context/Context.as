@@ -2,11 +2,13 @@ package net.seanhess.zero.context
 {
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
-	import flash.utils.Dictionary;
-
+	
 	/**
 	 * Creates a tree of event dispatchers that relay information to each other
 	 */
+	[Event(name="connect", type="net.seanhess.zero.context.ContextEvent")]
+	[Event(name="disconnect", type="net.seanhess.zero.context.ContextEvent")]
+	[Event(name="message", type="net.seanhess.zero.context.ContextEvent")]
 	public class Context extends EventDispatcher
 	{
 		protected var parent:IContext;
@@ -19,12 +21,14 @@ package net.seanhess.zero.context
 		{
 			this.parent = parent;
 			this.parent.addEventListener(ContextEvent.MESSAGE, onMessage);
+			dispatchEvent(new ContextEvent(ContextEvent.CONNECT));
 		}
 		
 		public function disconnect():void
 		{
 			parent.removeEventListener(ContextEvent.MESSAGE, onMessage);
 			parent = null;
+			dispatchEvent(new ContextEvent(ContextEvent.DISCONNECT));
 		}
 		
 		
@@ -47,13 +51,16 @@ package net.seanhess.zero.context
 				// self 
 				dispatchEvent(message.event);
 				
-				// children
-				dispatchEvent(message);
-				
-				// parent
-				if (parent)
+				// parent first, then children
+				if (parent && message.status == ContextEvent.MESSAGE_ACTIVE)
 				{
 					parent.relay(message);
+				}
+				
+				// children
+				if (message.status == ContextEvent.MESSAGE_ACTIVE)
+				{
+					dispatchEvent(message);
 				}
 			}
 		}
@@ -61,6 +68,11 @@ package net.seanhess.zero.context
 		protected function onMessage(message:ContextEvent):void
 		{
 			relay(message);
+		}
+		
+		public function cancelLastMessage():void
+		{
+			lastMessage.cancel();
 		}
 	}
 }

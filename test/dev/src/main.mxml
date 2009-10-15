@@ -12,12 +12,11 @@
 			private function asdf():void
 			{
 				ilibrary.createBook("my book");
+			}
+			
+			private function two():void
+			{
 				
-				trace("MAX ? " + ilibrary.maxBooks);
-				ilibrary.maxBooks += 2;
-				
-				trace("MAX ? " + ilibrary.maxBooks);
-				return;
 			}
 		]]>
 	</fx:Script>
@@ -27,16 +26,37 @@
 		<!-- ROOT FILE -->
 		<zero:Context id="context"/>
 		
-		<!--<WithContext context="{context}">-->
-			<!--<Implement face="dev.ILibrary" instance="{library}" context="{context}"/>
-			<Implement face="dev.ILibrary" factory="dev.Library" context="{context}"/>-->
-		<!--</WithContext>-->
+		<!-- 0) You want to create an implementation -->
+		
+		<!--
+		
+		It's the "connect" tag that does the actual matching. 
+		These guys need some way to out-prioritize each other / cancel each other 
+		
+		<Connect context="{context}">
+			<Implement match="dev.ILibrary" instance="{library}" context="{context}"/> can remove context att
+			<Implement match="dev.ILibrary" factory="dev.Library" context="{context}"/>
+		</Connect>
+		-->
 		
 		<!-- 1) You want a single function to come from a mock object -->
 		
-		<!-- 2) Currently, services send an object as a parameter, you want to change ALL of them so they use JSON instead without modifying them -->
+		<!--
+			<Intercept 
+		-->
 		
-		<!-- 3) Services current make calls out to the server, but come back w/ XML. You want to intercept and come back with strongly typed objects instead -->
+		
+		<!-- 2) Convert xml service data to strongly-typed objects -->
+		
+		<!--
+			Services: all have a send() method, and dispatch a "complete" event
+			Translate: need to intercept the complete event, and dispatch a new one
+		
+			<Intercept face="dev.something.*" proxy="{translate}"/>
+			
+		-->
+		
+		<!-- 2) Change all services -->
 		
 		<!-- CHILD FILE -->
 		<interfaces:ILibrary id="ilibrary" implementation="{proxy}" />
@@ -47,7 +67,8 @@
 		
 	</fx:Declarations>
 		
-	<s:Button label="asdf" click="asdf()"/>
-	<s:Button label="detach" click="listener.detach()"/>
+	<s:Button label="one" click="asdf()"/>
+	<s:Button label="two" click="two()"/>
+	<s:Button label="detach" click="listener.implementation = null"/>
 	
 </s:Application>

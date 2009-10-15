@@ -5,7 +5,6 @@ package net.seanhess.zero.interfaces
 	public class InterfaceEvent extends Event
 	{
 		public static const FIND:String = "find";
-		public static const FOUND:String = "found";
 		
 		public static const UPDATE:String = "update"; // a new interface is available
 
@@ -20,27 +19,23 @@ package net.seanhess.zero.interfaces
 		 */
 		public var implementation:*; 
 		
-		public function InterfaceEvent(type:String, face:Object)
+		/**
+		 * the callback to call once a find request is finished
+		 * Takes one parameter, this event. 
+		 */
+		public var callback:Function;
+		
+		public function InterfaceEvent(type:String, face:String, callback:Function = null)
 		{
 			super(type);
 			
-			if (face is String)
-			{
-				this.face = face as String;
-			}
-			else if (face.hasOwnProperty("type")) // for Interface
-			{
-				this.face = face.type;
-			}
-			else
-			{
-				throw new Error("Face must be String or have a 'type' property");
-			}
+			this.callback = callback;
+			this.face = face;			
 		}
 		
 		override public function clone() : Event
 		{
-			return new InterfaceEvent(type, face);
+			return new InterfaceEvent(type, face, callback);
 		}
 	}
 }
