@@ -3,14 +3,21 @@ package net.seanhess.zero.interfaces
 	import flash.utils.Proxy;
 	import flash.utils.flash_proxy;
 
-	public class BasicProxy extends Proxy
+	public class Implementation extends Proxy
 	{
 		protected var item:*;
 		
-		public function set implementation(item:*):void
+		public function set fullImplementation(item:*):void
 		{
 			this.item = item;
 		}
+		
+		public var factory:Class;
+		
+		
+		
+		// LAZY -create stuff! wahoo!
+		
 		
 		override flash_proxy function setProperty(name:*, value:*):void 
 		{

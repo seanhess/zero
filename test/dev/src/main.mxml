@@ -9,9 +9,12 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import dev.sandbox.Two;
 			private function asdf():void
 			{
-				ilibrary.createBook("my book");
+				// ilibrary.createBook("my book");
+				var test:Two = new Two();
+				
 			}
 			
 			private function two():void
@@ -33,6 +36,19 @@
 		It's the "connect" tag that does the actual matching. 
 		These guys need some way to out-prioritize each other / cancel each other 
 		
+		does hte connect tag handle keeping track of the base implementation?
+		
+		Yes. It creates an implementation based on what it understands. It then cancels the event. don't die on me son!
+		I know you can pull through
+		
+		Or can you put in an Implement tag and Intercept tag separately?
+		
+		No... not sure, actually :(
+		
+		Implement can exist just fine on its own
+		
+		Intercept can also, I suppose. But I'd like it to edit the existing implementation... 
+		
 		<Connect context="{context}">
 			<Implement match="dev.ILibrary" instance="{library}" context="{context}"/> can remove context att
 			<Implement match="dev.ILibrary" factory="dev.Library" context="{context}"/>
@@ -42,7 +58,8 @@
 		<!-- 1) You want a single function to come from a mock object -->
 		
 		<!--
-			<Intercept 
+			<Intercept me="{this is a test}"/>
+			This is stuch blarney... 
 		-->
 		
 		
@@ -56,19 +73,20 @@
 			
 		-->
 		
-		<!-- 2) Change all services -->
+		<!-- 2) Change all Services -->
 		
 		<!-- CHILD FILE -->
 		<interfaces:ILibrary id="ilibrary" implementation="{proxy}" />
 		<interfaces:ILibrary id="listener" implementation="{proxy}" newBook="trace('newBook!')"/>
 		
 		<services:Library id="library"/>
-		<zero:BasicProxy id="proxy" implementation="{library}"/>
+		<zero:Implementation id="proxy" fullImplementation="{library}"/>
 		
 	</fx:Declarations>
 		
 	<s:Button label="one" click="asdf()"/>
 	<s:Button label="two" click="two()"/>
 	<s:Button label="detach" click="listener.implementation = null"/>
+	<s:Button label="reattach" click="listener.implementation = proxy"/>
 	
 </s:Application>

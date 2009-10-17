@@ -2,9 +2,10 @@
 <componentPackage>    
 	<component class="net.seanhess.zero.context.Context"/>
 	<component class="net.seanhess.zero.context.IContext"/>
+	<component class="net.seanhess.zero.context.IContextClient"/>
 	<component class="net.seanhess.zero.context.ContextEvent"/>
 
-	<component class="net.seanhess.zero.interfaces.BasicProxy"/>
+	<component class="net.seanhess.zero.interfaces.Implementation"/>
 	<component class="net.seanhess.zero.interfaces.Interface"/>
 	<component class="net.seanhess.zero.interfaces.InterfaceEvent"/>
 </componentPackage>
