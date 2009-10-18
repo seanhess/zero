@@ -1,8 +1,8 @@
-package dev.interfaces
+package dev.dependency
 {
 	import net.seanhess.zero.interfaces.Interface;
 	
-	public class ILog extends Interface
+	public class DLog extends Interface
 	{
 		public function message(value:String):void 			{ i.message(value); } // or "title" or "arguments"
 	}

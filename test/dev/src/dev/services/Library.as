@@ -1,8 +1,7 @@
 package dev.services
 {
-	import dev.interfaces.IBook;
-	import dev.interfaces.ILibrary;
-	import dev.interfaces.ILog;
+	
+	import dev.dependency.DBook;
 	
 	import flash.events.Event;
 	import flash.events.EventDispatcher;
@@ -25,7 +24,7 @@ package dev.services
 		
 		public function createBook(title:String):void
 		{
-			var book:IBook = new IBook(this);
+			var book:DBook = new DBook(this);
 				book.title = title + Math.random();
 				
 

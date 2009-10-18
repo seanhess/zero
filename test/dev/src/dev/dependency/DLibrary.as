@@ -1,4 +1,4 @@
-package dev.interfaces
+package dev.dependency
 {
 	import mx.collections.IList;
 	
@@ -26,9 +26,9 @@ package dev.interfaces
 	// public class DLibrary extends DependencyInterface // that's a nice touch. It is an interface to a dependency 
 	
 	[Event(name="newBook", type="flash.events.Event")]
-	public class ILibrary extends DependencyInterface
+	public class DLibrary extends DependencyInterface
 	{
-		public function ILibrary(context:*=null):void	{ super(context);	}
+		public function DLibrary(context:*=null):void	{ super(context);	}
 		
 		public function get allBooks():IList 			{ return i.allBooks };
 		
