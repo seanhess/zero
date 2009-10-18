@@ -5,28 +5,19 @@ package net.seanhess.zero.interfaces
 
 	public class Implementation extends Proxy
 	{
-		protected var item:*;
-		
-		public function set fullImplementation(item:*):void
-		{
-			this.item = item;
-		}
-		
-		public var factory:Class;
-		
-		
+		public var onlyImplementation:*;		
 		
 		// LAZY -create stuff! wahoo!
 		
 		
 		override flash_proxy function setProperty(name:*, value:*):void 
 		{
-			item[name] = value;
+			onlyImplementation[name] = value;
 		}
 		
 		override flash_proxy function getProperty(name:*):*
 		{
-			return item[name];	
+			return onlyImplementation[name];	
 		}
 		
 		override flash_proxy function callProperty(name:*, ... args):* {
@@ -36,7 +27,7 @@ package net.seanhess.zero.interfaces
 				args = args[0];
 			}
 			
-			return item[name].apply(item, args);
+			return onlyImplementation[name].apply(onlyImplementation, args);
 		}	
 	}
 }

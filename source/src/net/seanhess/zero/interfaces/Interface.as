@@ -3,20 +3,23 @@ package net.seanhess.zero.interfaces
 	import flash.events.Event;
 	import flash.events.IEventDispatcher;
 	import flash.utils.Dictionary;
-	import flash.utils.getQualifiedClassName;
 	
 	import mx.core.IMXMLObject;
 	
-	import net.seanhess.zero.context.ContextEvent;
-	import net.seanhess.zero.context.IContext;
-	import net.seanhess.zero.context.IContextClient;
 	import net.seanhess.zero.context.Register;
+	import net.seanhess.zero.context.Utils;
 	
 	/**
 	 * The implementation will be 
 	 */
 	public class Interface implements IEventDispatcher, IMXMLObject
 	{
+		protected var utils:Utils = new Utils();	
+		
+		protected var type:String;
+		
+		protected var context:String;
+		
 		/**
 		 * The implementation
 		 */
@@ -24,65 +27,40 @@ package net.seanhess.zero.interfaces
 		
 		protected var register:Register = new Register();
 		
-		public function Interface()
+		public function Interface(context:*=null)
 		{
-			
+			type = utils.getName(this);
+			setContext(context);
 		}
 
 		public function initialized(document:Object, id:String):void
 		{
-			
+			setContext(document);
 		}
 		
-		/**
-		 * A unique key identifying this class
-		 */
-		public function get type():String
-		{
-			return getQualifiedClassName(this).replace("::",".");
-		}
 		
 		/**
 		 * Context gives this interface a place to listen
 		 */
-		public function set context(value:IContext):void
+		protected function setContext(value:*):void
 		{
-			if (value == context)
-				return;
+			// only perform this if not null. 
+			if (!value) return;
 			
-			// clean up 
-		    disconnectContext();
-			_context = value;
-            connectContext();
+			context = utils.getName(value);
+			
+			connect();
 		}
 		
-		public function get context():IContext
+		public function disconnect():void
 		{
-			return _context;		
+			implementation = null;
 		}
-
 		
-		protected function onFound(event:InterfaceEvent):void
+		public function connect():void
 		{
-			onUpdate(event);
+			implementation = register.seek(type, context);
 		}
-		
-		protected function onUpdate(event:InterfaceEvent):void
-		{
-			// only if they match!
-			if (event.face == this.type)
-			{
-				implementation = event.implementation;	
-			}
-		}
-		
-		protected function onDisconnect(event:ContextEvent):void
-		{
-			context = null;
-		}
-		
-		
-		
 		
 		/**
 		 * The actual object we work with
@@ -155,26 +133,6 @@ package net.seanhess.zero.interfaces
             }
         }
 		
-        private function connectContext():void
-        {
-			if (context)
-			{
-			    context.addEventListener(InterfaceEvent.UPDATE, onUpdate);
-			    context.addEventListener(ContextEvent.DISCONNECT, onDisconnect);
-			    context.send(new InterfaceEvent(InterfaceEvent.FIND, this.type, onFound));
-			}
-        }
-
-        private function disconnectContext():void
-        {
-			if (context)
-			{
-				context.removeEventListener(InterfaceEvent.UPDATE, onUpdate);
-				context.removeEventListener(ContextEvent.DISCONNECT, onDisconnect); 
-                implementation = null; // clear the implementation
-			}
-        }
-    
     
     
     

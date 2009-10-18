@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
-			   xmlns:mx="library://ns.adobe.com/flex/halo" xmlns:module="dev.module.*" xmlns:zero="http://zero.seanhess.net/2009" xmlns:interfaces="dev.interfaces.*" xmlns:services="dev.services.*">
+			   xmlns:mx="library://ns.adobe.com/flex/halo" xmlns:module="dev.module.*" xmlns:zero="http://zero.seanhess.net/2009" xmlns:interfaces="dev.interfaces.*" xmlns:services="dev.services.*" initialize="init()">
 
 	<s:layout>
 		<s:VerticalLayout/>
@@ -9,12 +9,26 @@
 	
 	<fx:Script>
 		<![CDATA[
-			import dev.sandbox.Two;
+			import net.seanhess.zero.context.Register;
+			import net.seanhess.zero.context.Rule;
+			
+			import dev.interfaces.ILibrary;
+			import dev.services.Library;
+			
+			private var register:Register = new Register();
+			
+			private function init():void
+			{
+				var rule:Rule = new Rule(Rule.IMPLEMENT, Library, "dev.interfaces.ILibrary");
+				register.addRule(rule);
+			}
+			
 			private function asdf():void
 			{
-				// ilibrary.createBook("my book");
-				var test:Two = new Two();
-				
+				var library:ILibrary = new ILibrary(this);
+					library.createBook("new book");
+					
+				// woot // 
 			}
 			
 			private function two():void
@@ -27,7 +41,7 @@
 	<fx:Declarations>
 		
 		<!-- ROOT FILE -->
-		<zero:Context id="context"/>
+		<!--<zero:Context id="context"/>-->
 		
 		<!-- 0) You want to create an implementation -->
 		
@@ -76,17 +90,12 @@
 		<!-- 2) Change all Services -->
 		
 		<!-- CHILD FILE -->
-		<interfaces:ILibrary id="ilibrary" implementation="{proxy}" />
-		<interfaces:ILibrary id="listener" implementation="{proxy}" newBook="trace('newBook!')"/>
-		
-		<services:Library id="library"/>
-		<zero:Implementation id="proxy" fullImplementation="{library}"/>
 		
 	</fx:Declarations>
 		
 	<s:Button label="one" click="asdf()"/>
 	<s:Button label="two" click="two()"/>
-	<s:Button label="detach" click="listener.implementation = null"/>
-	<s:Button label="reattach" click="listener.implementation = proxy"/>
+	<!--<s:Button label="detach" click="listener.implementation = null"/>
+	<s:Button label="reattach" click="listener.implementation = proxy"/>-->
 	
 </s:Application>
