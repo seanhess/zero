@@ -1,7 +1,3 @@
-# Todo
+# Zero
 
-[ ] CONTEXT - Better way to pass around contexts
-
-[ ] EVENTS - Performance optimizations? Too many events firing? 
-
-3. 
+Secret Dependency Injection Framework for Actionscript 
