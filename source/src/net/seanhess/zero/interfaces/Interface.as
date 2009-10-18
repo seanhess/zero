@@ -10,33 +10,28 @@ package net.seanhess.zero.interfaces
 	import net.seanhess.zero.context.ContextEvent;
 	import net.seanhess.zero.context.IContext;
 	import net.seanhess.zero.context.IContextClient;
-	import net.seanhess.zero.util.Invalidator;
+	import net.seanhess.zero.context.Register;
 	
 	/**
 	 * The implementation will be 
 	 */
-	public class Interface implements IEventDispatcher, IContextClient, IMXMLObject
+	public class Interface implements IEventDispatcher, IMXMLObject
 	{
-		protected var _context:IContext;
-
 		/**
 		 * The implementation
 		 */
 		protected var _implementation:*;
 		
+		protected var register:Register = new Register();
 		
-		public function Interface(context:IContext = null)
+		public function Interface()
 		{
-			if (context)
-				this.context = context;
+			
 		}
 
 		public function initialized(document:Object, id:String):void
 		{
-			if (document.hasOwnProperty("context") && document.context is IContext)
-			{
-				this.context = document.context;
-			}
+			
 		}
 		
 		/**
@@ -44,7 +39,7 @@ package net.seanhess.zero.interfaces
 		 */
 		public function get type():String
 		{
-			return getQualifiedClassName(this);
+			return getQualifiedClassName(this).replace("::",".");
 		}
 		
 		/**
