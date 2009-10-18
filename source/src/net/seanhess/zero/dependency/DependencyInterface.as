@@ -1,18 +1,11 @@
-package net.seanhess.zero.interfaces
+package net.seanhess.zero.dependency
 {
-	import flash.events.Event;
-	import flash.events.IEventDispatcher;
-	import flash.utils.Dictionary;
-	
 	import mx.core.IMXMLObject;
-	
-	import net.seanhess.zero.context.Register;
-	import net.seanhess.zero.context.Utils;
 	
 	/**
 	 * The implementation will be 
 	 */
-	public class Interface implements IMXMLObject
+	public class DependencyInterface implements IMXMLObject
 	{
 		protected var utils:Utils = new Utils();	
 		
@@ -27,7 +20,7 @@ package net.seanhess.zero.interfaces
 		
 		protected var register:Register = new Register();
 		
-		public function Interface(context:*=null)
+		public function DependencyInterface(context:*=null)
 		{
 			type = utils.getName(this);
 			setContext(context);

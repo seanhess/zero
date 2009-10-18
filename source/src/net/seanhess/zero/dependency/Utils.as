@@ -1,4 +1,4 @@
-package net.seanhess.zero.context
+package net.seanhess.zero.dependency
 {
 	import flash.utils.getQualifiedClassName;
 

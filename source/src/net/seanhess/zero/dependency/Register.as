@@ -1,4 +1,4 @@
-package net.seanhess.zero.context
+package net.seanhess.zero.dependency
 {
 	import flash.events.EventDispatcher;
 	import flash.events.IEventDispatcher;
@@ -7,9 +7,6 @@ package net.seanhess.zero.context
 	import mx.collections.ArrayCollection;
 	import mx.collections.ListCollectionView;
 	
-	import net.seanhess.zero.interfaces.Implementation;
-	import net.seanhess.zero.interfaces.InterfaceError;
-
 	public class Register
 	{
 		/**
@@ -51,11 +48,28 @@ package net.seanhess.zero.context
 				
 			if (rules.length == 0)
 			{
-				throw new InterfaceError("Could not find implementation for " + type + " in context "+ context);
+				throw new DependencyError("Could not find implementation for " + type + " in context "+ context);
 			}
 				
 			var rule:Rule = rules.getItemAt(rules.length-1) as Rule;
-			var instance:* = rule.factory.newInstance();
+			
+			var instance:*;
+			
+			if (rule.kind == Rule.IMPLEMENT)
+			{
+				if (cache[rule.factory] == null)
+					cache[rule.factory] = rule.factory.newInstance();
+
+				instance = cache[rule.factory];
+			}
+			else if (rule.kind == Rule.FACTORY)
+			{
+				instance = rule.factory.newInstance();
+			}
+			else
+			{
+				throw new Error("Rule not implemented");
+			}
 			
 			var implementation:Implementation = new Implementation();
 				implementation.onlyImplementation = instance;

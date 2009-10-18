@@ -1,4 +1,4 @@
-package net.seanhess.zero.interfaces
+package net.seanhess.zero.dependency
 {
 	import net.seanhess.zero.util.Invalidator;
 

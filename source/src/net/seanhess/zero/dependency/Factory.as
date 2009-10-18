@@ -1,4 +1,4 @@
-package net.seanhess.zero.interfaces
+package net.seanhess.zero.dependency
 {
 	/**
 	 * Creates a new instance of the implementation every time it is needed

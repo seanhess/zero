@@ -1,4 +1,4 @@
-package net.seanhess.zero.interfaces
+package net.seanhess.zero.dependency
 {
 	import flash.utils.Proxy;
 	import flash.utils.flash_proxy;

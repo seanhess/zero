@@ -1,8 +1,8 @@
 package dev.interfaces
 {
-	import net.seanhess.zero.interfaces.Interface;
+	import net.seanhess.zero.dependency.DependencyInterface;
 
-	public class IBook extends Interface
+	public class IBook extends DependencyInterface
 	{
 		public function IBook(context:*) { super(context) }
 		

@@ -1,10 +1,7 @@
 <?xml version="1.0"?>
 <componentPackage>    
-	<component class="net.seanhess.zero.common.ZEventDispatcher"/>
-
-	<component class="net.seanhess.zero.context.Register"/>
-
-	<component class="net.seanhess.zero.interfaces.Implementation"/>
-	<component class="net.seanhess.zero.interfaces.Interface"/>
-	<component class="net.seanhess.zero.interfaces.InterfaceEvent"/>
+	<component class="net.seanhess.zero.common.DEventDispatcher"/>
+	
+	<component class="net.seanhess.zero.dependency.Register"/>
+	<component class="net.seanhess.zero.dependency.DependencyInterface"/>
 </componentPackage>

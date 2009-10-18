@@ -26,7 +26,7 @@ package dev.services
 		public function createBook(title:String):void
 		{
 			var book:IBook = new IBook(this);
-				book.title = title;
+				book.title = title + Math.random();
 				
 
 			allBooks.addItem(book);

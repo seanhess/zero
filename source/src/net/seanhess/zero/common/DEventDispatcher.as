@@ -2,11 +2,12 @@ package net.seanhess.zero.common
 {
 	import flash.events.Event;
 	import flash.events.IEventDispatcher;
-	import net.seanhess.zero.interfaces.Interface;
 	
-	public class ZEventDispatcher extends Interface implements IEventDispatcher
+	import net.seanhess.zero.dependency.DependencyInterface;
+	
+	public class DEventDispatcher extends DependencyInterface implements IEventDispatcher
 	{
-		public function ZEventDispatcher(context:*) { super(context) }
+		public function DEventDispatcher(context:*) { super(context) }
 		
 		public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void
 		{

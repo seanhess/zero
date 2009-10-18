@@ -13,8 +13,8 @@
 			import dev.services.Book;
 			import dev.services.Library;
 			
-			import net.seanhess.zero.context.Register;
-			import net.seanhess.zero.context.Rule;
+			import net.seanhess.zero.dependency.Register;
+			import net.seanhess.zero.dependency.Rule;
 			
 
 			
@@ -26,7 +26,7 @@
 			private function init():void
 			{
 				register.addRule(new Rule(Rule.IMPLEMENT, Library, "dev.interfaces.ILibrary"));
-				register.addRule(new Rule(Rule.IMPLEMENT, Book, "dev.interfaces.IBook"));
+				register.addRule(new Rule(Rule.FACTORY, Book, "dev.interfaces.IBook"));
 				
 				trace("HUH?");
 				library = new ILibrary(this);
@@ -34,6 +34,8 @@
 					trace("Called CREATE");
 				});
 			}
+			
+			
 			
 			private function asdf():void
 			{

@@ -2,12 +2,31 @@ package dev.interfaces
 {
 	import mx.collections.IList;
 	
-	import net.seanhess.zero.common.ZEventDispatcher;
-	import net.seanhess.zero.interfaces.Interface;
+	import net.seanhess.zero.dependency.DependencyInterface;
 	
+	
+	// it could be a Zinterface
+	// ha... 
+	
+	// or a Zero extends Zero
+	
+	// because it isn't exactly an interface, is it. A new concept would be better
+	// ZSomething
+	
+	// Zinterface
+	// Zecorator
+	// Decorator (because that's what it is)
+	// But it's acting like an interface, because it isn't doing anything. 
+	// ZInterface
+	// zinterface
+	// zero
+	// extends ZeroDecorator
+	// public class ZLibrary extends ZeroDecorator
+	// public class ZLibrary
+	// public class DLibrary extends DependencyInterface // that's a nice touch. It is an interface to a dependency 
 	
 	[Event(name="newBook", type="flash.events.Event")]
-	public class ILibrary extends ZEventDispatcher
+	public class ILibrary extends DependencyInterface
 	{
 		public function ILibrary(context:*=null):void	{ super(context);	}
 		

@@ -1,4 +1,4 @@
-package net.seanhess.zero.context
+package net.seanhess.zero.dependency
 {
 	import mx.core.ClassFactory;
 	import mx.core.IFactory;
