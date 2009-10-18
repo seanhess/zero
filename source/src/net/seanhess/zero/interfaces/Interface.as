@@ -12,7 +12,7 @@ package net.seanhess.zero.interfaces
 	/**
 	 * The implementation will be 
 	 */
-	public class Interface implements IEventDispatcher, IMXMLObject
+	public class Interface implements IMXMLObject
 	{
 		protected var utils:Utils = new Utils();	
 		
@@ -70,9 +70,13 @@ package net.seanhess.zero.interfaces
             if (value == implementation)
                 return;
 
-            disconnectImplementation();
+			if (implementation)
+            	disconnectImplementation();
+			
 			_implementation = value;
-            connectImplementation();
+			
+			if (implementation)
+            	connectImplementation();
 		}	
 
 		public function get implementation():*
@@ -103,35 +107,15 @@ package net.seanhess.zero.interfaces
     
     	
 		
-        private function disconnectImplementation():void
+        protected function disconnectImplementation():void
         {
-            // clean up 
-			if (implementation)
-			{
-				for (var type:String in listeners)
-				{
-					for each(var args:Array in listeners[type])
-					{
-						args = args.slice(0, 3);
-						implementation.removeEventListener.apply(implementation, args);
-					}
-				}
-			}
-	    }	
 
-        private function connectImplementation():void
+		}	
+
+        protected function connectImplementation():void
         {
-            if (implementation)
-            {
-				for (var type:String in listeners)
-				{
-					for each(var args:Array in listeners[type])
-					{
-						implementation.addEventListener.apply(implementation, args);
-					}
-				}
-            }
-        }
+
+		}
 		
     
     
@@ -143,50 +127,5 @@ package net.seanhess.zero.interfaces
     
     
     	
-		
-		// IEventDispatcher Implementation // 		
-		protected var listeners:Dictionary = new Dictionary(true);
-		
-		public function addEventListener(type:String, listener:Function, useCapture:Boolean = false, priority:int = 0, useWeakReference:Boolean = false):void
-		{
-			if (listeners[type] == null) { listeners[type] = new Dictionary(true); }
-
-			listeners[type][listener] = arguments;
-			
-			if (implementation)
-			{
-				implementation.addEventListener(type, listener, useCapture, priority, useWeakReference);				
-			}
-		}
-		
-		public function dispatchEvent(event:Event):Boolean
-		{
-			return implementation.dispatchEvent(event);
-		}
-		
-		public function hasEventListener(type:String):Boolean
-		{
-			return implementation.hasEventListener(type);
-		}
-		
-		/**
-		 * Remove the keeping-track of the event listener
-		 */
-		public function removeEventListener(type:String, listener:Function, useCapture:Boolean = false):void
-		{
-			if (listeners[type] == null) { listeners[type] = new Dictionary(true); }
-
-			delete listeners[type][listener];
-			
-			if (implementation)
-			{
-				implementation.removeEventListener(type, listener, useCapture);
-			}
-		}
-		
-		public function willTrigger(type:String):Boolean
-		{
-			return implementation.willTrigger(type);
-		}
 	}
 }

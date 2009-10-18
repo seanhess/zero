@@ -8,6 +8,7 @@ package net.seanhess.zero.context
 	import mx.collections.ListCollectionView;
 	
 	import net.seanhess.zero.interfaces.Implementation;
+	import net.seanhess.zero.interfaces.InterfaceError;
 
 	public class Register
 	{
@@ -47,6 +48,11 @@ package net.seanhess.zero.context
 			var rules:ListCollectionView = new ListCollectionView(rules);
 				rules.filterFunction = filterRule;
 				rules.refresh();
+				
+			if (rules.length == 0)
+			{
+				throw new InterfaceError("Could not find implementation for " + type + " in context "+ context);
+			}
 				
 			var rule:Rule = rules.getItemAt(rules.length-1) as Rule;
 			var instance:* = rule.factory.newInstance();

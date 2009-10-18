@@ -1,5 +1,7 @@
 <?xml version="1.0"?>
 <componentPackage>    
+	<component class="net.seanhess.zero.common.ZEventDispatcher"/>
+
 	<component class="net.seanhess.zero.context.Register"/>
 
 	<component class="net.seanhess.zero.interfaces.Implementation"/>

@@ -4,6 +4,8 @@ package dev.interfaces
 
 	public class IBook extends Interface
 	{
+		public function IBook(context:*) { super(context) }
+		
 		public function set title(value:String):void 			{ i.title = value }
 		public function get title():String 						{ return i.title }
 		

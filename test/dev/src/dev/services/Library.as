@@ -14,6 +14,8 @@ package dev.services
 	public class Library extends EventDispatcher
 	{
 		public var allBooks:IList;
+		
+		[Bindable]
 		public var maxBooks:int = 10;
 				
 		public function Library()
@@ -23,14 +25,14 @@ package dev.services
 		
 		public function createBook(title:String):void
 		{
-//			var book:IBook = new IBook(this);
-//				book.title = title;
+			var book:IBook = new IBook(this);
+				book.title = title;
 				
 
-			// allBooks.addItem(book);
+			allBooks.addItem(book);
 			trace("ADDED : " + title);
-//			trace("BOOKS : "+ allBooks.length);
-//			dispatchEvent(new Event("newBook"));
+			trace("BOOKS : "+ allBooks.length);
+			dispatchEvent(new Event("newBook"));
 		}
 	}
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
 			   xmlns:s="library://ns.adobe.com/flex/spark" 
-			   xmlns:mx="library://ns.adobe.com/flex/halo" xmlns:module="dev.module.*" xmlns:zero="http://zero.seanhess.net/2009" xmlns:interfaces="dev.interfaces.*" xmlns:services="dev.services.*" initialize="init()">
+			   xmlns:mx="library://ns.adobe.com/flex/halo" xmlns:module="dev.module.*" xmlns:zero="http://zero.seanhess.net/2009" initialize="init()">
 
 	<s:layout>
 		<s:VerticalLayout/>
@@ -9,26 +9,38 @@
 	
 	<fx:Script>
 		<![CDATA[
+			import dev.interfaces.ILibrary;
+			import dev.services.Book;
+			import dev.services.Library;
+			
 			import net.seanhess.zero.context.Register;
 			import net.seanhess.zero.context.Rule;
 			
-			import dev.interfaces.ILibrary;
-			import dev.services.Library;
+
 			
 			private var register:Register = new Register();
 			
+			[Bindable]
+			private var library:ILibrary;
+			
 			private function init():void
 			{
-				var rule:Rule = new Rule(Rule.IMPLEMENT, Library, "dev.interfaces.ILibrary");
-				register.addRule(rule);
+				register.addRule(new Rule(Rule.IMPLEMENT, Library, "dev.interfaces.ILibrary"));
+				register.addRule(new Rule(Rule.IMPLEMENT, Book, "dev.interfaces.IBook"));
+				
+				trace("HUH?");
+				library = new ILibrary(this);
+				library.addEventListener("newBook", function(event:Event):void {
+					trace("Called CREATE");
+				});
 			}
 			
 			private function asdf():void
 			{
-				var library:ILibrary = new ILibrary(this);
-					library.createBook("new book");
-					
-				// woot // 
+				library.createBook("new book");
+				library.maxBooks++;
+				
+				trace(library.maxBooks);
 			}
 			
 			private function two():void
@@ -95,6 +107,8 @@
 		
 	<s:Button label="one" click="asdf()"/>
 	<s:Button label="two" click="two()"/>
+	<s:List dataProvider="{library.allBooks}"/>
+	<s:TextInput text="{library.maxBooks}"/>
 	<!--<s:Button label="detach" click="listener.implementation = null"/>
 	<s:Button label="reattach" click="listener.implementation = proxy"/>-->
 	
