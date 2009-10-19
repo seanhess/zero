@@ -1,8 +1,15 @@
+[glossary]: http://github.com/seanhess/zero/tree/master/doc/Glossary.mdown 
+[usecases]: http://github.com/seanhess/zero/tree/master/doc/UseCases.mdown
+
 # Zero
 
-Zero is a new way to approach Dependency Injection in Actionscript. It is a toolkit that replaces the concept of the Interface with the DependencyInterface, which defines an interface using Decorators instead of an ActionScript Interface. 
+Zero is a new way to approach Dependency Injection in Actionscript. It is a toolkit that replaces the concept of the Interface with the [DependencyInterface][glossary], which defines an interface using Decorators instead of an ActionScript Interface. 
 
 In this document, `Interface` refers to an actionscript interface, while "interface" refers to the concept of an interface. The words "extend", "override", and "implement" refer to the concepts, not the Actionscript keywords. 
+
+[Glossary][glossary]
+
+[Use Cases][usecases]
 
 ### Outstanding Questions
 
