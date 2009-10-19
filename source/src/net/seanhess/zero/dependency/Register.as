@@ -7,6 +7,10 @@ package net.seanhess.zero.dependency
 	import mx.collections.ArrayCollection;
 	import mx.collections.ListCollectionView;
 	
+	/**
+	 * Global register of creation rules and caches of singleton
+	 * implementations (the default)
+	 */ 
 	public class Register
 	{
 		/**
@@ -50,7 +54,9 @@ package net.seanhess.zero.dependency
 			{
 				throw new DependencyError("Could not find implementation for " + type + " in context "+ context);
 			}
-				
+			
+			
+			// doesn't currently support multiple rules per dependency
 			var rule:Rule = rules.getItemAt(rules.length-1) as Rule;
 			
 			var instance:*;

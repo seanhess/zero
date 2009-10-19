@@ -3,6 +3,12 @@ package net.seanhess.zero.dependency
 	import flash.utils.Proxy;
 	import flash.utils.flash_proxy;
 
+	/**
+	 * Proxy to allow us to manage multiple overlapping implementations
+	 * 
+	 * Also lets DependencyInterfaces just send in "arguments" instead of the 
+	 * parameters. 
+	 */
 	public class Implementation extends Proxy
 	{
 		public var onlyImplementation:*;		

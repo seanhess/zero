@@ -1,0 +1,190 @@
+## Contexts without requirements
+
+I have already seen that passing a context from one node to another is pretty easy. Not bad. The problem is waiting for an actual context object to get there. 
+
+So, if I continue to do it the way I am now, but then maintain a map of real context objects in the core, based on the original object. 
+
+contexts[owner] = new Context();
+
+So, when a class is created by the framework, we create a context for it, mapped to its parent context (which is defined by the class the mapping is defined in. 
+
+This is awesome!
+
+<Connect>  or new Connect(this);
+
+So, we don't have to grab the context from the current parent. Just have everything keep track of its owner (context) and we can recreate a tree of connectedness that way. Sweetness... The only thing is we need a way to enable communication between them. 
+
+Disconnecting everything in a particular context. VIEW - create a context mapping for each item in the view? Meh...
+
+Well, but I can do something here... to create that tree I wanted :)  The dictionary maintains a reference to.... umm..... well, whoever the parent was???
+
+How would I use this? 
+
+Making everything in a particular view inactive - 
+
+1) I could go back to proxying EVERY request through the context chain
+
+2) I could send a disconnect to everyone within that context
+
+DependencyInterface doesn't have to change either way. You can just put the logic in Implementation instead. If it needs a context, give it one :) 
+
+Which is faster... proxy chains, or event chains? I'm guessing proxies?
+
+A) send through the chain - this option makes it easier to change things at runtime. It makes it harder to set up binding (not if we use a proxy chain instead). 
+
+Proxy chains aren't that hard to set up either. .. 
+
+B) Just sent seek/update/disconnect commands through the chain
+
+C) Connect directly, but have logic that detects the chain. For example, implementations are always given by context. When you seek, it tries to locate the context where that is stored. 
+
+
+Implementation
+    - created by the system. 
+    - associated with a given context
+
+Context 
+    - implementations in it, or associated with it, or something
+    - parent context
+    - hasImplementationFor?
+
+Interface - seek (context, type)
+    - Calls Register.seek(context, type)
+    - context = contexts[context]; (which happens to be a particular implementation)
+    - we know the parent 
+
+
+MOCK SITUATION - Library
+
+    We have a library database. The views are as follows
+
+    MainView
+        SearchView
+        ResultsView - (Book, Library)
+        BookView - (Book, Library)
+        EditView - (Book, Library)
+        AddView - (Book, Library)
+
+    DependencyInterfaces
+
+        LibraryService (Book)
+            - search(term:String):IList
+            - addBook(book:Book):void
+            - updateBook(book:Book):void
+        
+        Book
+            - title:String
+            - details:String;
+
+        Library (Book, LibraryService)
+            - results:IList;
+            - currentBook:Book;
+            - currentPage:String;
+
+            - search(term:String)
+            - goToSearch() 
+            - goToEdit(book:Book)
+            - goToAdd()
+            - goToShow(book:Book)
+
+
+I define all implementations in Application. - each RULE has a context? Or what? I guess so. Yeah, sure. 
+
+    Library: contexts[library_implementation] = the_application;
+
+SearchView (Library)
+    new Library(this); - it has a context! 
+    connect() - goes through the context, or just keeps it in mind?
+        - generate - 
+        - context(SearchView).parent = context(MainView) - how do we know? We know it is a view because it extends DisplayObject? Because it has a "parent" property. so, we look for a context of its parent property, and create one if it doesn't exist. And so on, until we run into.... something. 
+
+
+-> System Creates a new Library Implementation - it doesn't exist yet, so we can't run into it's context. But we can put a context on a RULE. the context of a rule could be an object - in which case you only use it if you run into it, or a regexp, in which case your context name has to match it. Assume the FullImplementation Rule has a context of an object, the main application. 
+
+In Generate, when we're testing to see if it matches, we call
+    context.hasAncenstor(rule.context); -
+
+        - i have a view object
+        - the rule context is a parent view
+
+        1) check to see if the context object has a parent. No (context.parent)
+        2) check to see if the source has a parent - YES (context.source.parent) - MainView
+        3) if no, return false
+        4) If YES, see if we have a context for the parent - NO
+        5) If NO, see if the source has a parent  - YES - Application
+        6) See if we have a context for the parent - YES
+        7) See if it matches - YES - return true
+
+        ! Create a new Library, and save its context as a new context, referencing it, and with the Application as a parent. 
+
+
+
+    So, I'm holding a reference to every object in the system that contains a reference to an interface. Yikes!
+
+Now, let's have Libary get a reference to LibraryService
+
+    context.matches(rules.context); 
+
+    contexts[library_instance] is already set to the_applications_context
+
+    1) the LibraryService Interface has a context of the LibraryImplementation
+
+    does LibraryImplementation have a context in the system? (Yes, w/ parent = Application)
+
+    1) does it match? NO
+    2) does the context have a parent? yes, Application
+    3) does it match? YES
+
+
+
+
+OK >>> Now, let's create a new implementation of Library, that just traces things, and give it a context of MainView (kind of useless, but let's pretend)
+
+    When BookView goes to get an instance of Library
+
+    1) does it match? NO
+    2) does it have a parent in its context? NO
+    3) does it have a parent itself? YES
+    --
+    1) does it match? YES
+
+    When the mock Library goes to get a reference to LibraryService
+
+    MockLibrary has a context of MainView
+    The LibraryService interface has a context of MockLibrary
+
+    1) does it match? NO
+    2) have a parent? YES - MainView
+    3) match? NO
+    4) parent? YES - Application
+    5) match? YES
+
+    return true!
+
+    If I had implementated LibraryService as well, it would return that.. 
+    
+    So... why not put rules into the context object?
+
+    Application - Rule for all implementations
+    MainView - Rule for Library (MockLibrary)
+
+    then, you can just get the rules for it, and see if any exist?
+
+    You could still have them in one big list, and just filter them that way, I suppose. Well, the idea is that you DON'T return the others if you found them hiding out in that context. 
+
+    Sheesh this is a tough problem! Do I even gain anything by it?
+
+    I should start by designing a how-to page, similar to the one for Sinatra and God, and solicit feedback based on that. I think I have a good idea of how it should work. 
+
+
+
+
+
+
+
+
+
+
+
+
+

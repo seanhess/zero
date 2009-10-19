@@ -3,7 +3,14 @@ package net.seanhess.zero.dependency
 	import mx.core.IMXMLObject;
 	
 	/**
-	 * The implementation will be 
+	 * You can extend DependencyInterface to have the system pass you
+	 * an implementation. This class proxies the implementation. 
+	 * 
+	 * You MUST send in a reference to the context when extending this if
+	 * you want it to grab the implementation from the system.  
+	 * 
+	 * You can pass in null as the context, and set implementation to your
+	 * own class for mocking. 
 	 */
 	public class DependencyInterface implements IMXMLObject
 	{

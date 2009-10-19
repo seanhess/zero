@@ -1,3 +1,38 @@
 # Zero
 
-Secret Dependency Injection Framework for Actionscript 
+Dependency Injection Framework for Actionscript 
+
+## Goals
+
+1. To allow classes to "implement" interfaces in pieces
+2. To make overriding by decoration simple
+3. Make it easy to create short-term objects (Injecting factories)
+4. Testing and Local Mocking should be easy
+5. To make it configurable at runtime, including the ability to disconnect
+6. To allow different implementations based on context
+7. Beautiful syntax in both MXML and AS
+8. Easy to override functionality of the core
+
+## Use Cases
+
+#### When testing, pass in mock implementations to a class
+
+Switch to a mock server connection at runtime (a checkbox)
+
+4 different views of a list of users. Invisible ones are inactive and don't receive updates
+
+When a module is unloaded it is deactivated and GC'd
+
+Give a particular view a unique implementation
+
+Give a particular class a unique implementation
+
+Give a set of views/classes a unique implementation
+
+Proxy all service requests, to convert xml data to strongly typed data before returning
+
+Log all requests in the system without requiring the implementations to know about it
+
+
+
+

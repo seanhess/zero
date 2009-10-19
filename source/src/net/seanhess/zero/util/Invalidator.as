@@ -5,6 +5,9 @@ package net.seanhess.zero.util
 	import flash.events.TimerEvent;
 	import flash.utils.Timer;
 	
+	/**
+	 * delays stuff
+	 */
 	[Event(name="commit", type="flash.events.Event")]
 	public class Invalidator extends EventDispatcher
 	{
