@@ -1,5 +1,16 @@
 # Use Cases
 
+The following use cases are provided to show how Zero will make life better. 
+
+### Logging
+
+Logging is a classic example of Object-Oriented programming falling short. You want to log everything, or lots of stuff, so you can see where a program breaks. However, log statements clutter up your code significantly. Logging is a common example for Aspect-Oriented programming, which is mostly impossible in AS. 
+
+
+
+
+
+
 * When testing, pass in mock implementations to a class
 * Switch to a mock server connection at runtime (a checkbox)
 * 4 different views of a list of users. Invisible ones are inactive and don't receive updates
