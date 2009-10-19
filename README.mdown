@@ -2,7 +2,7 @@
 
 Zero is a new way to approach Dependency Injection in Actionscript. It is a toolkit that replaces the concept of the Interface with the DependencyInterface, which defines an interface using Decorators instead of an ActionScript Interface. 
 
-In this document, `Interface` refers to an actionscript interface, while `interface` refers to the concept of an interface. The word "extend" or "override" refer to the concepts of extending or overriding, not the Actionscript keywords. 
+In this document, `Interface` refers to an actionscript interface, while "interface" refers to the concept of an interface. The words "extend" and "override" refer to the concepts of extending and overriding, not the Actionscript keywords. 
 
 Here are the goals of the project. 
 
