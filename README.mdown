@@ -1,11 +1,11 @@
 # Zero
 
-Zero is a new way to approach Dependency Injection in Actionscript. It is a toolkit that replaces the concept of the Interface with the DependencyInterface, which define an interface using Decorators instead of an actual Interface. This offers several advantages. 
+Zero is a new way to approach Dependency Injection in Actionscript. It is a toolkit that replaces the concept of the Interface with the DependencyInterface, which defines an interface using Decorators instead of an actual Interface. This offers several advantages. 
 
 Here are the goals of the project. 
 
 1. Implement some or all of an interface with one or more classes
-2. Override funcitonality with anonymous Decorators
+2. Override funcitonality with anonymous Proxies (Decorators)
 3. Create short term dependencies with a clear Factory pattern
 4. Testing and Mocking are as simple as with normal interfaces
 5. Configure implementations at runtime
@@ -222,14 +222,6 @@ Any class can ask for a dependency. Here's our Library example revisited, using 
         }
     }
 
-### Testing and Mocking
-
-Dependencies will not connect unless you specify a context. You can deliberately skip that step, and pass in your own.
-
-    var library:DLibrary = new DLibrary(); // I left out the context!
-    library.implementation = new MockLibrary();
-
-You can also connect an implementation by package or class instead. (see below)
 
 ### Disconnecting an Interface
 
@@ -293,5 +285,39 @@ You can pass in a string with wildcards too.
     var connect:Connect = new Connect("view.admin.*");
         connect.add(...);
 
+### Remove Implementations
 
+You can use `Connect`'s `remove` function to remove an implementation instructions
+
+    var lib:Implement = new Implement(DLibrary, Library);
+
+    var connect:Connect = new Connect(this);
+        connect.add(lib);
+        connect.remove(lib); 
+
+### Updating Implementations
+
+You can remove an instruction and add a new one, or you can simply update the properties of an existing one
+
+    var lib:Implement = new Implement(DLibrary, Library);
+
+    var connect:Connect = new Connect(this);
+        connect.add(lib);
+
+        lib.factory = AnotherLibrary; // updates all interfaces connected to it. 
+
+### Testing and Mocking
+
+Dependencies will not connect unless you specify a context. You can deliberately skip that step, and pass in your own.
+
+    var library:DLibrary = new DLibrary(); // I left out the context!
+    library.implementation = new MockLibrary();
+
+You can also connect an implementation by package or class as described above. You can wipe out all information in the register.  This makes it easy to ensure there is no stale information in the register. 
+
+    var connect:Connect = new Connect(this);
+    connect.wipe();
+    // add pristine connections
+
+    
 
