@@ -9,13 +9,17 @@ Zero is a new way to approach Dependency Injection in Actionscript. It is a tool
 
 In this document, `Interface` refers to an actionscript interface, while "interface" refers to the concept of an interface. The words "extend", "override", and "implement" refer to the concepts, not the Actionscript keywords. 
 
-[**Glossary**][glossary]
+### Project Goals 
 
-[**Use Cases**][usecases]
-
-[**Goals**][goals]
-
-[**Questions**][questions]
+1. Implement some or all of an interface with one or more classes
+2. Extend funcitonality with anonymous Proxies (Decorators)
+3. Create short term dependencies with a clear Factory pattern
+4. Testing and Mocking are as simple as with normal interfaces
+5. Configure implementations at runtime
+6. Disconnect a client from implementations
+7. Change implementations based on context
+8. Clean configuration in both AS and MXML
+9. Easily modifiable core functionality.
 
 ### Getting Started
 
@@ -154,7 +158,7 @@ or in MXML
 
 ### Factories
 
-You can define factories for short-term objects, like value objects or models. Instead of creating a single copy of the implementation, it creates a new one every time it is requested. 
+You can define factories for short-term objects, like value objects or models. Instead of creating a single copy of the [implementation][glossary], it creates a new one every time it is requested. 
 
     // interface
     public class DBook extends DependencyInterface
@@ -207,9 +211,9 @@ They are connected similarly
     connect.add(new Implement(DLibrary, Library));
     connect.add(new Proxy(DLibrary, LibraryProxy));
 
-### Dependencies in Implementations
+### DependencyInterfaces in Implementations
 
-Any class can ask for a dependency. Here's our Library example revisited, using the DBook factory
+Any class can ask for a dependency, including the implementations you specify for other interfaces. Here's our Library example revisited, using the DBook factory:
 
     public class Library
     {
@@ -328,5 +332,10 @@ You can also connect an implementation by package or class as described above. Y
     connect.wipe();
     // add pristine implementations
 
+## More Information
 
+[**Glossary**][glossary]
 
+[**Use Cases**][usecases]
+
+[**Questions**][questions]
