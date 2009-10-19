@@ -18,8 +18,6 @@ Here are the goals of the project.
 
 Visit Downloads and get the latest swc. 
 
-    Short Example
-
 ### Contribute
 
 Zero is open source
@@ -28,7 +26,7 @@ http://github.com/seanhess/zero
 
 ### DependencyInterfaces
 
-Instead of a normal AS Interface, you create a simple class that defines an interface. By defining functions, you create strong-typing. 
+Instead of a normal AS `Interface`, you create a simple class that defines an interface. Here is how to define a function. 
 
     public function doSomething(param:String):Boolean { return i.doSomething(param) }
 
@@ -47,26 +45,26 @@ Here is a full example
             /**
              * Passing the context to the constructor is required
              */
-            public function DLibrary(context:*)  { super(context)}
+            public function DLibrary(context:*)         { super(context) }
 
-            public function get books():IList   { return i.books }
+            public function get books():IList           { return i.books }
 
-            public function addBook(title:String):void { i.addBook(title) }
+            public function addBook(title:String):void  { i.addBook(title) }
         }
     }
 
-You can use "arguments" to simplify passing the arguments along
+You can use `arguments` to simplify passing the arguments along
 
     public function manyArguments(one:SomeClass, two:String, three:int):void { i.manyArguments(arguments) }
 
 ### Using Dependencies
 
-You use the "new" operator anywhere as if you were creating the class. Zero takes care of the rest. 
+You use the `new` operator anywhere as if you were creating the class. Zero takes care of the rest. 
 
     // "this" is the context
     var library:DLibrary = new DLibrary(this); 
 
-Don't worry, you are _not_ creating a dependency on the implementation. Think of the DependencyInterface as a normal AS Interface. DependencyInterfaces are easy to refactor to Interfaces and vice versa. 
+Don't worry, you are _not_ creating a dependency on the implementation. Think of the `DependencyInterface` as a normal AS `Interface`. `DependencyInterfaces` are easy to refactor to `Interfaces` and vice versa. 
 
 You can create them in MXML as well. 
 
@@ -75,7 +73,7 @@ You can create them in MXML as well.
 
 ### Implementations
 
-There are no constraints on implementations at all. You don't have to implement all the functions. 
+There are no constraints on implementations at all. You don't event have to implement all the functions. 
 
     package service
     {
@@ -97,7 +95,7 @@ There are no constraints on implementations at all. You don't have to implement 
 
 ### Connceting Implementations
 
-You can easily specify the implementation for an interface in Actionscript. 
+You can easily connect an implementation to a DependencyInterface using ActionScript. 
 
     import dependency.DLibrary;
     import service.Library;
@@ -174,7 +172,7 @@ or in mxml
         <zero:Factory dependency="{DLibrary}" factory="{BookCreator}"/>
     </zero:Connect>
 
-You can then use the "new" operator, like normal, but Zero creates a new instance every time. 
+You can then use the `new` operator, like normal, but Zero creates a new instance every time. 
 
     var book:DBook = new DBook(this);
 
@@ -184,7 +182,7 @@ or in mxml
 
 ### Proxying
 
-Even more powerfully, you can define Proxies to intercept implementations
+You can use a `Proxy` to extend existing functionality. If you only need to override functionality, use multiple implementations instead. 
 
     public class LibraryProxy extends ObjectProxy
     {
@@ -196,7 +194,7 @@ Even more powerfully, you can define Proxies to intercept implementations
         }
     }
 
-They are connected like normal
+They are connected similarly
 
     var connect:Connect = new Connect(this);
     connect.add(new Implement(DLibrary, Library));
