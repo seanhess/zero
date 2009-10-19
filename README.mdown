@@ -55,21 +55,21 @@ Here is a full example
 
 You can use `arguments` to simplify passing the arguments along
 
-    public function manyArguments(one:SomeClass, two:String, three:int):void { i.manyArguments(arguments) }
+    public function manyArguments(one:SomeClass, two:String, three:int):void { i.manyArguments(**arguments**) }
 
 ### Using Dependencies
 
 You use the `new` operator anywhere as if you were creating the class. Zero takes care of the rest. 
 
     // "this" is the context
-    var library:DLibrary = new DLibrary(this); 
+    var library:DLibrary = **new** DLibrary(this); 
 
 Don't worry, you are _not_ creating a dependency on the implementation. Think of the `DependencyInterface` as a normal AS `Interface`. `DependencyInterfaces` are easy to refactor to `Interfaces` and vice versa. 
 
 You can create them in MXML as well. 
 
     <!-- Automatically sets the context -->
-    <dependency:DLibrary/>
+    <dependency:DLibrary id="library"/>
 
 ### Implementations
 
@@ -297,6 +297,8 @@ You can use `Connect`'s `remove` function to remove an implementation instructio
 
 ### Updating Implementations
 
+Remember, you can override an implementation simply by adding a new one (Later implementations have higher priority)
+
 You can remove an instruction and add a new one, or you can simply update the properties of an existing one
 
     var lib:Implement = new Implement(DLibrary, Library);
@@ -317,7 +319,7 @@ You can also connect an implementation by package or class as described above. Y
 
     var connect:Connect = new Connect(this);
     connect.wipe();
-    // add pristine connections
+    // add pristine implementations
 
     
 
