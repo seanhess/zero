@@ -3,7 +3,6 @@
 [goals]: http://github.com/seanhess/zero/tree/master/doc/Goals.mdown
 [questions]: http://github.com/seanhess/zero/tree/master/doc/Questions.mdown
 
-
 # Zero
 
 Zero is a new way to approach Dependency Injection in Actionscript. It is a toolkit that replaces the concept of the Interface with the [DependencyInterface][glossary], which defines an interface using Decorators instead of an ActionScript Interface. 
@@ -17,7 +16,6 @@ In this document, `Interface` refers to an actionscript interface, while "interf
 [**Goals**][goals]
 
 [**Questions**][questions]
-
 
 ### Getting Started
 
@@ -45,7 +43,7 @@ You can specify events by putting an `[Event]` tag on the class
 
     [Event(name="anEvent", type="flash.events.Event")]
 
-Here is a full example
+Here is a full example. Please see the [Glossary][glossary] for information about the context. 
 
     package dependency 
     {
@@ -69,21 +67,19 @@ You can use `arguments` to simplify passing the arguments along
 
 ### Using Dependencies
 
-You use the `new` operator anywhere as if you were creating the class. Zero takes care of the rest. 
+You use the `new` operator anywhere as if you were creating the class. Zero takes care of the rest. You should always pass in the [context][glossary] (a reference to the object creating it) when creating a [DependencyInterface][glossary].
 
-    // "this" is the context
     var library:DLibrary = new DLibrary(this); 
 
-Don't worry, you are _not_ creating a dependency on the implementation. Think of the `DependencyInterface` as a normal AS `Interface`. `DependencyInterfaces` are easy to refactor to `Interfaces` and vice versa. 
+Don't worry, you are _not_ creating a dependency on the implementation. Think of the [DependencyInterface][glossary] as a normal AS `Interface`. [DependencyInterfaces][glossary] are easy to refactor to `Interfaces` and vice versa. 
 
-You can create them in MXML as well. 
+You can create them in MXML as well. The [context][glossary] is set automatically in mxml.
 
-    <!-- Automatically sets the context -->
     <dependency:DLibrary id="library"/>
 
 ### Implementations
 
-There are no constraints on implementations at all. You don't event have to implement all the functions. 
+There are no constraints on [implementations][glossary] at all. You don't event have to implement all the functions. 
 
     package service
     {
@@ -106,7 +102,7 @@ There are no constraints on implementations at all. You don't event have to impl
 
 ### Connecting Implementations
 
-You can easily connect an implementation to a DependencyInterface using ActionScript. 
+You can easily connect an [implementation][glossary] to a [DependencyInterface][glossary] using ActionScript. 
 
     import dependency.DLibrary;
     import service.Library;
@@ -122,7 +118,7 @@ You can do it in MXML as well
 
 ### Multiple Implementations
 
-A single class doesn't need to be responsible for the whole interface. 
+A single class doesn't need to be responsible for the whole [DependencyInterface][glossary]. 
 
     package service
     {
@@ -143,7 +139,7 @@ A single class doesn't need to be responsible for the whole interface.
         }
     }
 
-You can then connect both of them to the interface. Later implementations have priority. 
+You can then connect both of them to the [interface][glossary]. Later [implementations][glossary] have priority. 
 
     var connect:Connect = new Connect(this);
     connect.add(new Implement(DLibrary, Books));
@@ -158,7 +154,7 @@ or in MXML
 
 ### Factories
 
-You can define factories for short-term objects, like value objects or models. 
+You can define factories for short-term objects, like value objects or models. Instead of creating a single copy of the implementation, it creates a new one every time it is requested. 
 
     // interface
     public class DBook extends DependencyInterface
@@ -332,14 +328,5 @@ You can also connect an implementation by package or class as described above. Y
     connect.wipe();
     // add pristine implementations
 
-    
-## Glossary
 
-### DependencyInterface
-
-A DependencyInterface is a class that wraps, or proxies, another object - also called a Decorator. However, unlike most Decorators, a DependencyInterface does not add any functionality. It only defines the functions that are available to call, in effect, performing the same role as an `Interface`. 
-
-### Context
-
-Objects in Zero need to know their _context_. DependencyInterfaces need to know which object created them, or which object is asking for a particular dependency. Connect has the ability to define different rules 
 
