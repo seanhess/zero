@@ -4,7 +4,16 @@ Zero is a new way to approach Dependency Injection in Actionscript. It is a tool
 
 In this document, `Interface` refers to an actionscript interface, while "interface" refers to the concept of an interface. The words "extend", "override", and "implement" refer to the concepts, not the Actionscript keywords. 
 
-Here are the goals of the project. 
+### Outstanding Questions
+
+* Does this approach solve actual problems?
+* Does it provide significant advantages over existing approaches?
+* What terminology makes this the most clear?
+* What would you change about the interface?
+* What functionality does it lack?
+* Is anything unnecessary?
+
+### Project Goals 
 
 1. Implement some or all of an interface with one or more classes
 2. Extend funcitonality with anonymous Proxies (Decorators)
