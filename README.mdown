@@ -1,11 +1,11 @@
-[glossary]: http://github.com/seanhess/zero/tree/master/doc/Glossary.mdown 
 [usecases]: http://github.com/seanhess/zero/tree/master/doc/UseCases.mdown
-[goals]: http://github.com/seanhess/zero/tree/master/doc/Goals.mdown
-[questions]: http://github.com/seanhess/zero/tree/master/doc/Questions.mdown
+[faq]: http://github.com/seanhess/zero/tree/master/doc/FAQ.mdown
 
 # Introduction to Zero
 
 Zero is a new way to approach Dependency Injection in Actionscript. Instead of using interfaces, you create lightweight objects that work as a gateway to the rest of the system. Zero allows you to attach functionality to interfaces with ultimate flexibility. 
+
+Please also see the [FAQ][faq]
 
 ### Why Zero?
 
@@ -29,43 +29,25 @@ After reading through the entire introduction, visit the [Use Cases Page][usecas
 
 * You need to start creating some complicated views before you even know how the server is going to work. 
 
-* You hit the limit in the scalability of your MVC framework. It started out clean, but eventually started to become cluttered and unwieldy. It would be nice if there was some way to decentralize it.
+* Your app is becoming so large that your once clean-and-logical MVC boilerplate and configuration code is becoming cluttered and unwieldy. It would be nice if there was some way to decentralize it.
 
 * You're working on a problem that is easily solved by a certain pattern, but your MVC framework makes it _really_ hard to do it that way. 
 
-* Your team is having a hard time developing things the "YourFramework-way". You begin to realize that although the framework solves many problems, it does so in a non-intuitive and constraining way. 
+* The Architect has selected an MVC framework, but junior members on the team aren't getting it. They code up good solutions to problems, but the code requires massive refactoring to make it fit into the paradigm of your framework. 
 
 * You need to work on a view in a huge project, but it takes a full minute to compile, and another minute to drill down to it. You want to tweak the colors and keep looking at it afterward, but it takes so long to get there you forget what you were working on. 
 
 * You need to write a class containing application (domain) logic. You don't yet know what it's interface will be, so you can't create unit tests yet, but you want to try it out while you develop without needing to plug it in to the rest of the application.
+
+* You've looked in to MVC frameworks, but the learning curve seems too steep. You'd rather spend time finishing your application and mastering Actionscript than figuring out somebody's domain-specific language.
     
-    
-
-
-
 ### Project Goals 
 
-1. Implement some or all of an interface with one or more classes
-2. Extend funcitonality with anonymous Proxies (Decorators)
-3. Create short term dependencies with a clear Factory pattern
-4. Testing and Mocking are as simple as with normal interfaces
-5. Configure implementations at runtime
-6. Disconnect a client from implementations
-7. Change implementations based on context
-8. Clean configuration in both AS and MXML
-9. Easily modifiable core functionality.
+*Infinitely Scalable* - Be performant and decentralized. Interfaces can be specified to depend on the context of the object asking for an implementation.
 
+*Flexible* - N:N mapping of implementations to interfaces. Easy to modify functionality with proxies. Simple factories for short-term objects. Simple testing and mocking. Ability to connect and disconnect pieces from the system. Runtime configuration.
 
-
-
-
-
-
-### Note:
-
-In this document, `Interface` refers to an actionscript interface, while "interface" refers to the concept of an interface. The words "extend", "override", and "implement" refer to the concepts, not the Actionscript keywords. 
-
-
+*Intuitive* - Stay out of the way, look like normal code, and let the user go. No appreciable constraints on implementations. Strongly-typed configuration. 
 
 ### Getting Started
 
@@ -93,7 +75,7 @@ You can specify events by putting an `[Event]` tag on the class
 
     [Event(name="anEvent", type="flash.events.Event")]
 
-Here is a full example. Please see the [Glossary][glossary] for information about the context. 
+Here is a full example. Please see the [faq][faq] for information about the context. 
 
     package dependency 
     {
@@ -117,19 +99,19 @@ You can use `arguments` to simplify passing the arguments along
 
 ### Using Dependencies
 
-You use the `new` operator anywhere as if you were creating the class. Zero takes care of the rest. You should always pass in the [context][glossary] (a reference to the object creating it) when creating a [DependencyInterface][glossary].
+You use the `new` operator anywhere as if you were creating the class. Zero takes care of the rest. You should always pass in the [context][faq] (a reference to the object creating it) when creating a [DependencyInterface][faq].
 
     var library:DLibrary = new DLibrary(this); 
 
-Don't worry, you are _not_ creating a dependency on the implementation. Think of the [DependencyInterface][glossary] as a normal AS `Interface`. [DependencyInterfaces][glossary] are easy to refactor to `Interfaces` and vice versa. 
+Don't worry, you are _not_ creating a dependency on the implementation. Think of the [DependencyInterface][faq] as a normal AS `Interface`. [DependencyInterfaces][faq] are easy to refactor to `Interfaces` and vice versa. 
 
-You can create them in MXML as well. The [context][glossary] is set automatically in mxml.
+You can create them in MXML as well. The [context][faq] is set automatically in mxml.
 
     <dependency:DLibrary id="library"/>
 
 ### Implementations
 
-There are no constraints on [implementations][glossary] at all. You don't event have to implement all the functions. 
+There are no constraints on [implementations][faq] at all. You don't event have to implement all the functions. 
 
     package service
     {
@@ -152,7 +134,7 @@ There are no constraints on [implementations][glossary] at all. You don't event 
 
 ### Connecting Implementations
 
-You can easily connect an [implementation][glossary] to a [DependencyInterface][glossary] using ActionScript. 
+You can easily connect an [implementation][faq] to a [DependencyInterface][faq] using ActionScript. 
 
     import dependency.DLibrary;
     import service.Library;
@@ -168,7 +150,7 @@ You can do it in MXML as well
 
 ### Multiple Implementations
 
-A single class doesn't need to be responsible for the whole [DependencyInterface][glossary]. 
+A single class doesn't need to be responsible for the whole [DependencyInterface][faq]. 
 
     package service
     {
@@ -189,7 +171,7 @@ A single class doesn't need to be responsible for the whole [DependencyInterface
         }
     }
 
-You can then connect both of them to the [interface][glossary]. Later [implementations][glossary] have priority. 
+You can then connect both of them to the [interface][faq]. Later [implementations][faq] have priority. 
 
     var connect:Connect = new Connect(this);
     connect.add(new Implement(DLibrary, Books));
@@ -204,7 +186,7 @@ or in MXML
 
 ### Factories
 
-You can define factories for short-term objects, like value objects or models. Instead of creating a single copy of the [implementation][glossary], it creates a new one every time it is requested. 
+You can define factories for short-term objects, like value objects or models. Instead of creating a single copy of the [implementation][faq], it creates a new one every time it is requested. 
 
     // interface
     public class DBook extends DependencyInterface
@@ -380,7 +362,7 @@ You can also connect an implementation by package or class as described above. Y
 
 ## More Information
 
-[**Glossary**][glossary]gg
+[**Glossary**][faq]gg
 
 [**Use Cases**][usecases]
 

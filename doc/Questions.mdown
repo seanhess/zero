@@ -1,7 +1,0 @@
-* Does this approach solve actual problems?
-* Does it provide significant advantages over existing approaches?
-* What terminology makes this the most clear?
-* What would you change about the interface?
-* What functionality does it lack?
-* Is anything unnecessary?
-
