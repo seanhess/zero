@@ -1,10 +1,10 @@
-[usecases]: http://github.com/seanhess/zero/tree/master/doc/UseCases.mdown
 [faq]: http://github.com/seanhess/zero/tree/master/doc/FAQ.mdown
 [intro]: http://github.com/seanhess/zero/tree/master/README.mdown
 
 # Use Cases
 
-Please see the [Introduction][intro] for information on how to code things things up. 
+* [Introduction to Zero][intro]
+* [FAQ][faq]
 
 ### Shared State
 

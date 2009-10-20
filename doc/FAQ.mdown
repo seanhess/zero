@@ -1,8 +1,10 @@
-## Frequently Asked Questions
-
 [intro]: http://github.com/seanhess/zero/tree/master/README.mdown
+[usecases]: http://github.com/seanhess/zero/tree/master/doc/UseCases.mdown
 
-[Introduction to Zero][intro]
+# Frequently Asked Questions
+
+* [Introduction to Zero][intro]
+* [Use Cases][usecases]
 
 ### Is Zero an MVC framework?
 
