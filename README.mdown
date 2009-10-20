@@ -7,9 +7,12 @@
 
 Zero is a new way to approach Dependency Injection in Actionscript. Instead of using interfaces, you create lightweight objects that work as a gateway to the rest of the system. Zero allows you to attach functionality to interfaces with ultimate flexibility. 
 
+Zero is _not_ an MVC framework. It is a set of tools that would work with _any_ pattern, including MVC. See the [FAQ][faq] for more information.
+
 * [Use Cases][usecases]
 * [Examples][examples]
 * [FAQ][faq]
+
 
 ### Why Zero?
 
