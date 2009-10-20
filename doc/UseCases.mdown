@@ -1,5 +1,99 @@
+[usecases]: http://github.com/seanhess/zero/tree/master/doc/UseCases.mdown
+[faq]: http://github.com/seanhess/zero/tree/master/doc/FAQ.mdown
+[intro]: http://github.com/seanhess/zero/tree/master/README.mdown
+
 # Use Cases
 
-These are things that provide the motivation for Zero. 
+Please see the [Introduction][intro] for information on how to code things things up. 
 
+### Shared State
 
+> You want to be able to access the same data (state) in several places in your application without passing references around, but have read that global variables and singletons are bad. 
+
+Zero allows you to just create a new instance of the [DependencyInterface][faq] in any view or object. 
+
+    var someController:DController = new DController(this);
+
+### Refactoring
+
+> You thought your code was decoupled. But when it comes time to refactor you have to change your application in many places. This is so annoying you start to put it off.
+
+Unfortunately, refactoring frequently means you must change the interface to an object. Using Zero, you can allow all implementations to keep the old interface, and add a implementation that proxies your old interface to the new object or new interface.
+
+### Inactive Views
+
+> You have used an MVC framework and realized that views continue responding to state changes even when hidden or unloaded.
+
+You can call `connect.stop()` to cause everything within a view or implementation to detach itself from the framework. You can call `connect.start()` to reconnect.
+
+### Proxies
+
+> You want to add or change functionality of a class (or several classes) without that class needing to know about the change. For example: adding logging or translating the result of a function from xml to another object. Extending that class works well for the first change, but by the time you've added the same 3 independent changes to 12 classes, you're starting to go crazy. 
+
+You can add a proxy to add functionality to an object instead of extending it. The proxy doesn't _have_ to know what the base class is doing. 
+
+### Runtime Configuration
+
+> You want to be able to add and remove functionality for a class at runtime. For example, turning logging on or off, or switching backends.
+
+Changing configuration at runtime is as simple as setting some properties.
+
+### Changing Services
+
+> You realize that you need to change server technology from web services (HTTPService) to an AMF server (RemoteObject). However, the way you have to interact with those services is completely different.
+
+You can keep all your old interfaces intact, and create a Proxy to map the functionality to the new services. Or, you can change whatever implementation you were using before, even if it doesn't match up with how the services work at all. 
+
+### Debugging 
+
+> You spend more time setting up and debugging your framework's configuration code than you do anything else. 
+
+Most things in Zero are strongly typed, and Zero includes a powerful runtime debugger that will tell you exactly what the problem is. 
+
+### VO mismatch
+
+> Your server requires you to pass it objects with a very specific format. Your views would be much easier to code if they were different, but it's just too hard to translate between different kinds of objects all the time. 
+
+You can use Factory and a proxy to completely remap one object to another
+
+### Coding a View without an Interface
+
+> You need to start creating some complicated views before you even know how the server is going to work. 
+
+You can define the interface you would like to use, and map it to the actual code for the server later. You can easily create a mock implementation to drive your view in the meantime. 
+
+### Decentralization 
+
+> Your app is becoming so large that your once clean-and-logical MVC boilerplate and configuration code is becoming cluttered and unwieldy. It would be nice if there was some way to decentralize it.
+
+You can create code in modules, test with mock implementations, and ensure that they work. You can put configuration at any level and it will propagate to any view inside that level. 
+
+### Letting you Code
+
+> You're working on a problem that is easily solved by a certain pattern, but your MVC framework makes it _really_ hard to do it that way. 
+
+Zero does not demand that implementations behave in any particular way. You can always map one implementation to another with a proxy. 
+
+### Do it my way
+
+> The Architect has selected an MVC framework, but junior members on the team aren't getting it. They code up good solutions to problems, but the code requires massive refactoring to make it fit into the paradigm of your framework. 
+
+You can write a proxy to adapt their solution instead of refactoring something that already works. Of course, tests help either way :)
+
+### Modular Views
+
+> You need to work on a view in a huge project, but it takes a full minute to compile, and another minute to drill down to it. You want to tweak the colors and keep looking at it afterward, but it takes so long to get there you forget what you were working on. 
+
+Use a module or a Sandbox application. Since it is so easy to create mock implementations, you can put an instance of a view with all its ugly children in an otherwise empty application, and give it some mock implementations. You can see it right away. 
+
+### Working on a class
+
+> You need to write a class containing application (domain) logic. You don't yet know what it's interface will be, so you can't create unit tests yet, but you want to try it out while you develop without needing to plug it in to the rest of the application.
+
+Same sort of thing, create a sandbox application, some mock implementations and go. 
+
+### Learning Curve
+
+> You've looked in to MVC frameworks, but the learning curve seems too steep. You'd rather spend time finishing your application and mastering Actionscript than figuring out somebody's domain-specific language.
+
+Zero looks just like normal code. You use the "new" operator. You define interfaces. The only thing you have to do is use the Connect object to pick which implementations go with which interfaces. You can get fancy later. At least you'll be future-proof. 

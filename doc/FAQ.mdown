@@ -1,5 +1,9 @@
 ## Frequently Asked Questions
 
+[intro]: http://github.com/seanhess/zero/tree/master/README.mdown
+
+[Introduction to Zero][intro]
+
 ### Is Zero an MVC framework?
 
 No. MVC is a _pattern_ that helps you design an application in a time-tested way of separating concerns. MVC _frameworks_ help you implement the pattern in a particular way. 
