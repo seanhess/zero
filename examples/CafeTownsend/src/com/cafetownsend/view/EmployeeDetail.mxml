@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Panel 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/halo"
+	title="Employee Details" 
+	xmlns:model="com.cafetownsend.model.vos.*" xmlns:dep="com.cafetownsend.dep.*">
+
+	<fx:Declarations>
+		<dep:DEmployees id="employees"/>
+	</fx:Declarations>
+	
+	<fx:Script>
+		<![CDATA[
+			import mx.controls.Alert;
+            import mx.events.CloseEvent;
+
+			// the delete button's click event is an Alert asking them to verify the delete
+			// the Alert's closeHandler is directed here to be mutated into a method in 
+			// the presentation model if the answer was OK
+			private function deleteEmployee( closeEvent:CloseEvent ) : void 
+			{
+				if ( closeEvent.detail == Alert.OK ) 
+				{
+					employees.remove(employees.current);
+				}
+			}
+			
+			private function onDeleteClick():void
+			{
+				Alert.show(	'Are you sure you want to delete this employee?',
+					null,
+					Alert.OK | Alert.CANCEL,
+					this,
+					deleteEmployee,
+					null,
+					Alert.OK );
+			}
+			
+			private function onSaveClick():void
+			{
+				employees.save(employees.current);
+			}
+			
+		]]>
+	</fx:Script>
+	
+	<dep:DEmployee id="updated">
+		<dep:email>{employees.current.email}</dep:email>
+		<dep:firstname>{employees.current.firstname}</dep:firstname>
+		<dep:lastname>{employees.current.lastname}</dep:lastname>
+		<dep:startdate>{employees.current.startdate}</dep:startdate>
+	</dep:DEmployee>
+	
+	
+	<!-- GUI ______________________________________________________________________ -->
+	
+	<s:Button label="&lt;&lt; Back" click="employees.cancelUpdate()" />
+	
+	<mx:Form defaultButton="{ submit }">
+		<mx:FormItem label="First Name:"  required="true">
+			<s:TextInput id="firstname"
+				text="{ model.selectedEmployee.firstname}"
+				change="updated.firstname = firstname.text" />
+		</mx:FormItem>
+		
+		<mx:FormItem label="Last Name:"  required="true">
+			<s:TextInput id="lastname" 
+				text="{model.selectedEmployee.lastname}" 
+				change="updated.lastname = lastname.text"/>
+		</mx:FormItem>
+		
+		<mx:FormItem label="Start Date:">
+			<mx:DateField id="startdate" 
+				selectedDate="{ model.selectedEmployee.startdate }"
+				change="updated.startdate = startdate.selectedDate" />
+		</mx:FormItem>
+		
+		<mx:FormItem label="Email:"  required="true">
+			<s:TextInput id="email"
+				 text="{employees.current.email}"
+				 change="updated.email = email.text"/>
+		</mx:FormItem>
+		
+		<mx:FormItem direction="horizontal">
+			<s:Button label="Submit" 
+				click="onSaveClick()" 
+				id="submit" />
+				
+			<s:Button label="Delete"
+				click="onDeleteClick()" />
+		</mx:FormItem>
+	</mx:Form>
+	
+</s:Panel>

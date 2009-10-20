@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Panel 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/halo"
+	xmlns:dep="com.cafetownsend.dep.*"
+	title="Employee Login"
+	currentState="{ auth.status }" >
+	
+	
+	<fx:Declarations>
+		<dep:DAuth id="auth" clear="resetForm()"/>
+	</fx:Declarations>
+
+	<fx:Script>
+	    <![CDATA[
+			private function login():void 
+			{
+				auth.login( username.text, password.text );
+			}
+			
+			private function resetForm():void
+			{
+				username.text = "";
+				password.text = "";
+			}
+			
+	    ]]>
+	</fx:Script>
+	
+	<!-- GUI ______________________________________________________________________ -->
+	
+	<mx:Text text="Invalid login information, please try again" includeIn="message"/>
+	
+	<mx:Form id="loginForm" defaultButton="{ loginBtn }">
+	  	<mx:FormItem label="Username:" required="true">
+	   		<s:TextInput id="username"/>
+	   	</mx:FormItem>
+	   	
+	   	<mx:FormItem label="Password:" required="true">
+	   		<s:TextInput id="password" displayAsPassword="true" />
+	   	</mx:FormItem>
+	   	
+	   	<mx:FormItem direction="horizontal" verticalGap="15" paddingTop="20">
+	   		<s:Button id="loginBtn" label="Login" click="login()"/>
+	   	</mx:FormItem>
+	</mx:Form>
+	
+	<s:Label htmlText="Username: Flex   Password: Mate" width="100%"/>
+	
+	<!-- States ______________________________________________________________________ -->
+	
+	<s:states>
+		<s:State name="message"/>
+	</s:states>
+
+</s:Panel>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Group 
+	height="100%" 
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/halo" 
+	xmlns:mate="http://mate.asfusion.com/" 
+	xmlns:view="com.cafetownsend.view.*" xmlns:dep="com.cafetownsend.dep.*"
+	currentState="{page.currentPage}"
+	>
+
+	<s:layout><s:VerticalLayout/></s:layout>
+	
+	<fx:Declarations>
+		<dep:DPage id="page"/>
+	</fx:Declarations>
+	
+	<s:states>
+		<mx:State name="login"/>
+		<mx:State name="list"/>
+		<mx:State name="details"/>
+	</s:states>
+	
+	<mx:Image source="assets/images/header.jpg" width="700" />
+	
+	<s:Group id="pages" width="100%" height="100%">
+		<view:Login includeIn="login"/>
+		<view:EmployeeList includeIn="list"/>
+		<view:EmployeeDetail includeIn="details"/>
+	</s:Group>
+	
+</s:Group>

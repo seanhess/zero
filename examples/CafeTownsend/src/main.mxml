@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Application xmlns:fx="http://ns.adobe.com/mxml/2009" 
+			   xmlns:s="library://ns.adobe.com/flex/spark" 
+			   xmlns:mx="library://ns.adobe.com/flex/halo" xmlns:view="com.cafetownsend.view.*">
+	<fx:Script>
+		<![CDATA[
+			import com.cafetownsend.control.Everything;
+			import com.cafetownsend.dep.DAuth;
+			import com.cafetownsend.dep.DEmployee;
+			import com.cafetownsend.dep.DEmployees;
+			import com.cafetownsend.dep.DPage;
+			import com.cafetownsend.model.vos.Employee;
+			import com.cafetownsend.model.vos.EmployeeProperName;
+			
+			import net.seanhess.zero.dependency.LogEverything;
+			import net.seanhess.zero.dependency.ThrowErrorIfMissing;
+		]]>
+	</fx:Script>
+	<fx:Declarations>
+
+		<!-- Hook up implementations -->
+		<zero:Connect>
+	
+			<!-- 
+				Here we are deciding to throw errors if something is missing
+				instead of ignoring it. We could easily bind the factory to
+				a variable instead to switch it at runtime
+
+			<zero:Implement dependency="*" factory="{IgnoreIfMissing}"/> -->
+			<zero:Implement dependency="*" factory="{ThrowErrorIfMissing}"/>
+			
+			<zero:Proxy dependency="*" factory="{LogEverything}"/>
+			
+			<zero:Implement dependency="{DAuth}" 		factory="{MockEverything}"/>
+			<zero:Implement dependency="{DEmployees}" 	factory="{MockEverything}"/>
+			<zero:Implement dependency="{DPage}" 		factory="{MockEverything}"/>
+			
+			<zero:Factory  dependency="{DEmployee}" factory="{Employee}"/>
+			<zero:Proxy    dependency="{DEmployee}" factory="{EmployeeProperName}"/>
+		</zero:Connect>
+		
+	</fx:Declarations>
+	
+	<fx:Style source="/assets/styles/main.css"/>
+	
+	<view:MainView/>
+	
+</s:Application>

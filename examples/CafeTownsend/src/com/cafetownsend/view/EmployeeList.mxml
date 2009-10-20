@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<s:Panel
+	xmlns:fx="http://ns.adobe.com/mxml/2009" 
+	xmlns:s="library://ns.adobe.com/flex/spark" 
+	xmlns:mx="library://ns.adobe.com/flex/halo"
+	title="Employee List" 
+	xmlns:dep="com.cafetownsend.dep.*">
+	
+	<fx:Declarations>
+		<dep:DEmployees id="employees"/>
+		<dep:DAuth id="auth"/>
+	</fx:Declarations>
+
+	<fx:Script> 
+		<![CDATA[
+			import com.cafetownsend.dep.DEmployee;
+			
+			private function onSelectEmployee():void
+			{
+				employees.goToUpdateEmployee( list.selectedItem as DEmployee );
+				list.selectedItem = null;
+			}
+		]]>
+	</fx:Script>
+	
+	<!-- GUI ______________________________________________________________________ -->
+	
+	<s:Group>
+		<s:layout><s:HorizontalLayout/></s:layout>
+		<s:Button label="Add New Employee" click="employees.goToNewEmployee()" />
+		<s:Button label="Logout" click="auth.logout()" />
+	</mx:HBox>
+
+	<mx:List id="list"
+		dataProvider="{ employees.allEmployees }"
+		change="onSelectEmployee()"
+		labelField="properName"
+		width="100%" 
+		/>
+
+</s:Panel>
