@@ -51,7 +51,7 @@ After reading through the entire introduction, visit the [Use Cases Page][usecas
 
 *Intuitive* - Stay out of the way, look like normal code, and let the user go. No appreciable constraints on implementations. Strongly-typed configuration. Completely Testable.
 
-*Infinitely Scalable* - Be performant and decentralized. Interfaces can be specified to depend on the context of the object asking for an implementation.g
+*Infinitely Scalable* - Be performant and decentralized. Interfaces can be specified to depend on the context of the object asking for an implementation.
 
 ### Getting Started
 
@@ -391,8 +391,8 @@ You can also connect an implementation by package or class as described above. Y
 
 ## More Information
 
-[**Glossary**][faq]gg
+[FAQ][faq]
 
-[**Use Cases**][usecases]
+[Use Cases][usecases]
 
-[**Questions**][questions]
+[Examples][examples]
