@@ -44,11 +44,11 @@ After reading through the entire introduction, visit the [Use Cases Page][usecas
     
 ### Project Goals 
 
-*Infinitely Scalable* - Be performant and decentralized. Interfaces can be specified to depend on the context of the object asking for an implementation.
-
 *Flexible* - N:N mapping of implementations to interfaces. Easy to modify functionality with proxies. Simple factories for short-term objects. Simple testing and mocking. Ability to connect and disconnect pieces from the system. Runtime configuration. 
 
 *Intuitive* - Stay out of the way, look like normal code, and let the user go. No appreciable constraints on implementations. Strongly-typed configuration. Completely Testable.
+
+*Infinitely Scalable* - Be performant and decentralized. Interfaces can be specified to depend on the context of the object asking for an implementation.
 
 ### Getting Started
 
