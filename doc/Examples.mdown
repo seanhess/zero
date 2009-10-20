@@ -6,7 +6,10 @@ I've created the classic, Cafe Townsend, using Zero. Please note that although I
 
 **Note:** This is shamelessly ripped off of Mate's implementation. I'm linking to mate's running application since this framework hasn't yet been fully implemented. Nahuel is the one who asked for this, anyway, so... tell me if I'm out of line, man.
 
+Realize that I did the views first, without any regard to how the control/model layer should work. I copied Mate's approach mostly, was able to get the benefits of the Presentation Model pattern without the overhead, and it's all completely refactorable. 
+
 * [Try It](http://mate.asfusion.com/assets/content/examples/cafeTownsend/)
 * [View Source](http://github.com/seanhess/zero/tree/master/examples/CafeTownsend)
+* [Compare to Mate's Source](http://mate.asfusion.com/assets/content/examples/cafeTownsend/srcview/)
 
 
