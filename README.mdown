@@ -48,7 +48,7 @@ After reading through the entire introduction, visit the [Use Cases Page][usecas
 
 *Intuitive* - Stay out of the way, look like normal code, and let the user go. No appreciable constraints on implementations. Strongly-typed configuration. Completely Testable.
 
-*Infinitely Scalable* - Be performant and decentralized. Interfaces can be specified to depend on the context of the object asking for an implementation.
+*Infinitely Scalable* - Be performant and decentralized. Interfaces can be specified to depend on the context of the object asking for an implementation.g
 
 ### Getting Started
 
@@ -78,6 +78,7 @@ You can specify events by putting an `[Event]` tag on the class
 
 Here is a full example. Please see the [faq][faq] for information about the context. 
 
+    // dependency/DLibrary.as
     package dependency 
     {
         [Event(name="newBook", type="flash.events.Event")]
@@ -135,7 +136,7 @@ There are no constraints on [implementations][faq] at all. You don't event have 
 
 ### Connecting Implementations
 
-You can easily connect an [implementation][faq] to a [DependencyInterface][faq] using ActionScript. 
+You can easily connect an [implementation][faq] to a [DependencyInterface][faq] using ActionScript. If you want an implementation to apply to your entire application, put this code in your main app.
 
     import dependency.DLibrary;
     import service.Library;
