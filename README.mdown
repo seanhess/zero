@@ -3,11 +3,45 @@
 [goals]: http://github.com/seanhess/zero/tree/master/doc/Goals.mdown
 [questions]: http://github.com/seanhess/zero/tree/master/doc/Questions.mdown
 
-# Zero
+# Introduction to Zero
 
-Zero is a new way to approach Dependency Injection in Actionscript. It is a toolkit that replaces the concept of the Interface with the [DependencyInterface][glossary], which defines an interface using Decorators instead of an ActionScript Interface. 
+Zero is a new way to approach Dependency Injection in Actionscript. Instead of using interfaces, you create lightweight objects that work as a gateway to the rest of the system. Zero allows you to attach functionality to interfaces with ultimate flexibility. 
 
-In this document, `Interface` refers to an actionscript interface, while "interface" refers to the concept of an interface. The words "extend", "override", and "implement" refer to the concepts, not the Actionscript keywords. 
+### Why Zero?
+
+After reading through the entire introduction, visit the [Use Cases Page][usecases] to see how Zero solves these problems.
+
+* You want to be able to access the same data (state) in several places in your application without passing references around, but have read that global variables and singletons are bad. 
+
+* You thought your code was decoupled. But when it comes time to refactor you have to change your application in many places. This is so annoying you start to put it off.
+
+* You have used an MVC framework and realized that views continue responding to state changes even when hidden or unloaded.
+
+* You want to add or change functionality of a class (or several classes) without that class needing to know about the change. For example: adding logging or translating the result of a function from xml to another object. Extending that class works well for the first change, but by the time you've added the same 3 independent changes to 12 classes, you're starting to go crazy. 
+
+* You want to be able to add and remove functionality for a class at runtime. For example, turning logging on or off, or switching backends.
+
+* You realize that you need to change server technology from web services (HTTPService) to an AMF server (RemoteObject). However, the way you have to interact with those services is completely different.
+
+* You spend more time setting up and debugging your framework's configuration code than you do anything else. 
+
+* Your server requires you to pass it objects with a very specific format. Your views would be much easier to code if they were different, but it's just too hard to translate between different kinds of objects all the time. 
+
+* You need to start creating some complicated views before you even know how the server is going to work. 
+
+* You hit the limit in the scalability of your MVC framework. It started out clean, but eventually started to become cluttered and unwieldy. It would be nice if there was some way to decentralize it.
+
+* You're working on a problem that is easily solved by a certain pattern, but your MVC framework makes it _really_ hard to do it that way. 
+
+* Your team is having a hard time developing things the "YourFramework-way". You begin to realize that although the framework solves many problems, it does so in a non-intuitive and constraining way. 
+
+* You need to work on a view in a huge project, but it takes a full minute to compile, and another minute to drill down to it. You want to tweak the colors and keep looking at it afterward, but it takes so long to get there you forget what you were working on. 
+
+* You need to write a class containing application (domain) logic. You don't yet know what it's interface will be, so you can't create unit tests yet, but you want to try it out while you develop without needing to plug it in to the rest of the application.
+    
+    
+
+
 
 ### Project Goals 
 
@@ -20,6 +54,18 @@ In this document, `Interface` refers to an actionscript interface, while "interf
 7. Change implementations based on context
 8. Clean configuration in both AS and MXML
 9. Easily modifiable core functionality.
+
+
+
+
+
+
+
+### Note:
+
+In this document, `Interface` refers to an actionscript interface, while "interface" refers to the concept of an interface. The words "extend", "override", and "implement" refer to the concepts, not the Actionscript keywords. 
+
+
 
 ### Getting Started
 
@@ -334,7 +380,7 @@ You can also connect an implementation by package or class as described above. Y
 
 ## More Information
 
-[**Glossary**][glossary]
+[**Glossary**][glossary]gg
 
 [**Use Cases**][usecases]
 

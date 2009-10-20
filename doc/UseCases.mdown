@@ -1,39 +1,5 @@
 # Use Cases
 
-Here are a few sample use cases. 
-
-### Logging
-
-Logging is a classic example of Object-Oriented programming falling short. You want to log everything, or lots of stuff, so you can see where a program breaks. However, log statements clutter up your code significantly. 
-
-    class LogAllFunctionCalls extends ObjectProxy
-    {
-        override public function callProperty(name:*, ... rest):*
-        {
-            trace("Called: " + name); // use a more sophisticated logger than this
-            object.callProperty.apply(object, [name].concat(rest));
-        }
-    }
-
-    ...
-
-    <zero:Connect>
-        <zero:Proxy dependency="*" factory="{LogAllFunctionCalls}"/>
-    </zero:Connect>
-
-### Switching Configurations at Runtime
-
-Imagine that you have an application that needs to send requests to a SharedObject when offline, and to some webservices when online. You can easily change the factory for an implementation at the click of a button. 
-
-### Deactiviate hidden views
-
-Normally, if several different views bind to the same data, they continue to receive updates even when inactive or hidden. For example, one view might show the data in a map, and the other in a list. By overriding `set visible` or by listening to `show` and `hide` events, you can easily make a view ignore updates when invisible. This will turn off sub-views as well. 
-
-    connect.disconnect(); // and .connect();
-
-### Translate XML Data to Objects
-
-If you can't use remoting, translating XML to VOs can be annoying. Assume you have a bunch of web services, and you want to abstract out the translation. Instead of making the services decide, you can use a proxy. 
-
+These are things that provide the motivation for Zero. 
 
 
