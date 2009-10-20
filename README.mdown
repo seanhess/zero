@@ -1,12 +1,15 @@
+[intro]: http://github.com/seanhess/zero/tree/master/README.mdown
 [usecases]: http://github.com/seanhess/zero/tree/master/doc/UseCases.mdown
+[examples]: http://github.com/seanhess/zero/tree/master/doc/Examples.mdown
 [faq]: http://github.com/seanhess/zero/tree/master/doc/FAQ.mdown
 
 # Introduction to Zero
 
 Zero is a new way to approach Dependency Injection in Actionscript. Instead of using interfaces, you create lightweight objects that work as a gateway to the rest of the system. Zero allows you to attach functionality to interfaces with ultimate flexibility. 
 
-* [FAQ][faq]
 * [Use Cases][usecases]
+* [Examples][examples]
+* [FAQ][faq]
 
 ### Why Zero?
 
