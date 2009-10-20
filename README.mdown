@@ -262,6 +262,29 @@ Any class can ask for a dependency, including the implementations you specify fo
         }
     }
 
+### Mocking
+
+You can create a mock implementation that implements some or all of the methods of the class. You can switch implementations by changing the value of the implement object, or by commenting one or the other out. 
+
+    public class MockLibrary
+    {
+        public var books:IList;
+        
+        public function addBook(title:String):void
+        {
+            trace("I'm pretending to add a book");
+        }
+    }
+    
+    ...
+    
+    var imp:Implement = new Implement(DLibrary, MockLibrary);
+    var connect:Connect = new Connect(this);
+    connect.add(imp);
+    
+    // now, you can switch back to the real version by doing
+    imp.factory = Library;
+    
 
 ### Disconnecting an Interface
 
@@ -349,7 +372,7 @@ You can remove an instruction and add a new one, or you can simply update the pr
 
         lib.factory = AnotherLibrary; // updates all interfaces connected to it. 
 
-### Testing and Mocking
+### Testing
 
 Dependencies will not connect unless you specify a context. You can deliberately skip that step, and pass in your own.
 
