@@ -12,11 +12,28 @@
 
 ### Is Zero an MVC framework?
 
-No. MVC is a _pattern_ that helps you design an application in a time-tested way of separating concerns. MVC _frameworks_ help you implement the pattern in a particular way. 
+No. MVC is a _pattern_ that helps you design an application in a time-tested way of separating concerns. MVC _frameworks_ help you implement the pattern in a particular way. Zero is a set of tools that could be used to follow MVC easily, or to create an MVC framework. You could also use an entirely different approach.
 
-Zero is a set of tools that you can use to implement MVC if you wish. However, it does not mandate using it. If you were to use Zero in an MVC setting, the MVC part would probably be a set of guidelines, not a particular framework. 
+### From Reviewers
 
-Zero can integrate with an MVC frameworks, but much of the functionality will be redundant. It provides tools that MVC frameworks do not. You could build a custom MVC framework using it. 
+> I've read through the Zero readme a few times now, and I don't get it. I'm not trying to be rude, I really, truly don't understand what you are trying to do. I don't get what problem Zero solves, I don't get what it does and I don't get how I should use it.
+
+So, imagine for a minute that AS interfaces have more features than they currently do - that
+
+1. you can implement "part" of an interface
+2. a proxy can implement an interface without ever using the implement keyword (so it can be generated dynamically)
+
+This would allow you to do some very powerful things. An object could require a certain dependency, typed as an interface, and the system could actually pass it a proxy that "pretends" to implement that interface.  
+
+Have you heard of Rack, for ruby? It makes it easy to create server middleware, with each middleware being ignorant of the other layers. A request passes through each layer (much like a proxy), and each layer can modify the request, pass it on and modify the result, or stop the request and return something. It's a very powerful concept, because each layer is entirely ignorant of the other layers. 
+
+So, I'm trying to do something like that... Interfaces simply don't allow that kind of flexibility. I have to replace the concept in order to do what I want. 
+
+> As I understand it, and I don't think I do, I create a class DLibrary and another class Library, and connect them using Zero. Then when I create an instance of DLibrary it proxies an instance of Library. But why would I want to do that? Why can't I just use an instance of Library directly? What is it that I gain from using the proxy?
+
+Yes, you're right. But you can give `DLibrary` something much more complicated than Library later, if you need to. You can give `DLibraries` _anything_, all without ever changing the code that creates one. 
+
+The second reason is that in `DLibrary`'s case, it is getting a singleton-esque instance (like a mate manager). You use `Factory` instead of `Implement` to create a new instance every time.
 
 ### What do the following terms mean?
 
@@ -27,4 +44,3 @@ Zero can integrate with an MVC frameworks, but much of the functionality will be
 * _Context_ - In Zero, an object's context is its place in the program. If you have one object, "a", which creates another object "b", b's context is a, because a created it. The context of a DependencyInterfaces is the object that created it. This lets the system know which object is requesting access to the dependency. By giving a context to Connect, we can give different implementations to different DependencyInterfaces.
 
 * _implementation_ - An implementation is a class that specifies functionality for an interface, or in Zero, a class connected to a DependencyInterface.
-
