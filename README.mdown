@@ -106,6 +106,10 @@ Here is a full example. Please see the [faq][faq] for information about the cont
 You can use `arguments` to simplify passing the arguments along
 
     public function manyArguments(one:SomeClass, two:String, three:int):void { i.manyArguments(arguments) }
+    
+### Why use these instead of normal interfaces?
+
+We want to be able to do more than normal interfaces allow. Specifically, we need to be able to allow an object to require a dependency with a particular interface (strong typing), but send it a proxy instead. See [FAQ][faq] for a more detailed answer.
 
 ### Using Dependencies
 
