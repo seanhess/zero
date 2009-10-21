@@ -58,6 +58,8 @@ After reading through the entire introduction, visit the [Use Cases Page][usecas
 
 ### Getting Started
 
+**Note:** The framework is only half done. You can't use it yet. 
+
 Visit Downloads and get the latest swc. 
 
 ### Contribute
