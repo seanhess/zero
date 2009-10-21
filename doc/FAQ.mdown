@@ -14,7 +14,7 @@
 
 No. MVC is a _pattern_ that helps you design an application in a time-tested way of separating concerns. MVC _frameworks_ help you implement the pattern in a particular way. Zero is a set of tools that could be used to follow MVC easily, or to create an MVC framework. You could also use an entirely different approach.
 
-### From Reviewers
+### From Reviewer A
 
 > I've read through the Zero readme a few times now, and I don't get it. I'm not trying to be rude, I really, truly don't understand what you are trying to do. I don't get what problem Zero solves, I don't get what it does and I don't get how I should use it.
 
@@ -34,6 +34,10 @@ So, I'm trying to do something like that... Interfaces simply don't allow that k
 Yes, you're right. But you can give `DLibrary` something much more complicated than Library later, if you need to. You can give `DLibraries` _anything_, all without ever changing the code that creates one. 
 
 The second reason is that in `DLibrary`'s case, it is getting a singleton-esque instance (like a mate manager). You use `Factory` instead of `Implement` to create a new instance every time.
+
+> There seems to be some idea of doing interfaces without interfaces, which I don't understand the motivation behind at all. If this is (and I'm not sure it is) a way to avoid using interfaces, it's extremely convoluted. If you just want to destroy type information * already does that.
+
+I'm trying to add features to interfaces. I want to keep type information. If I wanted to destroy it, I could just type everything as * and be done.  If you think of DependencyInterfaces as replacing interfaces, they're not that hard to use.
 
 ### What do the following terms mean?
 
