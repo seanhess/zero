@@ -107,7 +107,7 @@ You can use `arguments` to simplify passing the arguments along
 
     public function manyArguments(one:SomeClass, two:String, three:int):void { i.manyArguments(arguments) }
     
-### What's the point? Why not use interfaces.
+### What's the point? Why not use interfaces?
 
 Doing it this way gives us all the benefits of interfaces (Strong typing, coding to an interface), while allowing us to do more than the type system would (pass it a proxy that "pretends" to implement the interface). See [FAQ][faq] for a more detailed answer.
 
@@ -321,6 +321,10 @@ You can disconnect an interface by calling its `stop` method.
 And reconnect it with `start`
 
     library.start();
+
+Or permanently stop it by setting its implementation to null
+
+    library.implementation = null;
 
 ### Disconnecting a View
 
