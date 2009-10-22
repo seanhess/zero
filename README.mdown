@@ -5,7 +5,7 @@
 
 # Introduction to Zero
 
-Zero is a new way to approach Dependency Injection in Actionscript. Instead of using interfaces, you create lightweight objects that work as a gateway to the rest of the system. Zero allows you to attach functionality to interfaces with ultimate flexibility. 
+Zero is a new way to approach managing dependencies in Actionscript (Inversion of Control). Instead of using interfaces, you create a simple facade without any functionality. Zero allows you to attach functionality to these psuedo-interfaces with ultimate flexibility. 
 
 Zero is _not_ an MVC framework. It is a set of tools that would work with _any_ pattern, including MVC. See the [FAQ][faq] for more information.
 
@@ -50,7 +50,7 @@ After reading through the entire introduction, visit the [Use Cases Page][usecas
     
 ### Project Goals 
 
-*Flexible* - N:N mapping of implementations to interfaces. Easy to modify functionality with proxies. Simple factories for short-term objects. Simple testing and mocking. Ability to connect and disconnect pieces from the system. Runtime configuration. 
+*Flexible* - N:N mapping of implementations to facades. Easy to modify functionality with proxies. Simple factories for short-term objects. Simple testing and mocking. Ability to connect and disconnect pieces from the system. Runtime configuration. 
 
 *Intuitive* - Stay out of the way, look like normal code, and let the user go. No appreciable constraints on implementations. Strongly-typed configuration. Completely Testable.
 
@@ -68,9 +68,9 @@ Zero is open source. Please hack on it
 
 [http://github.com/seanhess/zero](http://github.com/seanhess/zero)
 
-### DependencyInterfaces
+### Facades
 
-Instead of a normal AS `Interface`, you create a simple class that defines an interface. Here is how to define a function. 
+When a class needs to use another class (creating a dependency), create a facade describing what the first class needs. This is very similar to creating an interface in Actionscript. For an example of how it looks, here is how you define a function. It looks just like an interface, except you use the public keyword, and pass the function on to "i"
 
     public function doSomething(param:String):Boolean { return i.doSomething(param) }
 
@@ -80,22 +80,22 @@ You can also define getters and setters
     public function set name(value:String):void     { i.name = value }
     public function get name():String               { return i.name }
 
-You can specify events by putting an `[Event]` tag on the class
+You can specify events by putting an `[Event]` tag on the class, something impossible to do with an interface.
 
     [Event(name="anEvent", type="flash.events.Event")]
 
-Here is a full example. Please see the [faq][faq] for information about the context. 
+Here is a full example. I use the naming convention of putting "I" before the name because it acts like an interface. You can always replace it with an actual interface if you change your mind. Please see the [faq][faq] for information about what context means.
 
-    // dependency/DLibrary.as
+    // dependency/ILibrary.as
     package dependency 
     {
         [Event(name="newBook", type="flash.events.Event")]
-        public class DLibrary extends DependencyInterface
+        public class ILibrary extends Facade
         {
             /**
              * Passing the context to the constructor is required
              */
-            public function DLibrary(context:*)         { super(context) }
+            public function ILibrary(context:*)         { super(context) }
 
             public function get books():IList           { return i.books }
 
@@ -107,32 +107,32 @@ You can use `arguments` to simplify passing the arguments along
 
     public function manyArguments(one:SomeClass, two:String, three:int):void { i.manyArguments(arguments) }
     
-### Why use these instead of normal interfaces?
+### What's the point? Why not use interfaces.
 
-We want to be able to do more than normal interfaces allow. Specifically, we need to be able to allow an object to require a dependency with a particular interface (strong typing), but send it a proxy instead. See [FAQ][faq] for a more detailed answer.
+Doing it this way gives us all the benefits of interfaces (Strong typing, coding to an interface), while allowing us to do more than the type system would (pass it a proxy that "pretends" to implement the interface). See [FAQ][faq] for a more detailed answer.
 
-### Using Dependencies
+### Using Facades
 
-You use the `new` operator anywhere as if you were creating the class. Zero takes care of the rest. You should always pass in the [context][faq] (a reference to the object creating it) when creating a [DependencyInterface][faq].
+Now that you've created a facade, you can use it anywhere in your code with the `new` operator. Zero then goes out and finds the right object(s) for your facade to work with. The code using `new` doesn't know which, and it doesn't care. Pass in `this` when creating it so Zero knows who is asking for it. This is the [Context][faq]. 
 
-    var library:DLibrary = new DLibrary(this); 
-
-Don't worry, you are _not_ creating a dependency on the implementation. Think of the [DependencyInterface][faq] as a normal AS `Interface`. [DependencyInterfaces][faq] are easy to refactor to `Interfaces` and vice versa. 
+    var library:ILibrary = new ILibrary(this); 
 
 You can create them in MXML as well. The [context][faq] is set automatically in mxml.
 
-    <dependency:DLibrary id="library"/>
+    <dependency:ILibrary id="library"/>
+
+This may give some of you shivers up and down your spine, but the code is easier to read, it's mxml compatible, doesn't require any meta-data wiring, and still provides the same benefits as passing dependencies in by hand. 
 
 ### Implementations
 
-There are no constraints on [implementations][faq] at all. You don't event have to implement all the functions. 
+Ok, now let's write a class to give to this facade. It can look any way we want. You don't event have to implement all the functions. We don't implement an interface, because the class isn't required to implement all the functions of the facade by itself. Zero's debugger will catch any mismatched functions.
 
     package service
     {
         public class Library
         {
             /**
-             * books is immutable because the interface only defines
+             * books is read-only because the interface only defines
              * a getter
              */
             public var books:IList = new ArrayCollection();
@@ -146,25 +146,27 @@ There are no constraints on [implementations][faq] at all. You don't event have 
         }
     }
 
-### Connecting Implementations
+### Wiring
 
-You can easily connect an [implementation][faq] to a [DependencyInterface][faq] using ActionScript. If you want an implementation to apply to your entire application, put this code in your main app.
+You can easily connect an [implementation][faq] to a [Facade][faq] using ActionScript or MXML. If you want an implementation to apply to your entire application, put this code in your main app.
 
-    import dependency.DLibrary;
+    // MyApplication.mxml
+    import dependency.ILibrary;
     import service.Library;
 
     var connect:Connect = new Connect(this);
-    connect.add(new Implement(DLibrary, Library));
+    connect.add(new Implement(ILibrary, Library));
 
 You can do it in MXML as well
 
+    <!-- MyApplication.mxml -->
     <zero:Connect>
-        <zero:Implement dependency="{DLibrary}" factory="{Library}"/>
+        <zero:Implement dependency="{ILibrary}" factory="{Library}"/>
     </zero:Connect>
 
 ### Multiple Implementations
 
-A single class doesn't need to be responsible for the whole [DependencyInterface][faq]. 
+A single class doesn't need to be responsible for the whole [Facade][faq]. 
 
     package service
     {
@@ -185,17 +187,19 @@ A single class doesn't need to be responsible for the whole [DependencyInterface
         }
     }
 
-You can then connect both of them to the [interface][faq]. Later [implementations][faq] have priority. 
+You can then connect both of them to the [facade][faq]. Later [implementations][faq] have priority. 
 
+    // MyApplication.mxml
     var connect:Connect = new Connect(this);
-    connect.add(new Implement(DLibrary, Books));
-    connect.add(new Implement(DLibrary, BookCreator)); 
+    connect.add(new Implement(ILibrary, Books));
+    connect.add(new Implement(ILibrary, BookCreator)); 
 
 or in MXML
 
+    // MyApplication.mxml
     <zero:Connect>
-        <zero:Implement dependency="{DLibrary}" factory="{Books}"/>
-        <zero:Implement dependency="{DLibrary}" factory="{BookCreator}"/>
+        <zero:Implement dependency="{ILibrary}" factory="{Books}"/>
+        <zero:Implement dependency="{ILibrary}" factory="{BookCreator}"/>
     </zero:Connect>
 
 ### Factories
@@ -203,7 +207,7 @@ or in MXML
 You can define factories for short-term objects, like value objects or models. Instead of creating a single copy of the [implementation][faq], it creates a new one every time it is requested. 
 
     // interface
-    public class DBook extends DependencyInterface
+    public class IBook extends Facade
     {
         public function get title():String           { return i.title }
         public function set title(value:String):void { i.title = value }
@@ -217,45 +221,52 @@ You can define factories for short-term objects, like value objects or models. I
 
 And you tell Zero to connect them like this
 
-    connect.add(new Factory(DBook, Book));
+    // MyApplication.mxml
+    connect.add(new Factory(IBook, Book));
 
 or in mxml
-    
+   
+    <!-- MyApplication.mxml -->
     <zero:Connect>
-        <zero:Factory dependency="{DLibrary}" factory="{BookCreator}"/>
+        <zero:Factory dependency="{IBook}" factory="{Book}"/>
     </zero:Connect>
 
 You can then use the `new` operator, like normal, but Zero creates a new instance every time. 
 
-    var book:DBook = new DBook(this);
+    // inside of some other class, like services/Library.as
+    var book:IBook = new IBook(this);
 
 or in mxml
 
-    <dependency:Book title="here is a title"/>
+    <!-- inside a view, like a form? -->
+    <dependency:IBook title="here is a title"/>
 
 ### Proxying
 
-You can use a `Proxy` to extend existing functionality. If you only need to override functionality, use multiple implementations instead. 
+So far, everything we've done could be easily accomplished with a good DI framework. But proxying is where Zero really starts to shine. You can use a `Proxy` to extend existing functionality using the decorator pattern, without needing to implement all the methods. 
+
+Even cooler, the proxy does not have to be aware of what is actually implementing ILibrary. You don't have to reference another class anywhere. 
 
     public class LibraryProxy extends ObjectProxy
     {
         public function addBook(title:String):void
         {
             trace("Do something cool");
-            object.addBook(title);
+            object.addBook(title); // I have no idea what object is, here.
             trace("Do something even cooler!");
         }
     }
 
 They are connected similarly
 
+    // MyApplication.mxml
     var connect:Connect = new Connect(this);
-    connect.add(new Implement(DLibrary, Library));
-    connect.add(new Proxy(DLibrary, LibraryProxy));
+    connect.add(new Implement(ILibrary, Library));
+    connect.add(new Proxy(ILibrary, LibraryProxy));
 
-### DependencyInterfaces in Implementations
+### Facades in Implementations
 
-Any class can ask for a dependency, including the implementations you specify for other interfaces. Here's our Library example revisited, using the DBook factory:
+Any class can ask for a facade, including an implementation. Here's our Library example revisited, using the IBook factory:
 
     public class Library
     {
@@ -267,7 +278,7 @@ Any class can ask for a dependency, including the implementations you specify fo
     
         public function addBook(title:String):void 
         {
-            var book:DBook = new DBook(this);
+            var book:IBook = new IBook(this);
                 book.title = title;
 
             books.addItem(book);
@@ -279,6 +290,7 @@ Any class can ask for a dependency, including the implementations you specify fo
 
 You can create a mock implementation that implements some or all of the methods of the class. You can switch implementations by changing the value of the implement object, or by commenting one or the other out. 
 
+    // mock/MockLibrary.as
     public class MockLibrary
     {
         public var books:IList;
@@ -289,9 +301,10 @@ You can create a mock implementation that implements some or all of the methods 
         }
     }
     
-    ...
-    
-    var imp:Implement = new Implement(DLibrary, MockLibrary);
+
+        
+    // MyApplication.mxml
+    var imp:Implement = new Implement(ILibrary, MockLibrary);
     var connect:Connect = new Connect(this);
     connect.add(imp);
     
@@ -327,16 +340,16 @@ You can disconnect an entire context
 
 ### Implementation by View
 
-You can specify a different implementation for everything within a particular view by putting new connect instructions in it. 
+You can specify a different implementation for everything within a particular view by putting new connect instructions in it. In this example, every view inside of SomeOtherView will get ADifferentLibrary, while the rest of the application will get Library.
 
-    <!-- MainApplication.mxml -->
+    <!-- MyApplication.mxml -->
     <zero:Connect>
-        <Implement dependency="{DLibrary}" factory="{Library}"/>
+        <Implement dependency="{ILibrary}" factory="{Library}"/>
     </zero:Connect>
 
     <!-- SomeOtherView.mxml -->
     <zero:Connect>
-        <Implement dependency="{DLibrary}" factory="{ADifferentLibrary}"/>
+        <Implement dependency="{ILibrary}" factory="{ADifferentLibrary}"/>
     </zero:Connect>
 
 ### Implementation by Other Context
@@ -366,7 +379,7 @@ You can pass in a string with wildcards too.
 
 You can use `Connect`'s `remove` function to remove an implementation instruction
 
-    var lib:Implement = new Implement(DLibrary, Library);
+    var lib:Implement = new Implement(ILibrary, Library);
 
     var connect:Connect = new Connect(this);
         connect.add(lib);
@@ -376,9 +389,9 @@ You can use `Connect`'s `remove` function to remove an implementation instructio
 
 Remember, you can override an implementation simply by adding a new one (Later implementations have higher priority)
 
-You can remove an instruction and add a new one, or you can simply update the properties of an existing one
+Instead, you could remove an instruction and add a new one, or you can simply update the properties of an existing one
 
-    var lib:Implement = new Implement(DLibrary, Library);
+    var lib:Implement = new Implement(ILibrary, Library);
 
     var connect:Connect = new Connect(this);
         connect.add(lib);
@@ -389,14 +402,15 @@ You can remove an instruction and add a new one, or you can simply update the pr
 
 Dependencies will not connect unless you specify a context. You can deliberately skip that step, and pass in your own.
 
-    var library:DLibrary = new DLibrary(); // I left out the context!
-    library.implementation = new MockLibrary();
+    var library:ILibrary = new ILibrary(); // I left out the context!
+    library.implementation = new MockLibrary(); // it will use mine!
 
 You can also connect an implementation by package or class as described above. You can wipe out all information in the register.  This makes it easy to ensure there is no stale information in the register. 
 
+    // TestLibrary.as -> setUp()
     var connect:Connect = new Connect(this);
     connect.wipe();
-    // add pristine implementations
+    connect.add(new Implementation(ILibrary, MockLibrary);
 
 ## More Information
 

@@ -13,9 +13,9 @@
 
 > You want to be able to access the same data (state) in several places in your application without passing references around, but have read that global variables and singletons are bad. 
 
-Zero allows you to just create a new instance of the [DependencyInterface][faq] in any view or object. 
+Zero allows you to just create a new instance of the [Facade][faq] in any view or object. 
 
-    var someController:DController = new DController(this);
+    var someController:IController = new IController(this);
 
 ### Refactoring
 

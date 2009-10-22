@@ -14,37 +14,12 @@
 
 No. MVC is a _pattern_ that helps you design an application in a time-tested way of separating concerns. MVC _frameworks_ help you implement the pattern in a particular way. Zero is a set of tools that could be used to follow MVC easily, or to create an MVC framework. You could also use an entirely different approach.
 
-### From Reviewer A
-
-> I've read through the Zero readme a few times now, and I don't get it. I'm not trying to be rude, I really, truly don't understand what you are trying to do. I don't get what problem Zero solves, I don't get what it does and I don't get how I should use it.
-
-So, imagine for a minute that AS interfaces have more features than they currently do - that
-
-1. you can implement "part" of an interface
-2. a proxy can implement an interface without ever using the implement keyword (so it can be generated dynamically)
-
-This would allow you to do some very powerful things. An object could require a certain dependency, typed as an interface, and the system could actually pass it a proxy that "pretends" to implement that interface.  
-
-Have you heard of Rack, for ruby? It makes it easy to create server middleware, with each middleware being ignorant of the other layers. A request passes through each layer (much like a proxy), and each layer can modify the request, pass it on and modify the result, or stop the request and return something. It's a very powerful concept, because each layer is entirely ignorant of the other layers. 
-
-So, I'm trying to do something like that... Interfaces simply don't allow that kind of flexibility. I have to replace the concept in order to do what I want. 
-
-> As I understand it, and I don't think I do, I create a class DLibrary and another class Library, and connect them using Zero. Then when I create an instance of DLibrary it proxies an instance of Library. But why would I want to do that? Why can't I just use an instance of Library directly? What is it that I gain from using the proxy?
-
-Yes, you're right. But you can give `DLibrary` something much more complicated than Library later, if you need to. You can give `DLibraries` _anything_, all without ever changing the code that creates one. 
-
-The second reason is that in `DLibrary`'s case, it is getting a singleton-esque instance (like a mate manager). You use `Factory` instead of `Implement` to create a new instance every time.
-
-> There seems to be some idea of doing interfaces without interfaces, which I don't understand the motivation behind at all. If this is (and I'm not sure it is) a way to avoid using interfaces, it's extremely convoluted. If you just want to destroy type information * already does that.
-
-I'm trying to add features to interfaces. I want to keep type information. If I wanted to destroy it, I could just type everything as * and be done.  If you think of DependencyInterfaces as replacing interfaces, they're not that hard to use.
-
 ### What do the following terms mean?
 
-* _interface_ - An interface is a way to describe _what_ an object does, without describing _how_ it does it. Object-oriented languages usually have an `interface` keyword that lets you define an interface explicitly. Zero allows you to describe an interface a different way, using another object, called a DependencyInterface.
+* _interface_ - An interface is a way to describe _what_ an object does, without describing _how_ it does it. Object-oriented languages usually have an `interface` keyword that lets you define an interface explicitly. Zero allows you to describe an interface a different way, using another object, called a Facade.
 
-* A _DependencyInterface_ - is a class that wraps, or proxies, another object - also called a Decorator. However, unlike most Decorators, a DependencyInterface does not add any functionality. It only defines the functions that are available to call, in effect, performing the same role as the interfaces built in to ActionScript.
+* A _Facade_ - is a class that wraps, or proxies, another object - also called a Decorator. However, unlike most Decorators, a Facade does not add any functionality. It only defines the functions that are available to call, in effect, performing the same role as the interfaces built in to ActionScript.
 
-* _Context_ - In Zero, an object's context is its place in the program. If you have one object, "a", which creates another object "b", b's context is a, because a created it. The context of a DependencyInterfaces is the object that created it. This lets the system know which object is requesting access to the dependency. By giving a context to Connect, we can give different implementations to different DependencyInterfaces.
+* _Context_ - In Zero, an object's context is its place in the program. If you have one object, "a", which creates another object "b", b's context is a, because a created it. The context of a Facades is the object that created it. This lets the system know which object is requesting access to the dependency. By giving a context to Connect, we can give different implementations to different Facades.
 
-* _implementation_ - An implementation is a class that specifies functionality for an interface, or in Zero, a class connected to a DependencyInterface.
+* _implementation_ - An implementation is a class that specifies functionality for an interface, or in Zero, a class connected to a Facade.
